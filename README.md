@@ -1,6 +1,10 @@
-# Ath
+# Google Authenticator
 
-Description to be added.
+Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process and has no other dependencies.
+
+[![Buy Me Coffee](img/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
+
+**Note:** Project is still under development.
 
 ## Contribution
 
