@@ -2,9 +2,11 @@
 
 Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process and has no other dependencies.
 
-[![Buy Me Coffee](img/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
+**Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
-**Note:** Project is still under development.
+[![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
+
+**Project is still under development.**
 
 ## Contribution
 
