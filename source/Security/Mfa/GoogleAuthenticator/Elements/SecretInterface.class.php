@@ -32,51 +32,33 @@
     namespace Security\Mfa\GoogleAuthenticator\Elements;
     
     /**
-     * <i>Secret</i> class is used for generating secrets required for one-time
-     * password generation and validation of the same.
+     * <i>SecretInterface</i> class is an interface used to enforce
+     * implementation of core secrets's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class Secret implements SecretInterface
+    interface SecretInterface
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
-        
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        private function getValue();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        private function setValue();
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        private function generateValue();
         
         /*****************\
         |* CHECK METHODS *|
