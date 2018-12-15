@@ -32,45 +32,33 @@
     namespace Security\Mfa\GoogleAuthenticator;
     
     /**
-     * <i>GoogleAuthenticator</i> class is used for generating QR codes, and
-     * validating provided one-time passwords.
+     * <i>AuthenticatorInterface</i> class is an interface used to enforce
+     * implementation of core authenticator's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class GoogleAuthenticator implements AuthenticatorInterface
+    interface AuthenticatorInterface
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
-        
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        public function getSecret();
+        
+        public function getPreviousCode();
+        
+        public function getCurrentCode();
+        
+        public function getNextCode();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        public function setSecret();
         
         /****************\
         |* CORE METHODS *|
@@ -82,7 +70,7 @@
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
+        public function isCodeValid();
         
         /*****************\
         |* OTHER METHODS *|
