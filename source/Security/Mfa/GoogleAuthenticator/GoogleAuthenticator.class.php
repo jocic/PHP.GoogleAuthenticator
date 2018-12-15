@@ -40,7 +40,7 @@
      * @version   1.0.0
      */
     
-    class GoogleAuthenticator implements AuthenticatorInterface
+    class GoogleAuthenticator implements GoogleAuthenticatorInterface
     {
         /******************\
         |* CORE CONSTANTS *|

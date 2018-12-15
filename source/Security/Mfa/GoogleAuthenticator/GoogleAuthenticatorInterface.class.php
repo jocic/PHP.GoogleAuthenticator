@@ -32,7 +32,7 @@
     namespace Security\Mfa\GoogleAuthenticator;
     
     /**
-     * <i>AuthenticatorInterface</i> class is an interface used to enforce
+     * <i>GoogleAuthenticatorInterface</i> class is an interface used to enforce
      * implementation of core authenticator's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
@@ -40,7 +40,7 @@
      * @version   1.0.0
      */
     
-    interface AuthenticatorInterface
+    interface GoogleAuthenticatorInterface
     {
         /***************\
         |* GET METHODS *|
