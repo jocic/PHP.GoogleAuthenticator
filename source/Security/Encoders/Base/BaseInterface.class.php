@@ -32,38 +32,21 @@
     namespace Security\Encoders\Base;
     
     /**
-     * <i>Base32</i> class is used for encoding data in Base32 format.
+     * <i>BaseInterface</i> is an interface used to enforce implementation of
+     * core base encoder's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class Base32 implements BaseInterface
+    interface BaseInterface
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
-        
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        public function getTable();
         
         /***************\
         |* SET METHODS *|
@@ -75,7 +58,9 @@
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        public function encode();
+        
+        public function decode();
         
         /*****************\
         |* CHECK METHODS *|
