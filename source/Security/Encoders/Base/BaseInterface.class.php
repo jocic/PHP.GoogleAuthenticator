@@ -46,7 +46,26 @@
         |* GET METHODS *|
         \***************/
         
-        public function getTable();
+        /**
+         * Returns an array containing characters of the encoding table.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getBaseTable();
+        
+        /**
+         * Returns a string containing a single character used for
+         * padding-purposes.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getBasePadding();
         
         /***************\
         |* SET METHODS *|
@@ -58,15 +77,48 @@
         |* CORE METHODS *|
         \****************/
         
-        public function encode();
+        /**
+         * Encodes a provided string to a desired <i>Base</i> encoding.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $input
+         *   Input string that needs to be encoded.
+         */
         
-        public function decode();
+        public function encode($input);
+        
+        /**
+         * Encodes a provided string to a desired <i>Base</i> decoding.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $input
+         *   Input string that needs to be decoding.
+         */
+        
+        public function decode($input);
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
+        /**
+         * Checks if the encoding is valid or not.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $encoding
+         *   Encoding that needs to be checked.
+         */
+        
+        public function isEncodingValid($encoding);
         
         /*****************\
         |* OTHER METHODS *|
