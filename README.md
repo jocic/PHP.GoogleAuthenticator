@@ -2,6 +2,12 @@
 
 Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process and has no other dependencies.
 
+Following specifications were referenced:
+
+* [RFC4648][documentation/rfc4648.txt] - Base 16, Base 32 & Base 64 Data Encodings
+* [RFC6238][documentation/rfc6238.txt] - TOTP: Time-Based One-Time Password Algorithm
+* [RFC6287][documentation/rfc6287.txt] - OCRA: OATH Challenge-Response Algorithm
+
 **Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
