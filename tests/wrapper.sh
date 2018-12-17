@@ -44,7 +44,7 @@ cd "$source_dir";
 if [[ $(whereis php) == "php:" ]]; then
     echo "Error: You don't have PHP installed on your machine." && exit;
 elif [[ ! -e "../dependencies/phpunit/phpunit/phpunit" ]]; then
-    echo "Error: You don't have PHPUnit installed - check composer." && exit;
+    echo "Error: You don't have PHPUnit installed - check Composer's dependencies." && exit;
 fi
 
 php "../dependencies/phpunit/phpunit/phpunit" "$@";

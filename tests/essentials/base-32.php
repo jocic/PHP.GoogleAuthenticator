@@ -66,6 +66,39 @@
             $this->assertSame("MZXW6YQ=", $encoder->encode("foob"));
             $this->assertSame("MZXW6YTB", $encoder->encode("fooba"));
             $this->assertSame("MZXW6YTBOI======", $encoder->encode("foobar"));
+            $this->assertSame("MZXW6YTBOIYQ====", $encoder->encode("foobar1"));
+            $this->assertSame("MZXW6YTBOIYTE===", $encoder->encode("foobar12"));
+            $this->assertSame("MZXW6YTBOIYTEMY=", $encoder->encode("foobar123"));
+        }
+        
+        /**
+         * Tests decoding of the <i>Base 32</i> implementation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testDecoding()
+        {
+            // Core Variables
+            
+            $encoder = new Security\Encoders\Base\Base32();
+            
+            // Logic.
+            
+            $this->assertSame("", $encoder->decode(""));
+            $this->assertSame("f", $encoder->decode("MY======"));
+            $this->assertSame("fo", $encoder->decode("MZXQ===="));
+            $this->assertSame("foo", $encoder->decode("MZXW6==="));
+            $this->assertSame("foob", $encoder->decode("MZXW6YQ="));
+            $this->assertSame("fooba", $encoder->decode("MZXW6YTB"));
+            $this->assertSame("foobar", $encoder->decode("MZXW6YTBOI======"));
+            $this->assertSame("foobar1", $encoder->decode("MZXW6YTBOIYQ===="));
+            $this->assertSame("foobar12", $encoder->decode("MZXW6YTBOIYTE==="));
+            $this->assertSame("foobar123", $encoder->decode("MZXW6YTBOIYTEMY="));
         }
     }
     
