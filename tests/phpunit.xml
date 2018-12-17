@@ -1,7 +1,7 @@
 <phpunit bootstrap="../source/Autoload.php">
     <testsuites>
         <testsuite name="essentials">
-            <file>encoding/base-32.php</file>
+            <file>essentials/base-32.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

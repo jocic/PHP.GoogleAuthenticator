@@ -61,12 +61,12 @@
             // Logic.
             
             $this->assertSame("", $encoder->encode(""));
-            $this->assertSame("f", $encoder->encode("MY======"));
-            $this->assertSame("fo", $encoder->encode("MZXQ===="));
-            $this->assertSame("foo", $encoder->encode("MZXW6==="));
-            $this->assertSame("foob", $encoder->encode("MZXW6YQ="));
-            $this->assertSame("fooba", $encoder->encode("MZXW6YTB"));
-            $this->assertSame("foobar", $encoder->encode("MZXW6YTBOI======"));
+            $this->assertSame("MY======", $encoder->encode("f"));
+            $this->assertSame("MZXQ====", $encoder->encode("fo"));
+            $this->assertSame("MZXW6===", $encoder->encode("foo"));
+            $this->assertSame("MZXW6YQ=", $encoder->encode("foob"));
+            $this->assertSame("MZXW6YTB", $encoder->encode("fooba"));
+            $this->assertSame("MZXW6YTBOI======", $encoder->encode("foobar"));
         }
     }
     
