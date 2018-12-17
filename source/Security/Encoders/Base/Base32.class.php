@@ -173,54 +173,36 @@
             
             // Other Variables
             
-            $temp = null;
+            $encodingIndex = 0;
+            $temp          = null;
             
-            // Step 1 - Handle Empty Input.
+            // Step 1 - Handle Empty Input
             
             if ($input == "")
             {
                 return "";
             }
             
-            // Step 2 - Split Input Into 5-bit Chunks.
+            // Step 2 - Split Input Into 5-bit Chunks
             
             $characters = str_split($input);
             
-            foreach ($characters as $characterIndex => $characterValue)
+            foreach ($characters as $character)
             {
-                $byte = ord($characterValue) & 0xFF;
+                // Handle Chunk Value
                 
-                if ($characterIndex % 5 == 0)
+                $byte = ord($character) & 0xFF;
+                
+                // Process Chunk Value
+                
+                if ($encodingIndex == 0)
                 {
                     $chunks[$chunkIndex ++] = ($byte >> 0x03) & 0x01F;
                     
                     $remainder = $byte & 0x07;
                     $padding   = 0x2;
                 }
-                else if ($characterIndex % 4 == 0)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x05) | ($remainder << 0x03)) & 0x01F;
-                    $chunks[$chunkIndex ++] = ($byte >> 0x00) & 0x01F;
-                    
-                    $remainder = $byte & 0x03;
-                    $padding   = 0x1;
-                }
-                else if ($characterIndex % 3 == 0)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x07) | ($remainder << 0x01)) & 0x01F;
-                    $chunks[$chunkIndex ++] = ($byte >> 0x02) & 0x01F;
-                    
-                    $remainder = $byte & 0x03;
-                    $padding   = 0x3;
-                }
-                else if ($characterIndex % 2 == 0)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x04) | ($remainder << 0x04)) & 0x01F;
-                    
-                    $remainder = $byte & 0x0F;
-                    $padding   = 0x1;
-                }
-                else if ($characterIndex % 1 == 0)
+                else if ($encodingIndex == 1)
                 {
                     $chunks[$chunkIndex ++] = (($byte >> 0x06) | ($remainder << 0x02)) & 0x01F;
                     $chunks[$chunkIndex ++] = ($byte >> 0x01) & 0x01F;
@@ -228,17 +210,47 @@
                     $remainder = $byte & 0x01;
                     $padding   = 0x4;
                 }
+                else if ($encodingIndex == 2)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x04) | ($remainder << 0x04)) & 0x01F;
+                    
+                    $remainder = $byte & 0x0F;
+                    $padding   = 0x1;
+                }
+                else if ($encodingIndex == 3)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x07) | ($remainder << 0x01)) & 0x01F;
+                    $chunks[$chunkIndex ++] = ($byte >> 0x02) & 0x01F;
+                    
+                    $remainder = $byte & 0x03;
+                    $padding   = 0x3;
+                }
+                else if ($encodingIndex == 4)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x05) | ($remainder << 0x03)) & 0x01F;
+                    $chunks[$chunkIndex ++] = ($byte >> 0x00) & 0x01F;
+                    
+                    $remainder = $byte & 0x03;
+                    $padding   = 0x1;
+                }
+                
+                // Handle Encoding Index
+                
+                $encodingIndex ++;
+                
+                if ($encodingIndex > 4)
+                {
+                    $encodingIndex = 0;
+                }
             }
             
             // Step 3 - Handle Remainder
             
             if (strlen($input) % 5 != 0)
             {
-                $temp = ($remainder << $padding);
-                
-                if ($temp != 32)
+                if (($temp = ($remainder << $padding)) != 32)
                 {
-                    $chunks[$chunkIndex ++] = $temp;
+                    $chunks[$chunkIndex ++] = $temp & 0xFF;
                 }
             }
             
@@ -290,7 +302,118 @@
         
         public function decode($input)
         {
+            // Core Variables
             
+            $baseTable   = $this->getBaseTable();
+            $basePadding = $this->getBasePadding();
+            
+            // Decoding Variables
+            
+            $decoding      = "";
+            $flippedTable  = null;
+            $characters    = null;
+            $decodingIndex = null;
+            
+            // Chunk Variables
+            
+            $chunks    = [];
+            $byte      = null;
+            $remainder = null;
+            
+            // Step 1 - Handle Empty Input
+            
+            if ($input == "")
+            {
+                return "";
+            }
+            
+            // Step 2 - Trim Padding
+            
+            $input = rtrim($input, $basePadding);
+            
+            // Step 3 - Decode Input Into 5-bit Chunks
+            
+            $flippedTable = array_flip($baseTable);
+            $characters   = str_split($input);
+            
+            foreach ($characters as $character)
+            {
+                if (isset($flippedTable[$character]))
+                {
+                    $chunks[] = $flippedTable[$character];
+                }
+                else
+                {
+                    throw new \Exception("Invalid character encountered.");
+                }
+            }
+            
+            // Step 4 - Merge Decoded Chunks
+            
+            foreach ($chunks as $chunk)
+            {
+                // Handle Chunk Value
+                
+                $byte = $chunk & 0x1F;
+                
+                // Process Chunk Value
+                
+                if ($decodingIndex == 0)
+                {
+                    $remainder = $byte;
+                }
+                else if ($decodingIndex == 1)
+                {
+                    $decoding .= chr((($remainder << 3) | ($byte >> 2)) & 0xFF);
+                    
+                    $remainder = $byte & 0x03;
+                }
+                else if ($decodingIndex == 2)
+                {
+                    $remainder = (($remainder << 5) | $byte) & 0xFF;
+                }
+                else if ($decodingIndex == 3)
+                {
+                    $decoding .= chr((($remainder << 1) | ($byte >> 4)) & 0xFF);
+                    
+                    $remainder = $byte & 0x0F;
+                }
+                else if ($decodingIndex == 4)
+                {
+                    $decoding .= chr((($remainder << 4) | ($byte >> 1)) & 0xFF);
+                    
+                    $remainder = $byte & 0x01;
+                }
+                else if ($decodingIndex == 5)
+                {
+                    $remainder = (($remainder << 5) | $byte) & 0xFF;
+                }
+                else if ($decodingIndex == 6)
+                {
+                    $decoding .= chr((($remainder << 2) | ($byte >> 3)) & 0xFF);
+                    
+                    $remainder = $byte & 0x07;
+                }
+                else if ($decodingIndex == 7)
+                {
+                    $decoding .= chr((($remainder << 5) | $byte) & 0xFF);
+                    
+                    $remainder = 0x00;
+                }
+                
+                // Handle Decoding Index
+                
+                $decodingIndex ++;
+                
+                if ($decodingIndex > 7)
+                {
+                    $decodingIndex = 0;
+                }
+            }
+            
+            // Step 5 - Return Decoding
+            
+            return $decoding;
         }
         
         /*****************\
