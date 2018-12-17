@@ -108,7 +108,7 @@
         \*****************/
         
         /**
-         * Checks if the encoding is valid or not.
+         * Checks if a provided encoding is valid or not.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved

@@ -32,7 +32,7 @@
     namespace Security\Encoders\Base;
     
     /**
-     * <i>Base32</i> class is used for encoding data in Base32 format.
+     * <i>Base32</i> class is used for encoding data in <i>Base 32</i> format.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
@@ -53,7 +53,7 @@
         
         /**
          * Array containing characters of the encoding table for <i>Base 32</i>
-         * encoding per RFC4648 specifications.
+         * encoding per <i>RFC 4648</i> specifications.
          * 
          * Note: Review page 8 of the mentioned document for more information.
          * 
@@ -70,7 +70,7 @@
         
         /**
          * String containing a single character used for padding-purposes per
-         * RFC4648 specifications.
+         * <i>RFC 4648</i> specifications.
          * 
          * Note: Review page 8 of the mentioned document for more information.
          * 
@@ -92,7 +92,7 @@
         
         /**
          * Returns an array containing characters of the encoding table for
-         * <i>Base 32</i> encoding per RFC4648 specifications.
+         * <i>Base 32</i> encoding per <i>RFC 4648</i> specifications.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -111,7 +111,7 @@
         
         /**
          * Returns a string containing a single character used for
-         * padding-purposes per RFC4648 specifications.
+         * padding-purposes per <i>RFC 4648</i> specifications.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -139,7 +139,7 @@
         \****************/
         
         /**
-         * Encodes a provided string to <i>Base32</i> encoding.
+         * Encodes a provided string to <i>Base 32</i> encoding.
          *  
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -155,9 +155,117 @@
         {
             // Core Variables
             
-            $encoding = "";
+            $baseTable   = $this->getBaseTable();
+            $basePadding = $this->getBasePadding();
             
-            // Logic
+            // Encoding Variables
+            
+            $encoding   = "";
+            $characters = null;
+            
+            // Chunk Variables
+            
+            $chunks     = [];
+            $chunkIndex = 0;
+            $byte       = null;
+            $remainder  = null;
+            $padding    = 0;
+            
+            // Other Variables
+            
+            $temp = null;
+            
+            // Step 1 - Handle Empty Input.
+            
+            if ($input == "")
+            {
+                return "";
+            }
+            
+            // Step 2 - Split Input Into 5-bit Chunks.
+            
+            $characters = str_split($input);
+            
+            foreach ($characters as $characterIndex => $characterValue)
+            {
+                $byte = ord($characterValue) & 0xFF;
+                
+                if ($characterIndex % 5 == 0)
+                {
+                    $chunks[$chunkIndex ++] = ($byte >> 0x03) & 0x01F;
+                    
+                    $remainder = $byte & 0x07;
+                    $padding   = 0x2;
+                }
+                else if ($characterIndex % 4 == 0)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x05) | ($remainder << 0x03)) & 0x01F;
+                    $chunks[$chunkIndex ++] = ($byte >> 0x00) & 0x01F;
+                    
+                    $remainder = $byte & 0x03;
+                    $padding   = 0x1;
+                }
+                else if ($characterIndex % 3 == 0)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x07) | ($remainder << 0x01)) & 0x01F;
+                    $chunks[$chunkIndex ++] = ($byte >> 0x02) & 0x01F;
+                    
+                    $remainder = $byte & 0x03;
+                    $padding   = 0x3;
+                }
+                else if ($characterIndex % 2 == 0)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x04) | ($remainder << 0x04)) & 0x01F;
+                    
+                    $remainder = $byte & 0x0F;
+                    $padding   = 0x1;
+                }
+                else if ($characterIndex % 1 == 0)
+                {
+                    $chunks[$chunkIndex ++] = (($byte >> 0x06) | ($remainder << 0x02)) & 0x01F;
+                    $chunks[$chunkIndex ++] = ($byte >> 0x01) & 0x01F;
+                    
+                    $remainder = $byte & 0x01;
+                    $padding   = 0x4;
+                }
+            }
+            
+            // Step 3 - Handle Remainder
+            
+            if (strlen($input) % 5 != 0)
+            {
+                $temp = ($remainder << $padding);
+                
+                if ($temp != 32)
+                {
+                    $chunks[$chunkIndex ++] = $temp;
+                }
+            }
+            
+            // Step 4 - Process Chunks
+            
+            foreach ($chunks as $chunk)
+            {
+                if (isset($baseTable[$chunk]))
+                {
+                    $encoding .= $baseTable[$chunk];
+                }
+                else
+                {
+                    throw new \Exception("Invalid chunk value.");
+                }
+            }
+            
+            // Step 5 - Apply Padding
+            
+            $temp = 8 - (strlen($encoding) % 8);
+            
+            if ($temp != 8)
+            {
+                $encoding .= str_repeat($basePadding, $temp);
+            }
+            
+            // Step 6 - Check & Return Encoding
             
             if (!$this->isEncodingValid($encoding))
             {
@@ -192,6 +300,9 @@
         /**
          * Checks if the <i>Base 32</i> encoding is valid or not.
          * 
+         * Note: Invalid encodings should be rejected per section <i>3.3</i>
+         * in the <i>RFC 4648</i> specifications.
+         * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
@@ -207,7 +318,7 @@
             // Core Variables
             
             $baseTable   = $this->getBaseTable();
-            $basePadding = $this->getPadding();
+            $basePadding = $this->getBasePadding();
             
             // Other Variables
             
@@ -221,9 +332,9 @@
             
             foreach ($characters as $character)
             {
-                if (!in_array($baseTable, $character))
+                if (!in_array($character, $baseTable))
                 {
-                    break;
+                    return false;
                 }
             }
             
