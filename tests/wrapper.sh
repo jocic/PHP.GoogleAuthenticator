@@ -35,12 +35,6 @@
 
 source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
 
-######################
-# COMPOSER VARIABLES #
-######################
-
-composer_version="1.7.2";
-
 #########
 # LOGIC #
 #########
@@ -49,6 +43,8 @@ cd "$source_dir";
 
 if [[ $(whereis php) == "php:" ]]; then
     echo "Error: You don't have PHP installed on your machine." && exit;
+elif [[ ! -e "../dependencies/phpunit/phpunit/phpunit" ]]; then
+    echo "Error: You don't have PHPUnit installed - check composer." && exit;
 fi
 
-php "$composer_version/composer.phar" "$@";
+php "../dependencies/phpunit/phpunit/phpunit" "$@";
