@@ -14,6 +14,12 @@ Following specifications are referenced:
 
 **Project is still under development.**
 
+## Tests
+
+Following unit tests are available:
+
+* Essentials
+
 ## Contribution
 
 Please review the following documents if you are planning to contribute to the project:

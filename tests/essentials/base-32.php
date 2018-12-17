@@ -48,8 +48,7 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @return string
-         *   String containing a single character used for padding-purposes.
+         * @return void
          */
         
         public function testEncoding()
