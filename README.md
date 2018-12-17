@@ -18,7 +18,13 @@ Following specifications are referenced:
 
 Following unit tests are available:
 
-* Essentials
+* **Essentials** - Base 32 Encoding & Decoding
+
+You can execute them easily from the terminal like in the example below.
+
+```bash
+bash ./tests/wrapper.sh --testsuite essentials
+```
 
 ## Contribution
 
