@@ -1,0 +1,7 @@
+{
+    "name": "jocic/google-authenticator",
+    "description": "Complete & easy-to-implement MFA solution for use with Google Authenticator App.",
+    "require": {
+        "php": "^7.2"
+    }
+}
