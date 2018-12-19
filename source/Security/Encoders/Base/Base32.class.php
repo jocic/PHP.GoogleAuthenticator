@@ -321,19 +321,19 @@
             $dShifts  = [ 0x00, 0x03, 0x00, 0x01, 0x04, 0x00, 0x02, 0x05 ];
             $bShifts  = [ 0x00, 0x02, 0x00, 0x04, 0x01, 0x00, 0x03, 0x00 ];
             $cIndexes = [ 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
+            $dIndex   = 0x00;
             
             // Decoding Variables
             
             $decoding      = "";
             $flippedTable  = null;
             $characters    = null;
-            $decodingIndex = 0;
             
             // Chunk Variables
             
             $chunks    = [];
             $byte      = null;
-            $remainder = 0;
+            $remainder = 0x00;
             
             // Step 1 - Handle Empty Input
             
@@ -373,29 +373,29 @@
                 
                 // Handle Character Decoding
                 
-                if ($cIndexes[$decodingIndex] == 0x01)
+                if ($cIndexes[$dIndex] == 0x01)
                 {
-                    $decoding .= chr((($remainder << $dShifts[$decodingIndex])
-                        | ($byte >> $bShifts[$decodingIndex])) & 0xFF);
+                    $decoding .= chr((($remainder << $dShifts[$dIndex])
+                        | ($byte >> $bShifts[$dIndex])) & 0xFF);
                 }
                 
                 // Handle Remainder
                 
-                if ($rClears[$decodingIndex] == 0x01)
+                if ($rClears[$dIndex] == 0x01)
                 {
-                    $remainder = 0;
+                    $remainder = 0x00;
                 }
                 
-                $remainder = (($remainder << $rShifts[$decodingIndex])
-                    | $byte) & $rMasks[$decodingIndex];
+                $remainder = (($remainder << $rShifts[$dIndex]) | $byte)
+                    & $rMasks[$dIndex];
                 
                 // Handle Decoding Index
                 
-                $decodingIndex ++;
+                $dIndex ++;
                 
-                if ($decodingIndex > 7)
+                if ($dIndex > 0x07)
                 {
-                    $decodingIndex = 0;
+                    $dIndex = 0x00;
                 }
             }
             
