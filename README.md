@@ -4,15 +4,26 @@ Google Authenticator is a mini PHP library for implementing Multi-Factor Authent
 
 Following specifications are referenced:
 
-* [RFC4648](documentation/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
-* [RFC6238](documentation/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
-* [RFC6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
+* [RFC 4648](documentation/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
+* [RFC 6238](documentation/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
+* [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 
 **Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
 
 **Project is still under development.**
+
+## Installation
+
+There's two ways you can add **Google Authenticator** library to your project:
+
+* Copying the files from the "source" directory to your project and including the "Autoload.php" file
+* Via Composer, by executing the command below
+
+```bash
+composer require jocic/google-authenticator
+```
 
 ## Tests
 
