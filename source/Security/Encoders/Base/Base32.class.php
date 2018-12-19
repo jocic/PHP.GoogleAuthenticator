@@ -158,6 +158,10 @@
             $baseTable   = $this->getBaseTable();
             $basePadding = $this->getBasePadding();
             
+            // Algorithm Variables
+            
+            
+            
             // Encoding Variables
             
             $encoding   = "";
@@ -192,6 +196,8 @@
                 // Handle Chunk Value
                 
                 $byte = ord($character) & 0xFF;
+                
+                    
                 
                 // Process Chunk Value
                 
@@ -307,18 +313,27 @@
             $baseTable   = $this->getBaseTable();
             $basePadding = $this->getBasePadding();
             
+            // Algorithm Variables
+            
+            $rMasks   = [ 0xFF, 0x03, 0xFF, 0x0F, 0x01, 0xFF, 0x07, 0x00 ];
+            $rShifts  = [ 0x00, 0x00, 0x05, 0x00, 0x00, 0x05, 0x00, 0x00 ];
+            $rClears  = [ 0x01, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
+            $dShifts  = [ 0x00, 0x03, 0x00, 0x01, 0x04, 0x00, 0x02, 0x05 ];
+            $bShifts  = [ 0x00, 0x02, 0x00, 0x04, 0x01, 0x00, 0x03, 0x00 ];
+            $cIndexes = [ 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
+            
             // Decoding Variables
             
             $decoding      = "";
             $flippedTable  = null;
             $characters    = null;
-            $decodingIndex = null;
+            $decodingIndex = 0;
             
             // Chunk Variables
             
             $chunks    = [];
             $byte      = null;
-            $remainder = null;
+            $remainder = 0;
             
             // Step 1 - Handle Empty Input
             
@@ -356,50 +371,23 @@
                 
                 $byte = $chunk & 0x1F;
                 
-                // Process Chunk Value
+                // Handle Character Decoding
                 
-                if ($decodingIndex == 0)
+                if ($cIndexes[$decodingIndex] == 0x01)
                 {
-                    $remainder = $byte;
+                    $decoding .= chr((($remainder << $dShifts[$decodingIndex])
+                        | ($byte >> $bShifts[$decodingIndex])) & 0xFF);
                 }
-                else if ($decodingIndex == 1)
+                
+                // Handle Remainder
+                
+                if ($rClears[$decodingIndex] == 0x01)
                 {
-                    $decoding .= chr((($remainder << 3) | ($byte >> 2)) & 0xFF);
-                    
-                    $remainder = $byte & 0x03;
+                    $remainder = 0;
                 }
-                else if ($decodingIndex == 2)
-                {
-                    $remainder = (($remainder << 5) | $byte) & 0xFF;
-                }
-                else if ($decodingIndex == 3)
-                {
-                    $decoding .= chr((($remainder << 1) | ($byte >> 4)) & 0xFF);
-                    
-                    $remainder = $byte & 0x0F;
-                }
-                else if ($decodingIndex == 4)
-                {
-                    $decoding .= chr((($remainder << 4) | ($byte >> 1)) & 0xFF);
-                    
-                    $remainder = $byte & 0x01;
-                }
-                else if ($decodingIndex == 5)
-                {
-                    $remainder = (($remainder << 5) | $byte) & 0xFF;
-                }
-                else if ($decodingIndex == 6)
-                {
-                    $decoding .= chr((($remainder << 2) | ($byte >> 3)) & 0xFF);
-                    
-                    $remainder = $byte & 0x07;
-                }
-                else if ($decodingIndex == 7)
-                {
-                    $decoding .= chr((($remainder << 5) | $byte) & 0xFF);
-                    
-                    $remainder = 0x00;
-                }
+                
+                $remainder = (($remainder << $rShifts[$decodingIndex])
+                    | $byte) & $rMasks[$decodingIndex];
                 
                 // Handle Decoding Index
                 
