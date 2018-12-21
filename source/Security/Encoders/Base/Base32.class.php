@@ -242,7 +242,7 @@
                 }
                 else
                 {
-                    throw new \Exception("Invalid chunk value.");
+                    throw new \Exception("Invalid chunk value. Chunk: \"$chunk\"");
                 }
             }
             
@@ -259,7 +259,7 @@
             
             if (!$this->isEncodingValid($encoding))
             {
-                throw new \Exception("Invalid encoding produced.");
+                throw new \Exception("Invalid encoding produced. Encoding: \"$encoding\"");
             }
             
             return $encoding;
@@ -331,7 +331,7 @@
                 }
                 else
                 {
-                    throw new \Exception("Invalid character encountered.");
+                    throw new \Exception("Invalid character encountered. Character: \"$character\"");
                 }
             }
             
@@ -405,11 +405,18 @@
             
             $characters = [];
             
-            // Step 1 - Trim Padding & Generate Array
+            // Step 1 - Check General Form
+            
+            if (!preg_match("/^([A-z0-9]+)([=]+)$/", $encoding))
+            {
+                return false;
+            }
+            
+            // Step 2 - Trim Padding & Generate Array
             
             $characters = str_split(rtrim($encoding, $basePadding));
             
-            // Step 2 - Check Characters
+            // Step 3 - Check Characters
             
             foreach ($characters as $character)
             {
