@@ -3,5 +3,8 @@
         <testsuite name="essentials">
             <file>essentials/base-32.php</file>
         </testsuite>
+        <testsuite name="elements">
+            <file>elements/secret.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
