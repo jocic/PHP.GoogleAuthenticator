@@ -32,8 +32,8 @@
     namespace Security\Mfa\GoogleAuthenticator\Elements;
     
     /**
-     * <i>SecretInterface</i> class is an interface used to enforce
-     * implementation of core secrets's methods.
+     * <i>SecretInterface</i> is an interface used to enforce implementation of
+     * core secrets's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
@@ -46,17 +46,44 @@
         |* GET METHODS *|
         \***************/
         
+        /**
+         * Returns a value of the secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
         private function getValue();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        private function setValue();
+        /**
+         * Sets a value of the secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $secret
+         *   New value of the secret.
+         */
+        
+        private function setValue($secret);
         
         /****************\
         |* CORE METHODS *|
         \****************/
+        
+        /**
+         * Generates a random secret that may be used for implementing MFA.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
         
         private function generateValue();
         
@@ -64,7 +91,18 @@
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
+        /**
+         * Checks if a provided secret is valid or not.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $secret
+         *   Secret that needs to be checked.
+         */
+        
+        private function isSecretValid($secret);
         
         /*****************\
         |* OTHER METHODS *|
