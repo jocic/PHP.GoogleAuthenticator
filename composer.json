@@ -1,7 +1,16 @@
 {
-    "name": "jocic/google-authenticator",
-    "description": "Complete & easy-to-implement MFA solution for use with Google Authenticator App.",
-    "require": {
-        "php": "^7.2"
+    "name" : "jocic/google-authenticator",
+    "description" : "Complete & easy-to-implement MFA solution for use with Google Authenticator App.",
+    "type" : "library",
+    "license" : "MIT",
+    "authors" : [{
+        "name" : "Đorđe Jocić",
+        "email" : "office@djordjejocic.com"
+    }],
+    "require" : {
+        "php" : ">=7.0"
+    },
+    "require-dev" : {
+        "phpunit/phpunit" : "^7.5"
     }
 }
