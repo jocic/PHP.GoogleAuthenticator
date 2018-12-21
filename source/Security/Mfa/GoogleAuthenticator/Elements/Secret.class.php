@@ -52,37 +52,211 @@
         |* CORE VARIABLES *|
         \******************/
         
-        // CORE VARIABLES GO HERE
+        /**
+         * Set or generated value of the secret.
+         * 
+         * @var    string
+         * @access private
+         */
+        
+        private $value = "";
+        
+        /*******************\
+        |* OTHER VARIABLES *|
+        \*******************/
+        
+        /**
+         * Object containing <i>Base 32</i> encoder.
+         * 
+         * @var    object
+         * @access private
+         */
+        
+        private $encoder = null;
         
         /*******************\
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        // MAGIC FUNCTIONS GO HERE
+        /**
+         * Generic PHP constructor used for instantiating <i>Base 32</i> object.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function __construct()
+        {
+            // Logic
+            
+            $this->encoder = \Security\Encoders\Base\Base32();
+        }
         
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        /**
+         * Returns a value of the secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Currently set value of the secret.
+         */
+        
+        private function getValue()
+        {
+            // Logic
+            
+            return $this->value;
+        }
+        
+        /**
+         * Returns an instantiated <i>Base 32</i> encoder object, or throws an
+         * exception if it's value is <i>NULL</i>.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return object
+         *   Instantiated <i>Base 32</i> encoder object.
+         */
+        
+        private function getEncoder()
+        {
+            // Logic
+            
+            if (is_null($this->encoder))
+            {
+                throw new \Exception("Encoder wasn't instantiated.");
+            }
+            
+            return $this->encoder;
+        }
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        /**
+         * Sets a value of the secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $secret
+         *   New value of the secret.
+         * @return void
+         */
+        
+        private function setValue($secret)
+        {
+            // Logic
+            
+            if ($this->isSecretValid($secret))
+            {
+                $this->value = $secret;
+            }
+            else
+            {
+                throw new \Exception("Invalid secret provided. Secret: \"$secret\"");
+            }
+        }
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        /**
+         * Generates a random secret that may be used for implementing MFA.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Value of the secret - randomly-generated.
+         */
+        
+        private function generateValue()
+        {
+            // Core Variables
+            
+            $baseTable = $this->getEncoder()->getBaseTable();
+            
+            // Other Variables
+            
+            $value    = "";
+            $maxIndex = count($baseTable) - 1;
+            $index    = 0;
+            
+            // Step 1 - Generate Value
+            
+            for ($i = 0; $i < 16; $i ++)
+            {
+                $index = rand(0, $maxIndex);
+                $value = $baseTable[$index];
+            }
+            
+            // Step 2 - Set & Return Value.
+            
+            $this->setValue($value);
+            
+            return $value;
+        }
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
+        /**
+         * Checks if a provided secret is valid or not.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $secret
+         *   Secret that needs to be checked.
+         * @return bool
+         *   Value <i>TRUE</i> if secret is valid, and vice versa.
+         */
+        
+        private function isSecretValid($secret)
+        {
+            // Core Variables
+            
+            $baseTable = $this->getEncoder()->getBaseTable();
+            
+            // Other Variables
+            
+            $characters = str_split($secret);
+            
+            // Step 1 - Check Length
+            
+            if (count($characters) != 16)
+            {
+                return false;
+            }
+            
+            // Step 2 - Check Characters
+            
+            foreach ($characters as $character)
+            {
+                if (!in_array($character, $baseTable))
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
         
         /*****************\
         |* OTHER METHODS *|
