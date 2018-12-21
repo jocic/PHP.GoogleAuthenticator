@@ -26,7 +26,7 @@ echo $secret->getValue();
 
 And if you are not satisfied with the returned value, you can simply generate a new one.
 
-``php
+```php
 $newSecret = $secret->generateValue();
 
 $secret->setValue($newSecret);
@@ -42,15 +42,13 @@ echo $secret->generateValue(true);
 
 Settings a pre-existing secret is extremely simple.
 
-``php
+```php
 $existingSecret = "3SJRXZHGUVHAGD7R"; // Maybe It's Fetched From The Database
 
 $secret = Security\Mfa\GoogleAuthenticator\Elements\Secret();
 
 $secret->setValue($existingSecret);
 ```
-
-To set a secret
 
 ## Installation
 
