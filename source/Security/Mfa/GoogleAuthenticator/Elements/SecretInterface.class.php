@@ -54,7 +54,7 @@
          * @version   1.0.0
          */
         
-        private function getValue();
+        public function getValue();
         
         /***************\
         |* SET METHODS *|
@@ -71,7 +71,7 @@
          *   New value of the secret.
          */
         
-        private function setValue($secret);
+        public function setValue($secret);
         
         /****************\
         |* CORE METHODS *|
@@ -85,7 +85,7 @@
          * @version   1.0.0
          */
         
-        private function generateValue();
+        public function generateValue();
         
         /*****************\
         |* CHECK METHODS *|
@@ -102,7 +102,7 @@
          *   Secret that needs to be checked.
          */
         
-        private function isSecretValid($secret);
+        public function isSecretValid($secret);
         
         /*****************\
         |* OTHER METHODS *|

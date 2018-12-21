@@ -90,7 +90,7 @@
         {
             // Logic
             
-            $this->encoder = \Security\Encoders\Base\Base32();
+            $this->encoder = new \Security\Encoders\Base\Base32();
         }
         
         /***************\
@@ -108,7 +108,7 @@
          *   Currently set value of the secret.
          */
         
-        private function getValue()
+        public function getValue()
         {
             // Logic
             
@@ -155,7 +155,7 @@
          * @return void
          */
         
-        private function setValue($secret)
+        public function setValue($secret)
         {
             // Logic
             
@@ -180,11 +180,14 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
+         * @param bool $setValue
+         *   Value <i>TRUE</i> if you want to immediately set the generated
+         *   value, and vice versa. Default value is <i>FALSE</i>.
          * @return string
          *   Value of the secret - randomly-generated.
          */
         
-        private function generateValue()
+        public function generateValue($setValue = false)
         {
             // Core Variables
             
@@ -201,12 +204,16 @@
             for ($i = 0; $i < 16; $i ++)
             {
                 $index = rand(0, $maxIndex);
-                $value = $baseTable[$index];
+                
+                $value .= $baseTable[$index];
             }
             
             // Step 2 - Set & Return Value.
             
-            $this->setValue($value);
+            if ($setValue)
+            {
+                $this->setValue($value);
+            }
             
             return $value;
         }
@@ -228,7 +235,7 @@
          *   Value <i>TRUE</i> if secret is valid, and vice versa.
          */
         
-        private function isSecretValid($secret)
+        public function isSecretValid($secret)
         {
             // Core Variables
             
