@@ -160,7 +160,13 @@
             
             // Algorithm Variables
             
-            
+            $eIndex    = 0x00;
+            $eShifts   = [ 0x03, 0x06, 0x04, 0x07, 0x05 ];
+            $ePaddings = [ 0x02, 0x04, 0x01, 0x03, 0x01 ];
+            $rShifts   = [ 0x08, 0x02, 0x04, 0x01, 0x03 ];
+            $rMasks    = [ 0x07, 0x01, 0x0F, 0x03, 0x03 ];
+            $cShifts   = [ 0x00, 0x01, 0x00, 0x02, 0x00 ];
+            $cIndexes  = [ 0x01, 0x03, 0x04 ];
             
             // Encoding Variables
             
@@ -170,15 +176,14 @@
             // Chunk Variables
             
             $chunks     = [];
-            $chunkIndex = 0;
+            $chunkIndex = 0x00;
             $byte       = null;
             $remainder  = null;
-            $padding    = 0;
+            $padding    = 0x00;
             
             // Other Variables
             
-            $encodingIndex = 0;
-            $temp          = null;
+            $temp = null;
             
             // Step 1 - Handle Empty Input
             
@@ -197,64 +202,31 @@
                 
                 $byte = ord($character) & 0xFF;
                 
-                    
-                
                 // Process Chunk Value
                 
-                if ($encodingIndex == 0)
+                $chunks[$chunkIndex ++] = (($byte >> $eShifts[$eIndex]) | ($remainder << $rShifts[$eIndex])) & 0x01F;
+                
+                if (in_array($eIndex, $cIndexes))
                 {
-                    $chunks[$chunkIndex ++] = ($byte >> 0x03) & 0x01F;
-                    
-                    $remainder = $byte & 0x07;
-                    $padding   = 0x2;
+                    $chunks[$chunkIndex ++] = ($byte >> $cShifts[$eIndex]) & 0x01F;
                 }
-                else if ($encodingIndex == 1)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x06) | ($remainder << 0x02)) & 0x01F;
-                    $chunks[$chunkIndex ++] = ($byte >> 0x01) & 0x01F;
-                    
-                    $remainder = $byte & 0x01;
-                    $padding   = 0x4;
-                }
-                else if ($encodingIndex == 2)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x04) | ($remainder << 0x04)) & 0x01F;
-                    
-                    $remainder = $byte & 0x0F;
-                    $padding   = 0x1;
-                }
-                else if ($encodingIndex == 3)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x07) | ($remainder << 0x01)) & 0x01F;
-                    $chunks[$chunkIndex ++] = ($byte >> 0x02) & 0x01F;
-                    
-                    $remainder = $byte & 0x03;
-                    $padding   = 0x3;
-                }
-                else if ($encodingIndex == 4)
-                {
-                    $chunks[$chunkIndex ++] = (($byte >> 0x05) | ($remainder << 0x03)) & 0x01F;
-                    $chunks[$chunkIndex ++] = ($byte >> 0x00) & 0x01F;
-                    
-                    $remainder = $byte & 0x03;
-                    $padding   = 0x1;
-                }
+                
+                $remainder = $byte & $rMasks[$eIndex];
+                $padding   = $ePaddings[$eIndex];
                 
                 // Handle Encoding Index
                 
-                $encodingIndex ++;
-                
-                if ($encodingIndex > 4)
+                if (($eIndex ++) == 0x04)
                 {
-                    $encodingIndex = 0;
+                    $eIndex = 0x00;
                 }
             }
             
             // Step 3 - Handle Remainder
             
-            if (strlen($input) % 5 != 0)
+            if (strlen($input) % 0x05 != 0x00)
             {
-                if (($temp = ($remainder << $padding)) != 32)
+                if (($temp = ($remainder << $padding)) != 0x20)
                 {
                     $chunks[$chunkIndex ++] = $temp & 0xFF;
                 }
@@ -276,9 +248,9 @@
             
             // Step 5 - Apply Padding
             
-            $temp = 8 - (strlen($encoding) % 8);
+            $temp = 0x08 - (strlen($encoding) % 0x08);
             
-            if ($temp != 8)
+            if ($temp != 0x08)
             {
                 $encoding .= str_repeat($basePadding, $temp);
             }
@@ -318,9 +290,9 @@
             $rMasks   = [ 0xFF, 0x03, 0xFF, 0x0F, 0x01, 0xFF, 0x07, 0x00 ];
             $rShifts  = [ 0x00, 0x00, 0x05, 0x00, 0x00, 0x05, 0x00, 0x00 ];
             $rClears  = [ 0x01, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
+            $cIndexes = [ 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
             $dShifts  = [ 0x00, 0x03, 0x00, 0x01, 0x04, 0x00, 0x02, 0x05 ];
             $bShifts  = [ 0x00, 0x02, 0x00, 0x04, 0x01, 0x00, 0x03, 0x00 ];
-            $cIndexes = [ 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
             $dIndex   = 0x00;
             
             // Decoding Variables
@@ -391,9 +363,7 @@
                 
                 // Handle Decoding Index
                 
-                $dIndex ++;
-                
-                if ($dIndex > 0x07)
+                if (($dIndex ++) == 0x07)
                 {
                     $dIndex = 0x00;
                 }
