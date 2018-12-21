@@ -14,11 +14,49 @@ Following specifications are referenced:
 
 **Project is still under development.**
 
+## Example 1 - Generating Secret
+
+Generating a unique secret is quite a straightforward process, it is done upon instantiating an object.
+
+```php
+$secret = Security\Mfa\GoogleAuthenticator\Elements\Secret();
+
+echo $secret->getValue();
+```
+
+And if you are not satisfied with the returned value, you can simply generate a new one.
+
+``php
+$newSecret = $secret->generateValue();
+
+$secret->setValue($newSecret);
+```
+
+You can skip the second step from the example above by changing the optional parameter value. Doing that will set newly generated secret automatically.
+
+```php
+echo $secret->generateValue(true);
+```
+
+## Example 2 - Setting Existing Secret
+
+Settings a pre-existing secret is extremely simple.
+
+``php
+$existingSecret = "3SJRXZHGUVHAGD7R"; // Maybe It's Fetched From The Database
+
+$secret = Security\Mfa\GoogleAuthenticator\Elements\Secret();
+
+$secret->setValue($existingSecret);
+```
+
+To set a secret
+
 ## Installation
 
 There's two ways you can add **Google Authenticator** library to your project:
 
-* Copying the files from the "source" directory to your project and including the "Autoload.php" file
+* Copying files from the "source" directory to your project and requiring the "Autoload.php" script
 * Via Composer, by executing the command below
 
 ```bash
@@ -29,12 +67,14 @@ composer require jocic/google-authenticator
 
 Following unit tests are available:
 
-* **Essentials** - Base 32 Encoding & Decoding
+* **Essentials** - Base 32 encoder, QR code generator, etc.
+* **Elements** - Secret, etc.
 
 You can execute them easily from the terminal like in the example below.
 
 ```bash
 bash ./tests/wrapper.sh --testsuite essentials
+bash ./tests/wrapper.sh --testsuite elements
 ```
 
 ## Contribution
