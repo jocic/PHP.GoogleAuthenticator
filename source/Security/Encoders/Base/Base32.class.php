@@ -407,7 +407,7 @@
             
             // Step 1 - Check General Form
             
-            if (!preg_match("/^([A-z0-9]+)([=]+)$/", $encoding))
+            if (!preg_match("/^([A-z0-9]+)([=]+)?$/", $encoding))
             {
                 return false;
             }
