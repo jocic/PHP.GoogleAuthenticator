@@ -79,10 +79,10 @@ bash ./tests/wrapper.sh --testsuite elements
 
 Please review the following documents if you are planning to contribute to the project:
 
-* [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md)
-* [Contribution Guidelines](CONTRIBUTING.md)
-* [Pull Request Template](PULL_REQUEST_TEMPLATE.md)
-* [MIT License](LICENSE.md)
+* [Contributor Covenant Code of Conduct](code_of_conduct.md)
+* [Contribution Guidelines](contributing.md)
+* [Pull Request Template](pull_request_template.md)
+* [MIT License](license.md)
 
 ## Support
 
