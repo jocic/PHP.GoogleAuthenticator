@@ -39,7 +39,7 @@ source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
 # COMPOSER VARIABLES #
 ######################
 
-composer_version="1.7.2";
+composer_version="1.8.0";
 
 #########
 # LOGIC #
