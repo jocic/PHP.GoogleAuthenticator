@@ -7,6 +7,9 @@
         "name" : "Đorđe Jocić",
         "email" : "office@djordjejocic.com"
     }],
+    "keywords" : [
+        "mfa"
+    ],
     "require" : {
         "php" : ">=7.0"
     },
@@ -14,7 +17,7 @@
         "phpunit/phpunit" : "^7.5"
     },
     "autoload": {
-        "psr-4  ": {
+        "psr-4": {
             "Security\\" : "source/"
         }
     }
