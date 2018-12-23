@@ -30,7 +30,7 @@ Following examples should be more then enough to get you started. I tried my bes
 
 ### Example 1 - Generating Secret
 
-Generating a unique secret is quite a straightforward process, it is done upon instantiating an object.
+Generating a secret is quite a straightforward process, it is done upon instantiating an object.
 
 ```php
 $secret = new Security\Mfa\GoogleAuthenticator\Secret();
@@ -52,7 +52,38 @@ You can skip the second step from the example above by changing the optional par
 echo $secret->generateValue(true);
 ```
 
-### Example 2 - Setting Existing Secret
+**Note:** Secret is an encoded 80-bit value used for one-time password generation, and should be unique for each account.
+
+### Example 2 - Different Methods
+
+Secret can be generated using two different methods:
+
+* **Base Method** - Random values from the base table are picked until an 80-bit value is formed.
+* **Numerical Method** - Random numbers, ranging from 0 to 256, are generated until an 80-bit value is formed.
+
+Base method is used by default, so you need not specify it. But in case you need to, following snippet can be used.
+
+```php
+use Security\Mfa\GoogleAuthenticator\Secret;
+
+$secret = new Secret();
+
+echo $secret->generateValue(false, Secret::M_BASE);
+
+```
+
+To generate a secret using numerical method, use the following snippet.
+
+
+```php
+use Security\Mfa\GoogleAuthenticator\Secret;
+
+$secret = new Secret();
+
+echo $secret->generateValue(false, Secret::M_NUMERICAL);
+```
+
+### Example 3 - Setting Existing Secret
 
 Settings a pre-existing secret is extremely simple.
 
