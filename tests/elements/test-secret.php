@@ -43,6 +43,40 @@
     
     class TestSecret extends TestCase
     {
+        /******************\
+        |* CORE CONSTANTS *|
+        \******************/
+        
+        // CORE CONSTANTS GO HERE
+        
+        /******************\
+        |* CORE VARIABLES *|
+        \******************/
+        
+        // CORE VARIABLES GO HERE
+        
+        /*******************\
+        |* MAGIC FUNCTIONS *|
+        \*******************/
+        
+        // MAGIC FUNCTIONS GO HERE
+        
+        /***************\
+        |* GET METHODS *|
+        \***************/
+        
+        // GET METHODS GO HERE
+        
+        /***************\
+        |* SET METHODS *|
+        \***************/
+        
+        // SET METHODS GO HERE
+        
+        /****************\
+        |* CORE METHODS *|
+        \****************/
+        
         /**
          * Tests <i>generate</i> method of the <i>Secret</i> class.
          * 
@@ -115,6 +149,18 @@
                 $this->assertSame($testValue, $secret->getValue());
             }
         }
+        
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
+        
+        // CHECK METHODS GO HERE
+        
+        /*****************\
+        |* OTHER METHODS *|
+        \*****************/
+        
+        // OTHER METHODS GO HERE
     }
     
 ?>

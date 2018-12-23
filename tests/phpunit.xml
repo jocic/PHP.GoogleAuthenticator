@@ -1,10 +1,10 @@
 <phpunit bootstrap="../source/Autoload.php">
     <testsuites>
         <testsuite name="essentials">
-            <file>essentials/base-32.php</file>
+            <file>essentials/test-base-32.php</file>
         </testsuite>
         <testsuite name="elements">
-            <file>elements/secret.php</file>
+            <file>elements/test-secret.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

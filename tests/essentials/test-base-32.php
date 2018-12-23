@@ -30,17 +30,53 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
+    use Security\Encoders\Base\Base32;
     
     /**
-     * <i>Base32</i> class is used for testing it's implementation.
+     * <i>TestBase32</i> class is used for testing method implementation of the
+     * class <i>Base32</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class Base32 extends TestCase
+    class TestBase32 extends TestCase
     {
+        /******************\
+        |* CORE CONSTANTS *|
+        \******************/
+        
+        // CORE CONSTANTS GO HERE
+        
+        /******************\
+        |* CORE VARIABLES *|
+        \******************/
+        
+        // CORE VARIABLES GO HERE
+        
+        /*******************\
+        |* MAGIC FUNCTIONS *|
+        \*******************/
+        
+        // MAGIC FUNCTIONS GO HERE
+        
+        /***************\
+        |* GET METHODS *|
+        \***************/
+        
+        // GET METHODS GO HERE
+        
+        /***************\
+        |* SET METHODS *|
+        \***************/
+        
+        // SET METHODS GO HERE
+        
+        /****************\
+        |* CORE METHODS *|
+        \****************/
+        
         /**
          * Tests encoding of the <i>Base 32</i> implementation.
          * 
@@ -55,7 +91,7 @@
         {
             // Core Variables
             
-            $encoder = new Security\Encoders\Base\Base32();
+            $encoder = new Base32();
             
             // Logic.
             
@@ -85,7 +121,7 @@
         {
             // Core Variables
             
-            $encoder = new Security\Encoders\Base\Base32();
+            $encoder = new Base32();
             
             // Logic.
             
@@ -100,6 +136,18 @@
             $this->assertSame("foobar12", $encoder->decode("MZXW6YTBOIYTE==="));
             $this->assertSame("foobar123", $encoder->decode("MZXW6YTBOIYTEMY="));
         }
+        
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
+        
+        // CHECK METHODS GO HERE
+        
+        /*****************\
+        |* OTHER METHODS *|
+        \*****************/
+        
+        // OTHER METHODS GO HERE
     }
     
 ?>
