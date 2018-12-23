@@ -14,7 +14,21 @@ Following specifications are referenced:
 
 **Project is still under development.**
 
-## Example 1 - Generating Secret
+## Versioning Scheme
+
+I use a 3-digit [Semantic Versioning](https://semver.org/spec/v2.0.0.html) identifier, for example 1.0.2. These digits have the following meaning:
+
+* The first digit (1) specifies the MAJOR version number.
+* The second digit (0) specifies the MINOR version number.
+* The third digit (2) specifies the PATCH version number.
+
+Complete documentation can be found by following the link above.
+
+## Examples
+
+Following examples should be more then enough to get you started. I tried my best to make them as simple as possible so that everyone, even junior developers, can successfully use them for implementing two-factor authentication.
+
+### Example 1 - Generating Secret
 
 Generating a unique secret is quite a straightforward process, it is done upon instantiating an object.
 
@@ -38,7 +52,7 @@ You can skip the second step from the example above by changing the optional par
 echo $secret->generateValue(true);
 ```
 
-## Example 2 - Setting Existing Secret
+### Example 2 - Setting Existing Secret
 
 Settings a pre-existing secret is extremely simple.
 
