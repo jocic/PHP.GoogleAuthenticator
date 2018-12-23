@@ -29,7 +29,7 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator\Elements;
+    namespace Security\Mfa\GoogleAuthenticator;
     
     /**
      * <i>SecretInterface</i> is an interface used to enforce implementation of

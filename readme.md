@@ -19,7 +19,7 @@ Following specifications are referenced:
 Generating a unique secret is quite a straightforward process, it is done upon instantiating an object.
 
 ```php
-$secret = new Security\Mfa\GoogleAuthenticator\Elements\Secret();
+$secret = new Security\Mfa\GoogleAuthenticator\Secret();
 
 echo $secret->getValue();
 ```
@@ -45,7 +45,7 @@ Settings a pre-existing secret is extremely simple.
 ```php
 $existingSecret = "3SJRXZHGUVHAGD7R"; // Maybe It's Fetched From The Database
 
-$secret = new Security\Mfa\GoogleAuthenticator\Elements\Secret();
+$secret = new Security\Mfa\GoogleAuthenticator\Secret();
 
 $secret->setValue($existingSecret);
 ```

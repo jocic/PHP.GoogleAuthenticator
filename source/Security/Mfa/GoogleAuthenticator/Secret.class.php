@@ -29,7 +29,7 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator\Elements;
+    namespace Security\Mfa\GoogleAuthenticator;
     
     /**
      * <i>Secret</i> class is used for generating secrets required for one-time

@@ -55,7 +55,7 @@
         {
             // Core Variables
             
-            $secret = new Security\Mfa\GoogleAuthenticator\Elements\Secret();
+            $secret = new Security\Mfa\GoogleAuthenticator\Secret();
             
             // Other Variables
             
@@ -85,7 +85,7 @@
         {
             // Core Variables
             
-            $secret = new Security\Mfa\GoogleAuthenticator\Elements\Secret();
+            $secret = new Security\Mfa\GoogleAuthenticator\Secret();
             
             // Other Variables
             
