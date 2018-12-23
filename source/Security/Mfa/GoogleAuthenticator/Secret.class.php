@@ -46,7 +46,23 @@
         |* CORE CONSTANTS *|
         \******************/
         
-        // CORE CONSTANTS GO HERE
+        /**
+         * Method constant - for generating secrets using <i>base</i> method.
+         * 
+         * @var    integer
+         * @access public
+         */
+        
+        public const M_BASE      = 0;
+        
+        /**
+         * Method constant - for generating secrets using <i>numerical</i> method.
+         * 
+         * @var    integer
+         * @access public
+         */
+        
+        public const M_NUMERICAL = 1;
         
         /******************\
         |* CORE VARIABLES *|
@@ -176,6 +192,9 @@
         /**
          * Generates a random secret that may be used for implementing MFA.
          * 
+         * Note: Secrets are actually random 80-bit values encoded using
+         * <i>Base 32</i> encoder.
+         * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
@@ -183,32 +202,35 @@
          * @param bool $setValue
          *   Value <i>TRUE</i> if you want to immediately set the generated
          *   value, and vice versa. Default value is <i>FALSE</i>.
+         * @param integer $method
+         *   Method used for generating the secret. Default value is <i>0</i>.
          * @return string
          *   Value of the secret - randomly-generated.
          */
         
-        public function generateValue($setValue = false)
+        public function generateValue($setValue = false, $method = 0)
         {
             // Core Variables
             
-            $baseTable = $this->getEncoder()->getBaseTable();
-            
-            // Other Variables
-            
-            $value    = "";
-            $maxIndex = count($baseTable) - 1;
-            $index    = 0;
+            $value = "";
             
             // Step 1 - Generate Value
             
-            for ($i = 0; $i < 16; $i ++)
+            switch ($method)
             {
-                $index = rand(0, $maxIndex);
+                case 0:
+                    $value = $this->runBaseMethod();
+                    break;
                 
-                $value .= $baseTable[$index];
+                case 1:
+                    $value = $this->runNumericalMethod();
+                    break;
+                
+                default:
+                    throw new \Exception("Invalid method selected.");
             }
             
-            // Step 2 - Set & Return Value.
+            // Step 2 - Set & Return Value
             
             if ($setValue)
             {
@@ -269,7 +291,70 @@
         |* OTHER METHODS *|
         \*****************/
         
-        // OTHER METHODS GO HERE
+        /**
+         * Generates a random secret using <i>base</i> method.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Value of the secret - randomly-generated.
+         */
+        
+        private function runBaseMethod()
+        {
+            // Core Variables
+            
+            $baseTable = $this->getEncoder()->getBaseTable();
+            
+            // Other Variables
+            
+            $value    = "";
+            $maxIndex = count($baseTable) - 1;
+            $index    = 0;
+            
+            // Step 1 - Generate Value
+            
+            for ($i = 0; $i < 16; $i ++)
+            {
+                $index = rand(0, $maxIndex);
+                
+                $value .= $baseTable[$index];
+            }
+            
+            return $value;
+        }
+        
+        /**
+         * Generates a random secret using <i>numerical</i> method.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Value of the secret - randomly-generated.
+         */
+        
+        private function runNumericalMethod()
+        {
+            // Core Variables
+            
+            $value  = "";
+            $number = 0;
+            
+            // Step 1 - Generate Value
+            
+            for ($i = 0; $i < 10; $i ++)
+            {
+                $number = rand(0, 256);
+                
+                $value .= chr($number);
+            }
+            
+            return $this->getEncoder()->encode($value);
+        }
     }
     
 ?>

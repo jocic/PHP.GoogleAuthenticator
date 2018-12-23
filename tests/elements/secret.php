@@ -30,16 +30,18 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
+    use Security\Mfa\GoogleAuthenticator\Secret;
     
     /**
-     * <i>Secret</i> class is used for testing it's implementation.
+     * <i>TestSecret</i> class is used for testing method implementation of the
+     * class <i>Secret</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class Secret extends TestCase
+    class TestSecret extends TestCase
     {
         /**
          * Tests <i>generate</i> method of the <i>Secret</i> class.
@@ -55,17 +57,26 @@
         {
             // Core Variables
             
-            $secret = new Security\Mfa\GoogleAuthenticator\Secret();
+            $secret = new Secret();
             
             // Other Variables
             
             $value = null;
             
-            // Logic.
+            // Step 1 - Base Method
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue();
+                $value = $secret->generateValue(false, Secret::M_BASE);
+                
+                $this->assertSame(true, $secret->isSecretValid($value), $value);
+            }
+            
+            // Step 2 - Numerical Method
+            
+            for ($i = 0; $i < 10; $i ++)
+            {
+                $value = $secret->generateValue(false, Secret::M_NUMERICAL);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }
