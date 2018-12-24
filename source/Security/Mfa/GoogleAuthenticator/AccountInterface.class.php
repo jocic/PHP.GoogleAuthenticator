@@ -32,37 +32,31 @@
     namespace Security\Mfa\GoogleAuthenticator;
     
     /**
-     * <i>GoogleAuthenticatorInterface</i> class is an interface used to enforce
-     * implementation of core authenticator's methods.
+     * <i>AccountInterface</i> is an interface used to enforce implementation of
+     * core account related methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface GoogleAuthenticatorInterface
+    interface AccountInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        public function getSecret();
+        public function getServiceName();
         
-        public function getAccount();
-        
-        public function getPreviousCode();
-        
-        public function getCurrentCode();
-        
-        public function getNextCode();
+        public function getAccountName();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        public function setSecret();
+        public function setServiceName($serviceName);
         
-        public function setAccount();
+        public function setAccountName($accountNname);
         
         /****************\
         |* CORE METHODS *|
@@ -74,7 +68,7 @@
         |* CHECK METHODS *|
         \*****************/
         
-        public function isCodeValid();
+        // CHECK METHODS GO HERE
         
         /*****************\
         |* OTHER METHODS *|

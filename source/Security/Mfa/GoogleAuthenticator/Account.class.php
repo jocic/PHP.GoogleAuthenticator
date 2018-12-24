@@ -40,7 +40,7 @@
      * @version   1.0.0
      */
     
-    class Account
+    class Account implements AccountInterface
     {
         /******************\
         |* CORE CONSTANTS *|

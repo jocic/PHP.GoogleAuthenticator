@@ -93,6 +93,10 @@ $secret = new Security\Mfa\GoogleAuthenticator\Secret();
 $secret->setValue($existingSecret);
 ```
 
+### Example 4 - Creating an Account
+
+...
+
 ## Installation
 
 There's two ways you can add **Google Authenticator** library to your project:
