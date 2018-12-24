@@ -10,6 +10,9 @@
     "keywords" : [
         "mfa"
     ],
+    "config" : {
+        "vendor-dir" : "./dependencies"
+    },
     "require" : {
         "php" : ">=7.0"
     },

@@ -109,13 +109,13 @@ composer require jocic/google-authenticator
 Following unit tests are available:
 
 * **Essentials** - Base 32 encoder, QR code generator, etc.
-* **Elements** - Secret, etc.
+* **Elements** - Secret, Account, etc.
 
 You can execute them easily from the terminal like in the example below.
 
 ```bash
-bash ./tests/wrapper.sh --testsuite essentials
-bash ./tests/wrapper.sh --testsuite elements
+bash ./scripts/phpunit.sh --testsuite essentials
+bash ./scripts/phpunit.sh --testsuite elements
 ```
 
 ## Contribution

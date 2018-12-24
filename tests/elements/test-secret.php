@@ -101,7 +101,7 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(false, Secret::M_BASE);
+                $value = $secret->generateValue(Secret::M_BASE);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }
@@ -110,7 +110,7 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(false, Secret::M_NUMERICAL);
+                $value = $secret->generateValue(Secret::M_NUMERICAL);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }
