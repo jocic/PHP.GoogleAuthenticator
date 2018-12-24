@@ -53,7 +53,7 @@
          * @access public
          */
         
-        public const M_BASE      = 0;
+        public const M_BASE = 0;
         
         /**
          * Method constant - for generating secrets using <i>numerical</i> method.
@@ -199,22 +199,19 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param bool $setValue
-         *   Value <i>TRUE</i> if you want to immediately set the generated
-         *   value, and vice versa. Default value is <i>FALSE</i>.
          * @param integer $method
          *   Method used for generating the secret. Default value is <i>0</i>.
          * @return string
          *   Value of the secret - randomly-generated.
          */
         
-        public function generateValue($setValue = false, $method = 0)
+        public function generateValue($method = 0)
         {
             // Core Variables
             
             $value = "";
             
-            // Step 1 - Generate Value
+            // Logic
             
             switch ($method)
             {
@@ -228,13 +225,6 @@
                 
                 default:
                     throw new \Exception("Invalid method selected.");
-            }
-            
-            // Step 2 - Set & Return Value
-            
-            if ($setValue)
-            {
-                $this->setValue($value);
             }
             
             return $value;

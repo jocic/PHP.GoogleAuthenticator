@@ -36,6 +36,8 @@ Following examples should be more then enough to get you started. I tried my bes
 
 Generating a secret is quite a straightforward process, it is done upon instantiating an object.
 
+**Note:** Secret is an encoded 80-bit value used for one-time password generation. It should ideally be unique for each account.
+
 ```php
 $secret = new Security\Mfa\GoogleAuthenticator\Secret();
 
@@ -49,8 +51,6 @@ $newSecret = $secret->generateValue();
 
 $secret->setValue($newSecret);
 ```
-
-**Note:** Secret is an encoded 80-bit value used for one-time password generation, and should be unique for each account.
 
 ### Example 2 - Different Methods
 
