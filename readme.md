@@ -1,3 +1,5 @@
+![Project Image](images/project-image-small.png)
+
 # Google Authenticator
 
 [![Build Status](https://travis-ci.org/jocic/PHP.GoogleAuthenticator.svg?branch=master)](https://travis-ci.org/jocic/PHP.GoogleAuthenticator) [![Coverage Status](https://coveralls.io/repos/github/jocic/PHP.GoogleAuthenticator/badge.svg?branch=master)](https://coveralls.io/github/jocic/PHP.GoogleAuthenticator?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e44ebb82f3746cca8443b60b683706f)](https://www.codacy.com/app/jocic/PHP.GoogleAuthenticator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jocic/PHP.GoogleAuthenticator&amp;utm_campaign=Badge_Grade)
@@ -48,12 +50,6 @@ $newSecret = $secret->generateValue();
 $secret->setValue($newSecret);
 ```
 
-You can skip the second step from the example above by changing the optional parameter value. Doing that will set newly generated secret automatically.
-
-```php
-echo $secret->generateValue(true);
-```
-
 **Note:** Secret is an encoded 80-bit value used for one-time password generation, and should be unique for each account.
 
 ### Example 2 - Different Methods
@@ -63,14 +59,14 @@ Secret can be generated using two different methods:
 * **Base Method** - Random values from the base table are picked until an 80-bit value is formed.
 * **Numerical Method** - Random numbers, ranging from 0 to 256, are generated until an 80-bit value is formed.
 
-Base method is used by default, so you need not specify it. But in case you need to, following snippet can be used.
+Base method is used by default, so you need not specify it. But in case something compels you, Satan for example, you can use the following.
 
 ```php
 use Security\Mfa\GoogleAuthenticator\Secret;
 
 $secret = new Secret();
 
-echo $secret->generateValue(false, Secret::M_BASE);
+echo $secret->generateValue(Secret::M_BASE);
 
 ```
 
@@ -82,7 +78,7 @@ use Security\Mfa\GoogleAuthenticator\Secret;
 
 $secret = new Secret();
 
-echo $secret->generateValue(false, Secret::M_NUMERICAL);
+echo $secret->generateValue(Secret::M_NUMERICAL);
 ```
 
 ### Example 3 - Setting Existing Secret
