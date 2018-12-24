@@ -1,24 +1,24 @@
 ---
 name: Feature Request Template
 about: Use the following markdown template when creating a feature request.
-title: "[FEATURE]"
+title: "(FEATURE) "
 labels: ''
 assignees: ''
 
 ---
 
-## Is your feature request related to a problem?
+## Problem Description
 
-[ YOUR ANSWER SHOULD GO HERE ]
+IF YOUR FEATURE REQUEST IS RELATED TO A PROBLEM - PROBLEM DESCRIPTION SHOULD GO HERE
 
-## Describe the solution you'd like
+## Feature Description
 
-[ YOUR DESCRIPTION SHOULD GO HERE ]
+YOUR DESCRIPTION SHOULD GO HERE
 
-## Describe alternatives you've considered
+## Describe Potential Alternatives
 
-[ YOUR DESCRIPTION SHOULD GO HERE ]
+YOUR DESCRIPTION ABOUT ALTERNATIVE SOLUTIONS SHOULD GO HERE - IF ANY
 
-## Additional context
+## Additional Context
 
-[ ANY ADDITIONAL CONTEXT THAT MAY HELP WITH YOUR REQUEST SHOULD GO HERE ]
+ANY ADDITIONAL CONTEXT THAT MAY HELP WITH BUG RESOLUTION SHOULD GO HERE

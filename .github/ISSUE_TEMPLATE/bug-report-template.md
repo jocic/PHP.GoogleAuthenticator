@@ -1,32 +1,32 @@
 ---
 name: Bug Report Template
 about: Use the following markdown template when creating a bug report.
-title: "[BUG]"
+title: "(BUG) "
 labels: ''
 assignees: ''
 
 ---
 
-## Bug description
+## Bug Description
 
-[ BUG DESCRIPTION SHOULD GO HERE ]
+BUG DESCRIPTION SHOULD GO HERE
 
-## How to reproduce the bug?
+## Bug Reproduction
 
-[ YOUR ANSWER SHOULD GO HERE ]
+STEP BY STEP INSTRUCTIONS SHOULD GO HERE
 
-## What should be expected behavior?
+## Expected Behaviour
 
-[ YOUR ANSWER SHOULD GO HERE ]
+INFORMATION ABOUT EXPECTED BEHAVIOUR SHOULD GO HERE
 
 ## Screenshots
 
-[ ATTACH ANY SCREENSHOTS THAT MAY HELP WITH BUG RESOLUTION HERE ]
+ATTACH ANY SCREENSHOTS THAT MAY HELP WITH BUG RESOLUTION HERE
 
-## System information
+## System Information
 
-[ YOUR SYSTEM INOFRMATION SHOULD GO HERE - OS, ARCHITECTURE, ETC. ]
+YOUR SYSTEM INOFRMATION SHOULD GO HERE - OS, ARCHITECTURE, ETC.
 
-## Additional context
+## Additional Context
 
-[ ANY ADDITIONAL CONTEXT THAT MAY HELP WITH BUG RESOLUTION SHOULD GO HERE ]
+ANY ADDITIONAL CONTEXT THAT MAY HELP WITH BUG RESOLUTION SHOULD GO HERE
