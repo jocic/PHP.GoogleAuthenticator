@@ -4,8 +4,5 @@
   install:
     - ./scripts/composer.sh install
   script:
-    - coverage run ./scripts/phpunit.sh --testsuite essentials
-    - coverage run ./scripts/phpunit.sh --testsuite elements
-  after_success:
-    - coverage report
-    - coveralls
+    - ./scripts/phpunit.sh --testsuite essentials
+    - ./scripts/phpunit.sh --testsuite elements
