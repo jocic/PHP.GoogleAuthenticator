@@ -30,25 +30,34 @@
 ###################################################################
 
 ##################
-# CORE VARIABLES #
+# Core Variables #
 ##################
 
 source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
 
+#################
+# PHP Variables #
+#################
+
+php_command="$(command -v php)";
+
 ######################
-# COMPOSER VARIABLES #
+# Composer Variables #
 ######################
 
 composer_version="1.8.0";
+composer_location="./other/composer/$composer_version/composer.phar";
 
 #########
-# LOGIC #
+# Logic #
 #########
 
 cd "$source_dir/../";
 
-if [[ $(whereis php) == "php:" ]]; then
+if [ -z "$php_command" ]; then
     echo "Error: You don't have PHP installed on your machine." && exit;
+elif [ ! -e "$composer_location" ]; then
+    echo "Error: Composer executable is missing." && exit;
 fi
 
-php "./other/composer/$composer_version/composer.phar" "$@";
+php "$composer_location" "$@";

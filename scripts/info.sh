@@ -29,34 +29,43 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-##################
-# Core Variables #
-##################
+####################
+# System Variables #
+####################
 
-source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
+kernel_name="$(uname -s)";
+kernel_version="$(uname -r)";
+architecture="$(uname -m)";
+hostname="$(uname -n)";
 
 #################
 # PHP Variables #
 #################
 
 php_command="$(command -v php)";
+php_version="$(php --version | sed -n 1p)";
 
-#####################
-# PHPUnit Variables #
-#####################
+###########################
+# Step 1 -System Details #
+###########################
 
-phpunit_location="./dependencies/phpunit/phpunit/phpunit";
+printf "[+] System Details\n\n";
 
-#########
-# LOGIC #
-#########
+printf "Kernel Name: %s\n" "$kernel_name";
+printf "Kernel Version: %s\n" "$kernel_version";
+printf "System Architecture: %s\n" "$architecture";
+printf "Hostname: %s\n" "$hostname";
 
-cd "$source_dir/../";
+########################
+# Step 2 - PHP Details #
+########################
 
-if [ -z "$php_command" ]; then
-    echo "Error: You don't have PHP installed on your machine." && exit;
-elif [ ! -e "$phpunit_location" ]; then
-    echo "Error: You don't have PHPUnit installed - check Composer's dependencies." && exit;
+printf "\n[+] PHP Details\n\n";
+
+printf "PHP Command: %s\n" "$php_command";
+
+if [ -n "$php_command" ]; then
+    
+    printf "PHP Version: %s\n" "$php_version";
+    
 fi
-
-php "$phpunit_location" --configuration "./phpunit.xml" "$@";
