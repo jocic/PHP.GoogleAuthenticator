@@ -2,14 +2,14 @@
 
 Use the following markdown template when creating a pull request.
 
-## What does this PR do?
+## Pull Request Details
 
-[ YOUR ANSWER SHOULD GO HERE ]
+PULL REQUEST DETAILS SHOULD GO HERE
 
-## How should this be manually tested?
+## Testing Instructions
 
-[ YOUR ANSWER SHOULD GO HERE ]
+INSTRUCTIONS FOR MANUAL TESTING SHOULD GO HERE
 
-## What are the relevant tickets?
+## Relevant Tickets
 
-[ YOUR ANSWER SHOULD GO HERE ]
+RELEVANT TICKETS SHOULD BE LISTED HERE - IF ANY

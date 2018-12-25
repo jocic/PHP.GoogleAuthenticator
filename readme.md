@@ -73,7 +73,6 @@ echo $secret->generateValue(Secret::M_BASE);
 
 To generate a secret using the numerical method, use the following snippet.
 
-
 ```php
 use Jocic\GoogleAuthenticator\Secret;
 
