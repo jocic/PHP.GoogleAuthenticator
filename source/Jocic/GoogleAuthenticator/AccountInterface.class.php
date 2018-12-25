@@ -46,7 +46,23 @@
         |* GET METHODS *|
         \***************/
         
+        /**
+         * Returns an account's service name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
         public function getServiceName();
+        
+        /**
+         * Returns an account's name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
         
         public function getAccountName();
         
@@ -54,9 +70,31 @@
         |* SET METHODS *|
         \***************/
         
+        /**
+         * Sets an account's service name, ex. <i>FastFood ABC</i>.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $serviceName
+         *   New account's service name.
+         */
+        
         public function setServiceName($serviceName);
         
-        public function setAccountName($accountNname);
+        /**
+         * Sets an account's name, ex. <i>John Doe</i>.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $accountName
+         *   New account's name.
+         */
+        
+        public function setAccountName($accountName);
         
         /****************\
         |* CORE METHODS *|
