@@ -29,80 +29,52 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>SecretInterface</i> is an interface used to enforce implementation of
-     * core secrets's methods.
+     * <i>GoogleAuthenticatorInterface</i> class is an interface used to enforce
+     * implementation of core authenticator's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface SecretInterface
+    interface GoogleAuthenticatorInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Returns a value of the secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
+        public function getSecret();
         
-        public function getValue();
+        public function getAccount();
+        
+        public function getPreviousCode();
+        
+        public function getCurrentCode();
+        
+        public function getNextCode();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        /**
-         * Sets a value of the secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $secret
-         *   New value of the secret.
-         */
+        public function setSecret();
         
-        public function setValue($secret);
+        public function setAccount();
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        /**
-         * Generates a random secret that may be used for implementing MFA.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
-        
-        public function generateValue();
+        // CORE METHODS GO HERE
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        /**
-         * Checks if a provided secret is valid or not.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $secret
-         *   Secret that needs to be checked.
-         */
-        
-        public function isSecretValid($secret);
+        public function isCodeValid();
         
         /*****************\
         |* OTHER METHODS *|

@@ -29,7 +29,7 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator;
     
     /**
      * <i>Secret</i> class is used for generating secrets required for one-time
@@ -115,7 +115,7 @@
         {
             // Logic
             
-            $this->encoder = new \Security\Encoders\Base\Base32();
+            $this->encoder = new \Jocic\GoogleAuthenticator\Encoders\Base\Base32();
         }
         
         /***************\

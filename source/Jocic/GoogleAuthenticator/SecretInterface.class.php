@@ -29,96 +29,80 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Encoders\Base;
+    namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>BaseInterface</i> is an interface used to enforce implementation of
-     * core base encoder's methods.
+     * <i>SecretInterface</i> is an interface used to enforce implementation of
+     * core secrets's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface BaseInterface
+    interface SecretInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
         /**
-         * Returns an array containing characters of the encoding table.
+         * Returns a value of the secret.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          */
         
-        public function getBaseTable();
-        
-        /**
-         * Returns a string containing a single character used for
-         * padding-purposes.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
-        
-        public function getBasePadding();
+        public function getValue();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        /**
+         * Sets a value of the secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $secret
+         *   New value of the secret.
+         */
+        
+        public function setValue($secret);
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
         /**
-         * Encodes a provided string to a desired <i>Base</i> encoding.
+         * Generates a random secret that may be used for implementing MFA.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
-         * 
-         * @param string $input
-         *   Input string that needs to be encoded.
          */
         
-        public function encode($input);
-        
-        /**
-         * Encodes a provided string to a desired <i>Base</i> decoding.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $input
-         *   Input string that needs to be decoding.
-         */
-        
-        public function decode($input);
+        public function generateValue();
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
         /**
-         * Checks if a provided encoding is valid or not.
+         * Checks if a provided secret is valid or not.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $encoding
-         *   Encoding that needs to be checked.
+         * @param string $secret
+         *   Secret that needs to be checked.
          */
         
-        public function isEncodingValid($encoding);
+        public function isSecretValid($secret);
         
         /*****************\
         |* OTHER METHODS *|

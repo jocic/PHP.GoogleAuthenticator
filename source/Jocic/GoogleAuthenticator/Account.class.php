@@ -29,18 +29,18 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Qr\Remote;
+    namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>GoogleQr</i> class is used for generating QR codes using pubilcly
-     * available Google's API.
+     * <i>Account</i> class is used for specifying various account-related
+     * information required for <i>2FA</i> implementation.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class GoogleQr
+    class Account implements AccountInterface
     {
         /******************\
         |* CORE CONSTANTS *|

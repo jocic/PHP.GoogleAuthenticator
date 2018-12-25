@@ -30,7 +30,7 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
-    use Security\Mfa\GoogleAuthenticator\Secret;
+    use Jocic\GoogleAuthenticator\Secret;
     
     /**
      * <i>TestSecret</i> class is used for testing method implementation of the
@@ -139,7 +139,7 @@
         {
             // Core Variables
             
-            $secret = new Security\Mfa\GoogleAuthenticator\Secret();
+            $secret = new Secret();
             
             // Other Variables
             

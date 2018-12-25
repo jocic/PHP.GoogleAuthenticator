@@ -29,18 +29,17 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator\Qr;
     
     /**
-     * <i>GoogleAuthenticator</i> class is used for generating QR codes, and
-     * validating provided one-time passwords.
+     * <i>Qr</i> class is used for generating QR codes locally.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class GoogleAuthenticator implements GoogleAuthenticatorInterface
+    class Qr implements QrInterface
     {
         /******************\
         |* CORE CONSTANTS *|

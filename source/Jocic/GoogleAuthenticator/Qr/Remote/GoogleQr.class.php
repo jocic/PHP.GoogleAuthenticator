@@ -29,17 +29,18 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Qr\Remote;
+    namespace Jocic\GoogleAuthenticator\Qr\Remote;
     
     /**
-     * <i>Qr</i> class is used for generating QR codes locally.
+     * <i>GoogleQr</i> class is used for generating QR codes using pubilcly
+     * available Google's API.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class Qr implements QrInterface
+    class GoogleQr
     {
         /******************\
         |* CORE CONSTANTS *|

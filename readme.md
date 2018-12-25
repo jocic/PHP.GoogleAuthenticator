@@ -39,7 +39,7 @@ Generating a secret is quite a straightforward process, it is done upon instanti
 **Note:** Secret is an encoded 80-bit value used for one-time password generation. It should ideally be unique for each account so you should appropriately check it's uniqueness before assigning it.
 
 ```php
-$secret = new Security\Mfa\GoogleAuthenticator\Secret();
+$secret = new Jocic\GoogleAuthenticator\Secret();
 
 echo $secret->getValue();
 ```
@@ -63,7 +63,7 @@ Secret can be generated using two different methods:
 The base method is used by default, so you need not specify it. However, if something is compelling you to do otherwise, Satan for example, you can use the following snippet.
 
 ```php
-use Security\Mfa\GoogleAuthenticator\Secret;
+use Jocic\GoogleAuthenticator\Secret;
 
 $secret = new Secret();
 
@@ -75,7 +75,7 @@ To generate a secret using the numerical method, use the following snippet.
 
 
 ```php
-use Security\Mfa\GoogleAuthenticator\Secret;
+use Jocic\GoogleAuthenticator\Secret;
 
 $secret = new Secret();
 
@@ -85,7 +85,7 @@ echo $secret->generateValue(Secret::M_NUMERICAL);
 And finally, following snippet can be used for generating a secret using the binary method.
 
 ```php
-use Security\Mfa\GoogleAuthenticator\Secret;
+use Jocic\GoogleAuthenticator\Secret;
 
 $secret = new Secret();
 
@@ -99,7 +99,7 @@ Settings a pre-existing secret is extremely simple.
 ```php
 $existingSecret = "3SJRXZHGUVHAGD7R"; // Maybe It's Fetched From The Database
 
-$secret = new Security\Mfa\GoogleAuthenticator\Secret();
+$secret = new Jocic\GoogleAuthenticator\Secret();
 
 $secret->setValue($existingSecret);
 ```

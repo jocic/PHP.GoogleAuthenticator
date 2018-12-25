@@ -30,7 +30,7 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
-    use Security\Encoders\Base\Base32;
+    use Jocic\GoogleAuthenticator\Encoders\Base\Base32;
     
     /**
      * <i>TestBase32</i> class is used for testing method implementation of the

@@ -29,54 +29,96 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator\Qr;
     
     /**
-     * <i>Account</i> class is used for specifying various account-related
-     * information required for <i>2FA</i> implementation.
+     * <i>QrInterface</i> is an interface used to enforce implementation of core
+     * qr's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class Account implements AccountInterface
+    interface QrInterface
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
-        
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        /**
+         * Returns set value used for QR code generation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getValue();
+        
+        /**
+         * Returns set directory used for storing generated QR codes.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getStorageDirectory();
+        
+        /**
+         * Returns file location of a generated QR code.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getFileLocation();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        /**
+         * Sets value used for QR code generation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $value
+         *   New value for QR code creation.
+         */
+        
+        public function setValue($value);
+        
+        /**
+         * Sets directory used for storing generated QR codes.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $directory
+         *   Directory for storing generated QR codes.
+         */
+        
+        public function setStorageDirectory();
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        /**
+         * Generates a QR code based on the set value.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function generate();
         
         /*****************\
         |* CHECK METHODS *|

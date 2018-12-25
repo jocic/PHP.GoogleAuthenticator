@@ -29,40 +29,48 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>GoogleAuthenticatorInterface</i> class is an interface used to enforce
-     * implementation of core authenticator's methods.
+     * <i>GoogleAuthenticator</i> class is used for generating QR codes, and
+     * validating provided one-time passwords.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface GoogleAuthenticatorInterface
+    class GoogleAuthenticator implements GoogleAuthenticatorInterface
     {
+        /******************\
+        |* CORE CONSTANTS *|
+        \******************/
+        
+        // CORE CONSTANTS GO HERE
+        
+        /******************\
+        |* CORE VARIABLES *|
+        \******************/
+        
+        // CORE VARIABLES GO HERE
+        
+        /*******************\
+        |* MAGIC FUNCTIONS *|
+        \*******************/
+        
+        // MAGIC FUNCTIONS GO HERE
+        
         /***************\
         |* GET METHODS *|
         \***************/
         
-        public function getSecret();
-        
-        public function getAccount();
-        
-        public function getPreviousCode();
-        
-        public function getCurrentCode();
-        
-        public function getNextCode();
+        // GET METHODS GO HERE
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        public function setSecret();
-        
-        public function setAccount();
+        // SET METHODS GO HERE
         
         /****************\
         |* CORE METHODS *|
@@ -74,7 +82,7 @@
         |* CHECK METHODS *|
         \*****************/
         
-        public function isCodeValid();
+        // CHECK METHODS GO HERE
         
         /*****************\
         |* OTHER METHODS *|

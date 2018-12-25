@@ -29,46 +29,96 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Security\Mfa\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator\Encoders\Base;
     
     /**
-     * <i>AccountInterface</i> is an interface used to enforce implementation of
-     * core account related methods.
+     * <i>BaseInterface</i> is an interface used to enforce implementation of
+     * core base encoder's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface AccountInterface
+    interface BaseInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        public function getServiceName();
+        /**
+         * Returns an array containing characters of the encoding table.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
         
-        public function getAccountName();
+        public function getBaseTable();
+        
+        /**
+         * Returns a string containing a single character used for
+         * padding-purposes.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getBasePadding();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        public function setServiceName($serviceName);
-        
-        public function setAccountName($accountNname);
+        // SET METHODS GO HERE
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        /**
+         * Encodes a provided string to a desired <i>Base</i> encoding.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $input
+         *   Input string that needs to be encoded.
+         */
+        
+        public function encode($input);
+        
+        /**
+         * Encodes a provided string to a desired <i>Base</i> decoding.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $input
+         *   Input string that needs to be decoding.
+         */
+        
+        public function decode($input);
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
+        /**
+         * Checks if a provided encoding is valid or not.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $encoding
+         *   Encoding that needs to be checked.
+         */
+        
+        public function isEncodingValid($encoding);
         
         /*****************\
         |* OTHER METHODS *|
