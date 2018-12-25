@@ -1,8 +1,14 @@
-  language: php
-  php:
-    - "7.0"
-  install:
-    - ./scripts/composer.sh install
-  script:
-    - ./scripts/phpunit.sh --testsuite essentials
-    - ./scripts/phpunit.sh --testsuite elements
+language: php
+
+php:
+  - "7.0"
+
+install:
+  - ./scripts/composer.sh install --no-interaction
+
+script:
+  - ./scripts/print-info.sh
+  - ./scripts/phpunit.sh --whitelist ./other --coverage-clover ./other/clover.xml
+
+after_success:
+  - travis_retry ./scripts/coveralls.sh -x ./other/clover.xml
