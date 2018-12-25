@@ -52,25 +52,134 @@
         |* CORE VARIABLES *|
         \******************/
         
-        // CORE VARIABLES GO HERE
+        /**
+         * Name of the service used by an account, ex. <i>Hosting ABC</i>.
+         * 
+         * @var    string
+         * @access private
+         */
+        
+        private $serviceName = "";
+        
+        /**
+         * Name of an account, ex. <i>John Doe</i> or <i>john@doe.com</i>.
+         * 
+         * @var    string
+         * @access private
+         */
+        
+        private $accountName = "";
         
         /*******************\
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        // MAGIC FUNCTIONS GO HERE
+        /**
+         * Constructor for the class <i>Account</i>. It's used for setting
+         * core class parameters upon object instantiation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $serviceName
+         *   New account's service name.
+         * @param string $accountName
+         *   Account's name that should be set.
+         * @return void
+         */
+        
+        public function __construct($serviceName = "", $accountName = "")
+        {
+            // Logic
+            
+            $this->setServiceName($serviceName);
+            $this->setAccountName($accountName);
+        }
         
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        /**
+         * Returns an account's service name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Name of an account's service, ex. <i>Hosting ABC</i>.
+         */
+        
+        public function getServiceName()
+        {
+            // Logic
+            
+            return $this->serviceName;
+        }
+        
+        /**
+         * Returns an account's name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Name of an account, ex. <i>John Doe</i> or <i>john@doe.com</i>.
+         */
+        
+        public function getAccountName()
+        {
+            // Logic
+            
+            return $this->accountName;
+        }
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        /**
+         * Sets an account's service name.
+         * 
+         * Note: Service name parameter is required, it must be set.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $serviceName
+         *   New account's service name.
+         * @return void
+         */
+        
+        public function setServiceName($serviceName)
+        {
+            // Logic
+            
+            $this->serviceName = $serviceName;
+        }
+        
+        /**
+         * Sets an account's name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $accountName
+         *   New account's name.
+         * @return void
+         */
+        
+        public function setAccountName($accountName)
+        {
+            // Logic
+            
+            $this->accountName = $accountName;
+        }
         
         /****************\
         |* CORE METHODS *|
