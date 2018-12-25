@@ -6,5 +6,8 @@
         <testsuite name="elements">
             <file>tests/elements/test-secret.php</file>
         </testsuite>
+        <testsuite name="elements">
+            <file>tests/elements/test-account.php</file>
+        </testsuite>
     </testsuites>
 </phpunit>
