@@ -64,6 +64,15 @@
         
         public const M_NUMERICAL = 1;
         
+        /**
+         * Method constant - for generating secrets using <i>binary</i> method.
+         * 
+         * @var    integer
+         * @access public
+         */
+        
+        public const M_BINARY = 2;
+        
         /******************\
         |* CORE VARIABLES *|
         \******************/
@@ -223,6 +232,10 @@
                     $value = $this->runNumericalMethod();
                     break;
                 
+                case 2:
+                    $value = $this->runBinaryMethod();
+                    break;
+                
                 default:
                     throw new \Exception("Invalid method selected.");
             }
@@ -282,7 +295,7 @@
         \*****************/
         
         /**
-         * Generates a random secret using <i>base</i> method.
+         * Generates a random secret using the <i>base</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -317,7 +330,7 @@
         }
         
         /**
-         * Generates a random secret using <i>numerical</i> method.
+         * Generates a random secret using the <i>numerical</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -334,13 +347,50 @@
             $value  = "";
             $number = 0;
             
-            // Step 1 - Generate Value
+            // Logic
             
             for ($i = 0; $i < 10; $i ++)
             {
                 $number = rand(0, 256);
                 
                 $value .= chr($number);
+            }
+            
+            return $this->getEncoder()->encode($value);
+        }
+        
+        /**
+         * Generates a random secret using the <i>binary</i> method.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Value of the secret - randomly-generated.
+         */
+        
+        private function runBinaryMethod()
+        {
+            // Core Variables
+            
+            $value = "";
+            $byte  = 0x0;
+            
+            // Other Variables
+            
+            $index = 0;
+            
+            // Logic
+            
+            for ($i = 0; $i < 10; $i ++)
+            {
+                for ($j = 0; $j < 8; $j ++)
+                {
+                    $byte = ($byte << 1) | rand(0, 1);
+                }
+                
+                $value .= chr($byte);
             }
             
             return $this->getEncoder()->encode($value);

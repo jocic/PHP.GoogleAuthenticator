@@ -114,6 +114,15 @@
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }
+            
+            // Step 3 - Binary Method
+            
+            for ($i = 0; $i < 10; $i ++)
+            {
+                $value = $secret->generateValue(Secret::M_BINARY);
+                
+                $this->assertSame(true, $secret->isSecretValid($value), $value);
+            }
         }
         
         /**
