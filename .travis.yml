@@ -8,7 +8,7 @@ install:
 
 script:
   - ./scripts/print-info.sh
-  - ./scripts/phpunit.sh --whitelist ./other --coverage-clover ./other/clover.xml
+  - ./scripts/phpunit.sh --whitelist ./ --coverage-clover ./other/clover.xml
 
 after_success:
   - travis_retry ./scripts/coveralls.sh -x ./other/clover.xml
