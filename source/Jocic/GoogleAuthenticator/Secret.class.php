@@ -317,7 +317,7 @@
             $maxIndex = count($baseTable) - 1;
             $index    = 0;
             
-            // Step 1 - Generate Value
+            // Logic
             
             for ($i = 0; $i < 16; $i ++)
             {
@@ -375,16 +375,14 @@
             // Core Variables
             
             $value = "";
-            $byte  = 0x0;
-            
-            // Other Variables
-            
-            $index = 0;
+            $byte  = 0;
             
             // Logic
             
             for ($i = 0; $i < 10; $i ++)
             {
+                $byte = 0;
+                
                 for ($j = 0; $j < 8; $j ++)
                 {
                     $byte = ($byte << 1) | rand(0, 1);
