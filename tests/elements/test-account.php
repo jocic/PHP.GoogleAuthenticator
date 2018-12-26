@@ -79,6 +79,42 @@
         \****************/
         
         /**
+         * Tests constructor of the class.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testConstructor()
+        {
+            // Core Variables
+            
+            $account = null;
+            
+            // Other Variables
+            
+            $testValues = [
+                [ "",  "",  null ],
+                [ "A", "B", new Secret() ]
+            ];
+            
+            // Logic
+            
+            foreach ($testValues as $testValue)
+            {
+                $account = new Account($testValue[0], $testValue[1],
+                    $testValue[2]);
+                
+                $this->assertSame($testValue[0], $account->getServiceName());
+                $this->assertSame($testValue[1], $account->getAccountName());
+                $this->assertSame($testValue[2], $account->getAccountSecret());
+            }
+        }
+        
+        /**
          * Tests <i>set</i> & <i>get</i> methods of the <i>serviceName</i>
          * methods - <i>setServiceName</i> & <i>getServiceName</i>.
          * 

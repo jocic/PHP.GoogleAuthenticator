@@ -10,4 +10,10 @@
             <file>tests/elements/test-account.php</file>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./source</directory>
+            <directory suffix=".php">./tests</directory>
+        </whitelist>
+    </filter>
 </phpunit>

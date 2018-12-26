@@ -9,7 +9,7 @@ install:
 script:
   - ./scripts/print-info.sh
   - ./scripts/prepare-build.sh
-  - ./scripts/phpunit.sh --whitelist ./ --coverage-clover ./build/logs/clover.xml
+  - ./scripts/phpunit.sh --coverage-clover ./build/logs/clover.xml
 
 after_success:
   - travis_retry ./scripts/coveralls.sh
