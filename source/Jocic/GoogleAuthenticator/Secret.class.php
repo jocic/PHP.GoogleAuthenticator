@@ -156,7 +156,7 @@
         {
             // Logic
             
-            if (is_null($this->encoder))
+            if ($this->encoder == null)
             {
                 throw new \Exception("Encoder wasn't instantiated.");
             }
@@ -184,14 +184,12 @@
         {
             // Logic
             
-            if ($this->isSecretValid($secret))
-            {
-                $this->value = $secret;
-            }
-            else
+            if (!$this->isSecretValid($secret))
             {
                 throw new \Exception("Invalid secret provided. Secret: \"$secret\"");
             }
+            
+            $this->value = $secret;
         }
         
         /****************\
@@ -353,7 +351,7 @@
             {
                 $number = rand(0, 256);
                 
-                $value .= chr($number);
+                $value .= sprintf("%c", $number);
             }
             
             return $this->getEncoder()->encode($value);
@@ -388,7 +386,7 @@
                     $byte = ($byte << 1) | rand(0, 1);
                 }
                 
-                $value .= chr($byte);
+                $value .= sprintf("%c", $byte);
             }
             
             return $this->getEncoder()->encode($value);

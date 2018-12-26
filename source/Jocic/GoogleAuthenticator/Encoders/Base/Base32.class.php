@@ -236,14 +236,12 @@
             
             foreach ($chunks as $chunk)
             {
-                if (isset($baseTable[$chunk]))
-                {
-                    $encoding .= $baseTable[$chunk];
-                }
-                else
+                if (!isset($baseTable[$chunk]))
                 {
                     throw new \Exception("Invalid chunk value. Chunk: \"$chunk\"");
                 }
+                
+                $encoding .= $baseTable[$chunk];
             }
             
             // Step 5 - Apply Padding
@@ -347,7 +345,7 @@
                 
                 if ($cIndexes[$dIndex] == 0x01)
                 {
-                    $decoding .= chr((($remainder << $dShifts[$dIndex])
+                    $decoding .= sprintf("%c", (($remainder << $dShifts[$dIndex])
                         | ($byte >> $bShifts[$dIndex])) & 0xFF);
                 }
                 

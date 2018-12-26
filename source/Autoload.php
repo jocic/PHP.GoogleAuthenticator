@@ -55,7 +55,7 @@
         
         // Logic
         
-        if (file_exists($class_file))
+        if (is_file($class_file))
         {
             include $class_file;
         }
