@@ -126,7 +126,8 @@
         }
         
         /**
-         * Tests <i>set</i> & <i>get</i> methods of the <i>Secret</i> class.
+         * Tests <i>set</i> & <i>get</i> methods of the <i>value</i> methods -
+         * <i>setValue</i> & <i>getValue</i>.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -135,7 +136,7 @@
          * @return void
          */
         
-        public function testGetSetMethod()
+        public function testValueMethods()
         {
             // Core Variables
             

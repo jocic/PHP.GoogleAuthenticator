@@ -30,6 +30,7 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
+    use Jocic\GoogleAuthenticator\Secret;
     use Jocic\GoogleAuthenticator\Account;
     
     /**
@@ -78,7 +79,8 @@
         \****************/
         
         /**
-         * Tests <i>set</i> & <i>get</i> methods of the <i>Secret</i> class.
+         * Tests <i>set</i> & <i>get</i> methods of the <i>serviceName</i>
+         * methods - <i>setServiceName</i> & <i>getServiceName</i>.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -87,7 +89,7 @@
          * @return void
          */
         
-        public function testGetSetMethod()
+        public function testServiceNameMethods()
         {
             // Core Variables
             
@@ -95,34 +97,89 @@
             
             // Other Variables
             
-            $testServiceNames = [
+            $testValues = [
                 "Hosting ABC",
                 "FastFood Joint",
                 "That Shop"
             ];
             
-            $testAccountNames = [
+            // Logic
+            
+            foreach ($testValues as $testValue)
+            {
+                $account->setServiceName($testValue);
+                
+                $this->assertSame($testValue, $account->getServiceName());
+            }
+        }
+        
+        /**
+         * Tests <i>set</i> & <i>get</i> methods of the <i>accountName</i>
+         * methods - <i>setAccountName</i> & <i>getAccountName</i>.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testAccountNameMethods()
+        {
+            // Core Variables
+            
+            $account = new Account();
+            
+            // Other Variables
+            
+            $testValues = [
                 "John Doe",
                 "john@doe.com",
                 "Buyer McBuyerson"
             ];
             
-            // Step 1 - Test "Service Name" Methods
+            // Logic
             
-            foreach ($testServiceNames as $testServiceName)
+            foreach ($testValues as $testValue)
             {
-                $account->setServiceName($testServiceName);
+                $account->setAccountName($testValue);
                 
-                $this->assertSame($testServiceName, $account->getServiceName());
+                $this->assertSame($testValue, $account->getAccountName());
             }
+        }
+        
+        /**
+         * Tests <i>set</i> & <i>get</i> methods of the <i>accountSecret</i>
+         * methods - <i>setAccountSecret</i> & <i>getAccountSecret</i>.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testAccountSecretMethods()
+        {
+            // Core Variables
             
-            // Step 2 - Test "Account Name" Methods
+            $account = new Account();
             
-            foreach ($testAccountNames as $testAccountName)
+            // Other Variables
+            
+            $testSecrets = [
+                new Secret(),
+                new Secret(),
+                new Secret()
+            ];
+            
+            // Logic
+            
+            foreach ($testSecrets as $testSecret)
             {
-                $account->setAccountName($testAccountName);
+                $account->setAccountSecret($testSecret);
                 
-                $this->assertSame($testAccountName, $account->getAccountName());
+                $this->assertSame($testSecret, $account->getAccountSecret());
             }
         }
         
