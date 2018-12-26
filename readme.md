@@ -108,16 +108,19 @@ $secret->setValue($existingSecret);
 Use the following snippet when creating an account.
 
 ```php
-$account = new Jocic\GoogleAuthenticator\Account("Hosting ABC", "John Doe");
+$secret  = new Jocic\GoogleAuthenticator\Secret();
+$account = new Jocic\GoogleAuthenticator\Account("Hosting ABC", "John Doe", $secret);
 ```
 
 Alternatively, you can instantiate an object and set parameters later.
 
 ```php
+$secret  = new Jocic\GoogleAuthenticator\Secret();
 $account = new Jocic\GoogleAuthenticator\Account();
 
 $account->setServiceName("Hosting ABC");
 $account->setAccountName("john@doe.com");
+$account->setAccountSecret($secret);
 ```
 
 ## Installation

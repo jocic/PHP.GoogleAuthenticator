@@ -66,6 +66,16 @@
         
         public function getAccountName();
         
+        /**
+         * Returns an account's secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getAccountSecret();
+        
         /***************\
         |* SET METHODS *|
         \***************/
@@ -95,6 +105,19 @@
          */
         
         public function setAccountName($accountName);
+        
+        /**
+         * Sets an account's secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $accountSecret
+         *   New account's secret.
+         */
+        
+        public function setAccountSecret($accountSecret);
         
         /****************\
         |* CORE METHODS *|

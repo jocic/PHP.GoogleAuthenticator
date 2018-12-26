@@ -70,6 +70,15 @@
         
         private $accountName = "";
         
+        /**
+         * Secret of an account.
+         * 
+         * @var    string
+         * @access private
+         */
+        
+        private $accountSecret = null;
+        
         /*******************\
         |* MAGIC FUNCTIONS *|
         \*******************/
@@ -83,18 +92,22 @@
          * @version   1.0.0
          * 
          * @param string $serviceName
-         *   New account's service name.
+         *   Account's service name that should be set.
          * @param string $accountName
          *   Account's name that should be set.
+         * @param object $secret
+         *   Account's secret that should be set.
          * @return void
          */
         
-        public function __construct($serviceName = "", $accountName = "")
+        public function __construct($serviceName = "", $accountName = "",
+            $accountSecret = null)
         {
             // Logic
             
             $this->setServiceName($serviceName);
             $this->setAccountName($accountName);
+            $this->setAccountSecret($accountSecret);
         }
         
         /***************\
@@ -135,6 +148,24 @@
             // Logic
             
             return $this->accountName;
+        }
+        
+        /**
+         * Returns an account's secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return object
+         *   Secret of an account.
+         */
+        
+        public function getAccountSecret()
+        {
+            // Logic
+            
+            return $this->accountSecret;
         }
         
         /***************\
@@ -179,6 +210,25 @@
             // Logic
             
             $this->accountName = $accountName;
+        }
+        
+        /**
+         * Sets an account's secret.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $accountSecret
+         *   New account's secret.
+         * @return void
+         */
+        
+        public function setAccountSecret($accountSecret)
+        {
+            // Logic
+            
+            $this->accountSecret = $accountSecret;
         }
         
         /****************\
