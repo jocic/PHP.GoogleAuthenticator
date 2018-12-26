@@ -55,9 +55,9 @@ composer_location="./other/composer/$composer_version/composer.phar";
 cd "$source_dir/../";
 
 if [ -z "$php_command" ]; then
-    echo "Error: You don't have PHP installed on your machine." && exit;
+    echo "Error: You don't have PHP installed on your machine." && exit 1;
 elif [ ! -e "$composer_location" ]; then
-    echo "Error: Composer executable is missing." && exit;
+    echo "Error: Composer executable is missing." && exit 1;
 fi
 
-php "$composer_location" "$@";
+php "$composer_location" "$@" && exit $?;

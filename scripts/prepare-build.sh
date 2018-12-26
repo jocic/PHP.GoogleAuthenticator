@@ -35,28 +35,10 @@
 
 source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
 
-#################
-# PHP Variables #
-#################
-
-php_command="$(command -v php)";
-
-#######################
-# Coveralls Variables #
-#######################
-
-coveralls_location="./dependencies/bin/php-coveralls";
-
 #########
 # Logic #
 #########
 
 cd "$source_dir/../";
 
-if [ -z "$php_command" ]; then
-    echo "Error: You don't have PHP installed on your machine." && exit 1;
-elif [ ! -e "$coveralls_location" ]; then
-    echo "Error: You don't have PHP Coveralls installed - check Composer's dependencies." && exit 1;
-fi
-
-php "$coveralls_location" "$@" && exit $?;
+mkdir -p "./build/logs";

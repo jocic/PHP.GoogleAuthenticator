@@ -48,15 +48,15 @@ php_command="$(command -v php)";
 phpunit_location="./dependencies/phpunit/phpunit/phpunit";
 
 #########
-# LOGIC #
+# Logic #
 #########
 
 cd "$source_dir/../";
 
 if [ -z "$php_command" ]; then
-    echo "Error: You don't have PHP installed on your machine." && exit;
+    echo "Error: You don't have PHP installed on your machine." && exit 1;
 elif [ ! -e "$phpunit_location" ]; then
-    echo "Error: You don't have PHPUnit installed - check Composer's dependencies." && exit;
+    echo "Error: You don't have PHPUnit installed - check Composer's dependencies." && exit 1;
 fi
 
-php "$phpunit_location" --configuration "./phpunit.xml" "$@";
+php "$phpunit_location" --configuration "./phpunit.xml" "$@" && exit $?;
