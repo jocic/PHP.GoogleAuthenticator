@@ -323,14 +323,12 @@
             
             foreach ($characters as $character)
             {
-                if (isset($flippedTable[$character]))
-                {
-                    $chunks[] = $flippedTable[$character];
-                }
-                else
+                if (!isset($flippedTable[$character]))
                 {
                     throw new \Exception("Invalid character encountered. Character: \"$character\"");
                 }
+                
+                $chunks[] = $flippedTable[$character];
             }
             
             // Step 4 - Merge Decoded Chunks
@@ -403,18 +401,25 @@
             
             $characters = [];
             
-            // Step 1 - Check General Form
+            // Step 1 - Check If Empty
+            
+            if ($encoding == "")
+            {
+                return true;
+            }
+            
+            // Step 2 - Check General Form
             
             if (!preg_match("/^([A-z0-9]+)([=]+)?$/", $encoding))
             {
                 return false;
             }
             
-            // Step 2 - Trim Padding & Generate Array
+            // Step 3 - Trim Padding & Generate Array
             
             $characters = str_split(rtrim($encoding, $basePadding));
             
-            // Step 3 - Check Characters
+            // Step 4 - Check Characters
             
             foreach ($characters as $character)
             {

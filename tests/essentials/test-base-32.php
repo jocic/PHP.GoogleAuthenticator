@@ -78,6 +78,42 @@
         \****************/
         
         /**
+         * Tests encoding validation for the <i>Base 32</i> implementation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testValidation()
+        {
+            // Core Variables
+            
+            $encoder = new Base32();
+            
+            // Other Variables
+            
+            $testValues = [
+                ""         => true,
+                "MY======" => true,
+                "MZXW6YTB" => true,
+                "&43"      => false,
+                "==TeR==f" => false,
+                "Uf934FER" => false
+            ];
+            
+            // Step 1 - Test Valid Values
+            
+            foreach ($testValues as $testValue => $testResult)
+            {
+                $this->assertSame($testResult,
+                    $encoder->isEncodingValid($testValue), $testValue);
+            }
+        }
+        
+        /**
          * Tests encoding of the <i>Base 32</i> implementation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
