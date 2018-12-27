@@ -8,10 +8,10 @@ Google Authenticator is a mini PHP library for implementing Multi-Factor Authent
 
 Following specifications are referenced:
 
-* [RFC 4648](documentation/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
-* [RFC 6238](documentation/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
-* [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
-* [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code bar code symbology specification
+*   [RFC 4648](documentation/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
+*   [RFC 6238](documentation/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
+*   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
+*   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code bar code symbology specification
 
 __Note:__ Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
@@ -23,9 +23,9 @@ __Project is still under development.__
 
 I use a 3-digit [Semantic Versioning](https://semver.org/spec/v2.0.0.html) identifier, for example 1.0.2. These digits have the following meaning:
 
-* The first digit (1) specifies the MAJOR version number.
-* The second digit (0) specifies the MINOR version number.
-* The third digit (2) specifies the PATCH version number.
+*   The first digit (1) specifies the MAJOR version number.
+*   The second digit (0) specifies the MINOR version number.
+*   The third digit (2) specifies the PATCH version number.
 
 Complete documentation can be found by following the link above.
 
@@ -57,9 +57,9 @@ $secret->setValue($newSecret);
 
 Secret can be generated using two different methods:
 
-* __Base Method__ - Random values from the base table are picked until an 80-bit value is formed.
-* __Numerical Method__ - Random numbers, ranging from 0 to 256, are generated until an 80-bit value is formed.
-* __Binary Method__ - Random bits are chosen until an 80-bit value is formed.
+*   __Base Method__ - Random values from the base table are picked until an 80-bit value is formed.
+*   __Numerical Method__ - Random numbers, ranging from 0 to 256, are generated until an 80-bit value is formed.
+*   __Binary Method__ - Random bits are chosen until an 80-bit value is formed.
 
 The base method is used by default, so you need not specify it. However, if something is compelling you to do otherwise, Satan for example, you can use the following snippet.
 
@@ -124,11 +124,23 @@ $account->setAccountName("john@doe.com");
 $account->setAccountSecret($secret);
 ```
 
-### Example 5 - Account Manager - Saving
+### Example 5 - Account Manager (Adding)
 
 ...
 
-### Example 6 - Account Manager - Loading
+### Example 6 - Account Manager (Removing)
+
+...
+
+### Example 7 - Account Manager (Finding)
+
+...
+
+### Example 8 - Account Manager (Saving)
+
+...
+
+### Example 9 - Account Manager (Loading)
 
 ...
 
@@ -136,8 +148,8 @@ $account->setAccountSecret($secret);
 
 There's two ways you can add __Google Authenticator__ library to your project:
 
-* Copying files from the "source" directory to your project and requiring the "Autoload.php" script
-* Via Composer, by executing the command below
+*   Copying files from the "source" directory to your project and requiring the "Autoload.php" script
+*   Via Composer, by executing the command below
 
 ```bash
 composer require jocic/google-authenticator
@@ -147,8 +159,8 @@ composer require jocic/google-authenticator
 
 Following unit tests are available:
 
-* __Essentials__ - Base 32 encoder, QR code generator, etc.
-* __Elements__ - Secret, Account, etc.
+*   __Essentials__ - Base 32 encoder, QR code generator, etc.
+*   __Elements__ - Secret, Account, etc.
 
 You can execute them easily from the terminal like in the example below.
 
@@ -161,10 +173,10 @@ bash ./scripts/phpunit.sh --testsuite elements
 
 Please review the following documents if you are planning to contribute to the project:
 
-  * [Contributor Covenant Code of Conduct](code_of_conduct.md)
-  * [Contribution Guidelines](contributing.md)
-  * [Pull Request Template](pull_request_template.md)
-  * [MIT License](license.md)
+*   [Contributor Covenant Code of Conduct](code_of_conduct.md)
+*   [Contribution Guidelines](contributing.md)
+*   [Pull Request Template](pull_request_template.md)
+*   [MIT License](license.md)
 
 ## Support
 
@@ -172,7 +184,7 @@ Please don't hesitate to contact me if you have any questions, ideas, or concern
 
 My Twitter account is: [@jocic_91](https://www.twitter.com/jocic_91)
 
-My support E-Mail address is: <support@djordjejocic.com>
+My support E-Mail address is: [support@djordjejocic.com](mailto:support@djordjejocic.com)
 
 ## Copyright & License
 
