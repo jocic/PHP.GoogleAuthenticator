@@ -155,35 +155,9 @@
         {
             // Core Variables
             
-            $baseTable   = $this->getBaseTable();
-            $basePadding = $this->getBasePadding();
-            
-            // Algorithm Variables
-            
-            $eIndex    = 0x00;
-            $eShifts   = [ 0x03, 0x06, 0x04, 0x07, 0x05 ];
-            $ePaddings = [ 0x02, 0x04, 0x01, 0x03, 0x01 ];
-            $rShifts   = [ 0x08, 0x02, 0x04, 0x01, 0x03 ];
-            $rMasks    = [ 0x07, 0x01, 0x0F, 0x03, 0x03 ];
-            $cShifts   = [ 0x00, 0x01, 0x00, 0x02, 0x00 ];
-            $cIndexes  = [ 0x01, 0x03, 0x04 ];
-            
-            // Encoding Variables
-            
-            $encoding   = "";
-            $characters = null;
-            
-            // Chunk Variables
-            
-            $chunks     = [];
-            $chunkIndex = 0x00;
-            $byte       = null;
-            $remainder  = null;
-            $padding    = 0x00;
-            
-            // Other Variables
-            
-            $temp = null;
+            $baseTable = $this->getBaseTable();
+            $output    = "";
+            $chunks    = [];
             
             // Step 1 - Handle Empty Input
             
@@ -194,73 +168,18 @@
             
             // Step 2 - Split Input Into 5-bit Chunks
             
-            $characters = str_split($input);
+            $chunks = $this->convertInputToChunks($input);
             
-            foreach ($characters as $character)
-            {
-                // Handle Chunk Value
-                
-                $byte = ord($character) & 0xFF;
-                
-                // Process Chunk Value
-                
-                $chunks[$chunkIndex ++] = (($byte >> $eShifts[$eIndex]) | ($remainder << $rShifts[$eIndex])) & 0x01F;
-                
-                if (in_array($eIndex, $cIndexes))
-                {
-                    $chunks[$chunkIndex ++] = ($byte >> $cShifts[$eIndex]) & 0x01F;
-                }
-                
-                $remainder = $byte & $rMasks[$eIndex];
-                $padding   = $ePaddings[$eIndex];
-                
-                // Handle Encoding Index
-                
-                if (($eIndex ++) == 0x04)
-                {
-                    $eIndex = 0x00;
-                }
-            }
-            
-            // Step 3 - Handle Remainder
-            
-            if (strlen($input) % 0x05 != 0x00)
-            {
-                if (($temp = ($remainder << $padding)) != 0x20)
-                {
-                    $chunks[$chunkIndex ++] = $temp & 0xFF;
-                }
-            }
-            
-            // Step 4 - Process Chunks
+            // Step 3 - Process Chunks
             
             foreach ($chunks as $chunk)
             {
-                if (!isset($baseTable[$chunk]))
-                {
-                    throw new \Exception("Invalid chunk value. Chunk: \"$chunk\"");
-                }
-                
-                $encoding .= $baseTable[$chunk];
+                $output .= $baseTable[$chunk];
             }
             
-            // Step 5 - Apply Padding
+            // Step 4 - Apply Padding & Return Encoding
             
-            $temp = 0x08 - (strlen($encoding) % 0x08);
-            
-            if ($temp != 0x08)
-            {
-                $encoding .= str_repeat($basePadding, $temp);
-            }
-            
-            // Step 6 - Check & Return Encoding
-            
-            if (!$this->isEncodingValid($encoding))
-            {
-                throw new \Exception("Invalid encoding produced. Encoding: \"$encoding\"");
-            }
-            
-            return $encoding;
+            return $this->applyPadding($output);
         }
         
         /**
@@ -280,30 +199,7 @@
         {
             // Core Variables
             
-            $baseTable   = $this->getBaseTable();
-            $basePadding = $this->getBasePadding();
-            
-            // Algorithm Variables
-            
-            $rMasks   = [ 0xFF, 0x03, 0xFF, 0x0F, 0x01, 0xFF, 0x07, 0x00 ];
-            $rShifts  = [ 0x00, 0x00, 0x05, 0x00, 0x00, 0x05, 0x00, 0x00 ];
-            $rClears  = [ 0x01, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
-            $cIndexes = [ 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
-            $dShifts  = [ 0x00, 0x03, 0x00, 0x01, 0x04, 0x00, 0x02, 0x05 ];
-            $bShifts  = [ 0x00, 0x02, 0x00, 0x04, 0x01, 0x00, 0x03, 0x00 ];
-            $dIndex   = 0x00;
-            
-            // Decoding Variables
-            
-            $decoding      = "";
-            $flippedTable  = null;
-            $characters    = null;
-            
-            // Chunk Variables
-            
-            $chunks    = [];
-            $byte      = null;
-            $remainder = 0x00;
+            $chunks = [];
             
             // Step 1 - Handle Empty Input
             
@@ -314,60 +210,19 @@
             
             // Step 2 - Trim Padding
             
-            $input = rtrim($input, $basePadding);
+            $input = $this->stripPadding($input);
             
             // Step 3 - Decode Input Into 5-bit Chunks
             
-            $flippedTable = array_flip($baseTable);
-            $characters   = str_split($input);
+            $chunks = $this->convertEncodingToChunks($input);
             
-            foreach ($characters as $character)
-            {
-                if (!isset($flippedTable[$character]))
-                {
-                    throw new \Exception("Invalid character encountered. Character: \"$character\"");
-                }
-                
-                $chunks[] = $flippedTable[$character];
-            }
+            // Step 4 - Merge Dervided Chunks
             
-            // Step 4 - Merge Decoded Chunks
-            
-            foreach ($chunks as $chunk)
-            {
-                // Handle Chunk Value
-                
-                $byte = $chunk & 0x1F;
-                
-                // Handle Character Decoding
-                
-                if ($cIndexes[$dIndex] == 0x01)
-                {
-                    $decoding .= sprintf("%c", (($remainder << $dShifts[$dIndex])
-                        | ($byte >> $bShifts[$dIndex])) & 0xFF);
-                }
-                
-                // Handle Remainder
-                
-                if ($rClears[$dIndex] == 0x01)
-                {
-                    $remainder = 0x00;
-                }
-                
-                $remainder = (($remainder << $rShifts[$dIndex]) | $byte)
-                    & $rMasks[$dIndex];
-                
-                // Handle Decoding Index
-                
-                if (($dIndex ++) == 0x07)
-                {
-                    $dIndex = 0x00;
-                }
-            }
+            $input = $this->mergeEncodingChunks($chunks);
             
             // Step 5 - Return Decoding
             
-            return $decoding;
+            return $input;
         }
         
         /*****************\
@@ -430,6 +285,284 @@
             }
             
             return true;
+        }
+        
+        /********************\
+        |* ENCODING METHODS *|
+        \********************/
+        
+        /**
+         * Adds padding to the provided encoding.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $encoding
+         *   Encoding that needs to be padded.
+         * @return string
+         *   Encoding that was padded appropriately.
+         */
+        
+        public function applyPadding($encoding)
+        {
+            // Core Variables
+            
+            $basePadding  = $this->getBasePadding();
+            $paddingCount = 0;
+            
+            // Step 1 - Check Encoding
+            
+            if (!$this->isEncodingValid($encoding))
+            {
+                throw new \Exception("Invalid encoding provided, padding can't be applied. Encoding: \"$encoding\"");
+            }
+            
+            // Step 2 - Apply Padding
+            
+            $paddingCount = 8 - (strlen($encoding) % 8);
+            
+            if ($paddingCount != 8)
+            {
+                $encoding .= str_repeat($basePadding, $paddingCount);
+            }
+            
+            // Step 3 - Return Encoding
+            
+            return $encoding;
+        }
+        
+        /**
+         * Converts provided string into chunks - 5-bit values.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $input
+         *   Input that needs to be converted to chunks.
+         * @return array
+         *   Array containing chunks (5-bit values).
+         */
+        
+        public function convertInputToChunks($input)
+        {
+            // Core Variables
+            
+            $characters = null;
+            
+            // Algorithm Variables
+            
+            $eIndex    = 0x00;
+            $eShifts   = [ 0x03, 0x06, 0x04, 0x07, 0x05 ];
+            $ePaddings = [ 0x02, 0x04, 0x01, 0x03, 0x01 ];
+            $rShifts   = [ 0x08, 0x02, 0x04, 0x01, 0x03 ];
+            $rMasks    = [ 0x07, 0x01, 0x0F, 0x03, 0x03 ];
+            $cShifts   = [ 0x00, 0x01, 0x00, 0x02, 0x00 ];
+            $cIndexes  = [ 0x01, 0x03, 0x04 ];
+            
+            // Chunk Variables
+            
+            $chunks     = [];
+            $chunkIndex = 0x00;
+            $byte       = null;
+            $remainder  = null;
+            $padding    = 0x00;
+            
+            // Other Variables
+            
+            $temp = null;
+            
+            // Step 1 - Process Input
+            
+            $characters = str_split($input);
+            
+            foreach ($characters as $character)
+            {
+                // Handle Chunk Value
+                
+                $byte = ord($character) & 0xFF;
+                
+                // Process Chunk Value
+                
+                $chunks[$chunkIndex ++] = (($byte >> $eShifts[$eIndex]) | ($remainder << $rShifts[$eIndex])) & 0x01F;
+                
+                if (in_array($eIndex, $cIndexes))
+                {
+                    $chunks[$chunkIndex ++] = ($byte >> $cShifts[$eIndex]) & 0x01F;
+                }
+                
+                $remainder = $byte & $rMasks[$eIndex];
+                $padding   = $ePaddings[$eIndex];
+                
+                // Handle Encoding Index
+                
+                if (($eIndex ++) == 0x04)
+                {
+                    $eIndex = 0x00;
+                }
+            }
+            
+            // Step 2 - Handle Remainder
+            
+            if (strlen($input) % 0x05 != 0x00)
+            {
+                if (($temp = ($remainder << $padding)) != 0x20)
+                {
+                    $chunks[$chunkIndex ++] = $temp & 0x1F;
+                }
+            }
+            
+            return $chunks;
+        }
+        
+        /********************\
+        |* DECODING METHODS *|
+        \********************/
+        
+        /**
+         * Removes padding from the provided encoding.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $encoding
+         *   Encoding that needs to be stripped from it's padding.
+         * @return string
+         *   Encoding that was stripped from it's padding appropriately.
+         */
+        
+        public function stripPadding($encoding)
+        {
+            // Core Variables
+            
+            $basePadding  = $this->getBasePadding();
+            
+            // Step 1 - Check Encoding
+            
+            if (!$this->isEncodingValid($encoding))
+            {
+                throw new \Exception("Invalid encoding provided, padding can't be stripped. Encoding: \"$encoding\"");
+            }
+            
+            // Step 2 - Strip & Return Encoding
+            
+            return rtrim($encoding, $basePadding);
+        }
+        
+        /**
+         * Converts provided encoding into chunks (5-bit values) based on the
+         * <i>Base 32</i> table.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $encoding
+         *   Encoding that needs to be converted to chunks.
+         * @return array
+         *   Array containing chunks (5-bit values).
+         */
+        
+        public function convertEncodingToChunks($encoding)
+        {
+            // Core Variables
+            
+            $baseTable = $this->getBaseTable();
+            $chunks    = [];
+            
+            // Other Variables
+            
+            $flippedTable = array_flip($baseTable);
+            $characters   = str_split($encoding);
+            
+            // Step 1 - Check Encoding
+            
+            if (!$this->isEncodingValid($encoding))
+            {
+                throw new \Exception("Invalid encoding provided, it can't be converted. Encoding: \"$encoding\"");
+            }
+            
+            // Step 2 - Convert Encoding
+            
+            foreach ($characters as $character)
+            {
+                if (isset($flippedTable[$character]))
+                {
+                    $chunks[] = $flippedTable[$character];
+                }
+            }
+            
+            return $chunks;
+        }
+        
+        /**
+         * Merges encoding chunks into a single string.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param array $chunks
+         *   Encoding chunks that should be merged.
+         * @return string
+         *   Merged encoding chunks - actual decoding.
+         */
+        
+        public function mergeEncodingChunks($chunks)
+        {
+            // Core Variables
+            
+            $decoding  = "";
+            $byte      = null;
+            $remainder = 0x00;
+            
+            // Algorithm Variables
+            
+            $rMasks   = [ 0xFF, 0x03, 0xFF, 0x0F, 0x01, 0xFF, 0x07, 0x00 ];
+            $rShifts  = [ 0x00, 0x00, 0x05, 0x00, 0x00, 0x05, 0x00, 0x00 ];
+            $rClears  = [ 0x01, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
+            $cIndexes = [ 0x00, 0x01, 0x00, 0x01, 0x01, 0x00, 0x01, 0x01 ];
+            $dShifts  = [ 0x00, 0x03, 0x00, 0x01, 0x04, 0x00, 0x02, 0x05 ];
+            $bShifts  = [ 0x00, 0x02, 0x00, 0x04, 0x01, 0x00, 0x03, 0x00 ];
+            $dIndex   = 0x00;
+            
+            // Logic
+            
+            foreach ($chunks as $chunk)
+            {
+                // Handle Chunk Value
+                
+                $byte = $chunk & 0x1F;
+                
+                // Handle Character Decoding
+                
+                if ($cIndexes[$dIndex] == 0x01)
+                {
+                    $decoding .= sprintf("%c", (($remainder << $dShifts[$dIndex])
+                        | ($byte >> $bShifts[$dIndex])) & 0xFF);
+                }
+                
+                // Handle Remainder
+                
+                if ($rClears[$dIndex] == 0x01)
+                {
+                    $remainder = 0x00;
+                }
+                
+                $remainder = (($remainder << $rShifts[$dIndex]) | $byte)
+                    & $rMasks[$dIndex];
+                
+                // Handle Decoding Index
+                
+                if (($dIndex ++) == 0x07)
+                {
+                    $dIndex = 0x00;
+                }
+            }
+            
+            return $decoding;
         }
         
         /*****************\

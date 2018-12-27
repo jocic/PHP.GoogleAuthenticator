@@ -159,7 +159,7 @@
             
             $encoder = new Base32();
             
-            // Logic.
+            // Logic
             
             $this->assertSame("", $encoder->decode(""));
             $this->assertSame("f", $encoder->decode("MY======"));
@@ -171,6 +171,88 @@
             $this->assertSame("foobar1", $encoder->decode("MZXW6YTBOIYQ===="));
             $this->assertSame("foobar12", $encoder->decode("MZXW6YTBOIYTE==="));
             $this->assertSame("foobar123", $encoder->decode("MZXW6YTBOIYTEMY="));
+        }
+        
+        /**
+         * Tests encoding process of the <i>Base 32</i> implementation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testEncodingProcesses()
+        {
+            // Core Variables
+            
+            $encoder = new Base32();
+            
+            // Step 1 - Apply Padding
+            
+            $this->expectExceptionMessage("Invalid encoding provided, padding" .
+                " can't be applied. Encoding: \"#\"");
+            
+            $this->assertSame("MY======", $encoder->applyPadding("MY"));
+            
+            $encoder->applyPadding("#");
+        }
+        
+        /**
+         * Tests <i>stripPadding</i> method of the <i>Base 32</i> class - used
+         * in the <i>decoding</i> process.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testStripPadding()
+        {
+            // Core Variables
+            
+            $encoder = new Base32();
+            
+            // Logic
+            
+            $this->assertSame("MY", $encoder->stripPadding("MY======"));
+            
+            $this->expectExceptionMessage("Invalid encoding provided, padding" .
+                " can't be stripped. Encoding: \"#\"");
+            
+            $encoder->stripPadding("#");
+        }
+        
+        /**
+         * Tests <i>convertEncodingToChunks</i> method of the <i>Base 32</i>
+         * class - used in the <i>decoding</i> process.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testConvertEncodingToChunks()
+        {
+            // Core Variables
+            
+            $encoder = new Base32();
+            
+            // Logic
+            
+            $this->assertSame([
+                12, 24
+            ], $encoder->convertEncodingToChunks("MY======"));
+            
+            $this->expectExceptionMessage("Invalid encoding provided, it " .
+                "can't be converted. Encoding: \"#\"");
+            
+            $encoder->convertEncodingToChunks("#");
         }
         
         /*****************\
