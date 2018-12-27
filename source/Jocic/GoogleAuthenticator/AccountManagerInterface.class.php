@@ -32,77 +32,43 @@
     namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>SecretInterface</i> is an interface used to enforce implementation of
-     * core secret related methods.
+     * <i>AccountManagerInterface</i> is an interface used to enforce
+     * implementation of core account manager related methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface SecretInterface
+    interface AccountManagerInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Returns a value of the secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
-        
-        public function getValue();
+        public function getAccounts();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        /**
-         * Sets a value of the secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $secret
-         *   New value of the secret.
-         */
-        
-        public function setValue($secret);
+        public function setAccounts();
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        /**
-         * Generates a random secret that may be used for implementing MFA.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
+        public function addAccount();
         
-        public function generateValue();
+        public function removeAccount();
+        
+        public function findAccount();
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        /**
-         * Checks if a provided secret is valid or not.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $secret
-         *   Secret that needs to be checked.
-         */
-        
-        public function isSecretValid($secret);
+        // CHECK METHODS GO HERE
         
         /*****************\
         |* OTHER METHODS *|

@@ -40,7 +40,7 @@
      * @version   1.0.0
      */
     
-    class AccountManager
+    class AccountManager implements AccountManagerInterface
     {
         /******************\
         |* CORE CONSTANTS *|
@@ -52,184 +52,25 @@
         |* CORE VARIABLES *|
         \******************/
         
-        /**
-         * Name of the service used by an account, ex. <i>Hosting ABC</i>.
-         * 
-         * @var    string
-         * @access private
-         */
-        
-        private $serviceName = "";
-        
-        /**
-         * Name of an account, ex. <i>John Doe</i> or <i>john@doe.com</i>.
-         * 
-         * @var    string
-         * @access private
-         */
-        
-        private $accountName = "";
-        
-        /**
-         * Secret of an account.
-         * 
-         * @var    string
-         * @access private
-         */
-        
-        private $accountSecret = null;
+        // CORE VARIABLES GO HERE
         
         /*******************\
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        /**
-         * Constructor for the class <i>Account</i>. It's used for setting
-         * core class parameters upon object instantiation.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $serviceName
-         *   Account's service name that should be set.
-         * @param string $accountName
-         *   Account's name that should be set.
-         * @param object $secret
-         *   Account's secret that should be set.
-         * @return void
-         */
-        
-        public function __construct($serviceName = "", $accountName = "",
-            $accountSecret = null)
-        {
-            // Logic
-            
-            $this->setServiceName($serviceName);
-            $this->setAccountName($accountName);
-            $this->setAccountSecret($accountSecret);
-        }
+        // MAGIC FUNCTIONS GO HERE
         
         /***************\
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Returns an account's service name.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return string
-         *   Name of an account's service, ex. <i>Hosting ABC</i>.
-         */
-        
-        public function getServiceName()
-        {
-            // Logic
-            
-            return $this->serviceName;
-        }
-        
-        /**
-         * Returns an account's name.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return string
-         *   Name of an account, ex. <i>John Doe</i> or <i>john@doe.com</i>.
-         */
-        
-        public function getAccountName()
-        {
-            // Logic
-            
-            return $this->accountName;
-        }
-        
-        /**
-         * Returns an account's secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return object
-         *   Secret of an account.
-         */
-        
-        public function getAccountSecret()
-        {
-            // Logic
-            
-            return $this->accountSecret;
-        }
+        // GET METHODS GO HERE
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        /**
-         * Sets an account's service name.
-         * 
-         * Note: Service name parameter is required, it must be set.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $serviceName
-         *   New account's service name.
-         * @return void
-         */
-        
-        public function setServiceName($serviceName)
-        {
-            // Logic
-            
-            $this->serviceName = $serviceName;
-        }
-        
-        /**
-         * Sets an account's name.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $accountName
-         *   New account's name.
-         * @return void
-         */
-        
-        public function setAccountName($accountName)
-        {
-            // Logic
-            
-            $this->accountName = $accountName;
-        }
-        
-        /**
-         * Sets an account's secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $accountSecret
-         *   New account's secret.
-         * @return void
-         */
-        
-        public function setAccountSecret($accountSecret)
-        {
-            // Logic
-            
-            $this->accountSecret = $accountSecret;
-        }
+        // SET METHODS GO HERE
         
         /****************\
         |* CORE METHODS *|
