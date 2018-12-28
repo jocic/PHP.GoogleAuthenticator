@@ -29,45 +29,99 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    // Step 1 - Define Autoload Function.
+    use PHPUnit\Framework\TestCase;
     
     /**
-     * Automatically loads a class for the library.
+     * <i>TestAutoload</i> class is used for testing project's autoloader as
+     * it isn't tested automatically by Travis CI.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
-     * 
-     * @param string $class_name
-     *   Name of the class, ex. <i>Security\Mfa\GoogleAuthenticator</i>.
-     * @return bool
-     *   Value <i>TRUE</i> if class was included, and vice versa.
      */
     
-    function google_authenticator_loader($class_name)
+    class TestAutoload extends TestCase
     {
-        // Core Variables
+        /******************\
+        |* CORE CONSTANTS *|
+        \******************/
         
-        $class_name = str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . ".php";
-        $class_file = join(DIRECTORY_SEPARATOR, [
-            __DIR__,
-            $class_name
-        ]);
+        // CORE CONSTANTS GO HERE
         
-        // Logic
+        /******************\
+        |* CORE VARIABLES *|
+        \******************/
         
-        if (is_file($class_file))
+        // CORE VARIABLES GO HERE
+        
+        /*******************\
+        |* MAGIC FUNCTIONS *|
+        \*******************/
+        
+        // MAGIC FUNCTIONS GO HERE
+        
+        /***************\
+        |* GET METHODS *|
+        \***************/
+        
+        // GET METHODS GO HERE
+        
+        /***************\
+        |* SET METHODS *|
+        \***************/
+        
+        // SET METHODS GO HERE
+        
+        /****************\
+        |* CORE METHODS *|
+        \****************/
+        
+        /**
+         * Tests the project's autoloader.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testAutoloader()
         {
-            include $class_file;
+            // Core Variables
             
-            return true;
+            $testValues = [
+                "\Jocic\GoogleAuthenticator\Secret" => true,
+                "\Jocic\GoogleAuthenticator\Potato" => false,
+            ];
+            
+            // Step 1 - Check If Function Exists
+            
+            if (!function_exists("google_authenticator_loader"))
+            {
+                $this->fail("Project's autoloader function is missing.");
+            }
+            
+            // Step 2 - Test File Inclusion
+            
+            foreach ($testValues as $testValue => $testResult)
+            {
+                $this->assertSame($testResult,
+                    google_authenticator_loader($testValue), $testValue);
+            }
         }
         
-        return false;
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
+        
+        // CHECK METHODS GO HERE
+        
+        /*****************\
+        |* OTHER METHODS *|
+        \*****************/
+        
+        // OTHER METHODS GO HERE
     }
-    
-    // Step 2 - Register Autoload Function
-    
-    spl_autoload_register("google_authenticator_loader");
     
 ?>

@@ -11,7 +11,7 @@ Following specifications are referenced:
 *   [RFC 4648](documentation/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
 *   [RFC 6238](documentation/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
 *   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
-*   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code bar code symbology specification
+*   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code Bar Code Symbology Specification
 
 __Note:__ Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
@@ -161,12 +161,20 @@ Following unit tests are available:
 
 *   __Essentials__ - Base 32 encoder, QR code generator, etc.
 *   __Elements__ - Secret, Account, etc.
+*   __Authenticator__ - Nothing right now.
 
 You can execute them easily from the terminal like in the example below.
 
 ```bash
 bash ./scripts/phpunit.sh --testsuite essentials
 bash ./scripts/phpunit.sh --testsuite elements
+bash ./scripts/phpunit.sh --testsuite core
+```
+
+Please don’t forget to install necessary dependencies before attempting to do God's work above. They may be important.
+
+```bash
+bash ./scripts/composer.sh install
 ```
 
 ## Contribution

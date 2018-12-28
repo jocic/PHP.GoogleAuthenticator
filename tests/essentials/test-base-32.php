@@ -191,12 +191,19 @@
             
             // Step 1 - Apply Padding
             
-            $this->expectExceptionMessage("Invalid encoding provided, padding" .
-                " can't be applied. Encoding: \"#\"");
-            
             $this->assertSame("MY======", $encoder->applyPadding("MY"));
             
-            $encoder->applyPadding("#");
+            try
+            {
+                $encoder->applyPadding("#");
+                
+                $this->fail("Exception should be thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid encoding provided, padding" .
+                    " can't be applied. Encoding: \"#\"", $e->getMessage());
+            }
         }
         
         /**
@@ -220,10 +227,18 @@
             
             $this->assertSame("MY", $encoder->stripPadding("MY======"));
             
-            $this->expectExceptionMessage("Invalid encoding provided, padding" .
-                " can't be stripped. Encoding: \"#\"");
+            try
+            {
+                $encoder->stripPadding("#");
+                
+                $this->fail("Exception should be thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid encoding provided, padding" .
+                    " can't be stripped. Encoding: \"#\"", $e->getMessage());
+            }
             
-            $encoder->stripPadding("#");
         }
         
         /**
@@ -249,10 +264,18 @@
                 12, 24
             ], $encoder->convertEncodingToChunks("MY======"));
             
-            $this->expectExceptionMessage("Invalid encoding provided, it " .
-                "can't be converted. Encoding: \"#\"");
+            try
+            {
+                $encoder->convertEncodingToChunks("#");
+                
+                $this->fail("Exception should be thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid encoding provided, it " .
+                    "can't be converted. Encoding: \"#\"", $e->getMessage());
+            }
             
-            $encoder->convertEncodingToChunks("#");
         }
         
         /*****************\

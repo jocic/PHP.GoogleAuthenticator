@@ -1,13 +1,15 @@
 <phpunit bootstrap="./source/Autoload.php">
     <testsuites>
         <testsuite name="essentials">
+            <file>tests/essentials/test-autoloader.php</file>
             <file>tests/essentials/test-base-32.php</file>
         </testsuite>
         <testsuite name="elements">
             <file>tests/elements/test-secret.php</file>
-        </testsuite>
-        <testsuite name="elements">
             <file>tests/elements/test-account.php</file>
+        </testsuite>
+        <testsuite name="authenticator">
+            
         </testsuite>
     </testsuites>
     <filter>
