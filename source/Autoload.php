@@ -47,7 +47,7 @@
     {
         // Core Variables
         
-        $class_name = str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . ".class.php";
+        $class_name = str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . ".php";
         $class_file = join(DIRECTORY_SEPARATOR, [
             __DIR__,
             $class_name

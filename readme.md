@@ -152,7 +152,7 @@ There's two ways you can add __Google Authenticator__ library to your project:
 *   Via Composer, by executing the command below
 
 ```bash
-composer require jocic/google-authenticator
+composer require jocic/google-authenticator dev-master
 ```
 
 ## Tests
