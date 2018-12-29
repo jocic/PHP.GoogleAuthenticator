@@ -126,7 +126,18 @@ $account->setAccountSecret($secret);
 
 ### Example 5 - Account Manager (Adding)
 
-...
+Account Manager class can be used for, you guessed it, managing accounts on local file system. To add an account simply use the following snippet.
+
+```php
+$accountManager = new Jocic\GoogleAuthenticator\AccountManager();
+
+$accountManager->addAccount($account);
+```
+
+Newly added account will receive an ID used for easier referencing. Also, you should keep in mind that:
+
+*   Account ID is only unique in relation to it's manager
+*   Account can only be added to one account manager
 
 ### Example 6 - Account Manager (Removing)
 
@@ -171,7 +182,7 @@ bash ./scripts/phpunit.sh --testsuite elements
 bash ./scripts/phpunit.sh --testsuite core
 ```
 
-Please don’t forget to install necessary dependencies before attempting to do God's work above. They may be important.
+Please don’t forget to install necessary dependencies before attempting to do the God's work above. They may be important.
 
 ```bash
 bash ./scripts/composer.sh install

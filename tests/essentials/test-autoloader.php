@@ -95,14 +95,7 @@
                 "\Jocic\GoogleAuthenticator\Potato" => false,
             ];
             
-            // Step 1 - Check If Function Exists
-            
-            if (!function_exists("load_google_authenticator_class"))
-            {
-                $this->fail("Project's autoloader function is missing.");
-            }
-            
-            // Step 2 - Test File Inclusion
+            // Logic
             
             foreach ($testValues as $testValue => $testResult)
             {

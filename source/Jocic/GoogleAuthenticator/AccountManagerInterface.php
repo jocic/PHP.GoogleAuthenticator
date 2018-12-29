@@ -46,23 +46,78 @@
         |* GET METHODS *|
         \***************/
         
+        /**
+         * Returns an array containing added accounts.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
         public function getAccounts();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        public function setAccounts();
+        /**
+         * Replaces manager's accounts with new ones.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param array $accounts
+         *   Array containing new accounts that should be assigned.
+         */
+        
+        public function setAccounts($accounts);
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        public function addAccount();
+        /**
+         * Adds an account to the manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be added.
+         */
         
-        public function removeAccount();
+        public function addAccount($account);
         
-        public function findAccount();
+        /**
+         * Removes an account from the manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param mixed $account
+         *   Account that should be removed - either an object, 
+         */
+        
+        public function removeAccount($account);
+        
+        /**
+         * Finds an account in the manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $key
+         *   Key that should be used for finding an account, ex. <i>ID</i>.
+         * @param mixed $value
+         *   Value that should be used for finding an account, it depends on
+         *   the used key.
+         */
+        
+        public function findAccount($key, $value);
         
         /*****************\
         |* CHECK METHODS *|
@@ -74,7 +129,15 @@
         |* OTHER METHODS *|
         \*****************/
         
-        // OTHER METHODS GO HERE
+        /**
+         * Resets account manager, essentially removing all added accounts.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function reset();
     }
     
 ?>
