@@ -32,7 +32,7 @@
     use PHPUnit\Framework\TestCase;
     
     /**
-     * <i>TestAutoload</i> class is used for testing project's autoloader as
+     * <i>TestAutoloader</i> class is used for testing project's autoloader as
      * it isn't tested automatically by Travis CI.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
@@ -40,7 +40,7 @@
      * @version   1.0.0
      */
     
-    class TestAutoload extends TestCase
+    class TestAutoloader extends TestCase
     {
         /******************\
         |* CORE CONSTANTS *|
@@ -77,7 +77,7 @@
         \****************/
         
         /**
-         * Tests the project's autoloader.
+         * Tests the project's autoloading function.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -86,7 +86,7 @@
          * @return void
          */
         
-        public function testAutoloader()
+        public function testFunction()
         {
             // Core Variables
             
@@ -97,7 +97,7 @@
             
             // Step 1 - Check If Function Exists
             
-            if (!function_exists("google_authenticator_loader"))
+            if (!function_exists("load_google_authenticator_class"))
             {
                 $this->fail("Project's autoloader function is missing.");
             }
@@ -107,7 +107,7 @@
             foreach ($testValues as $testValue => $testResult)
             {
                 $this->assertSame($testResult,
-                    google_authenticator_loader($testValue), $testValue);
+                    load_google_authenticator_class($testValue), $testValue);
             }
         }
         

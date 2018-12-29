@@ -32,7 +32,7 @@
     // Step 1 - Define Autoload Function.
     
     /**
-     * Automatically loads a class for the library.
+     * Loads a desired class from the project's source directory.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
@@ -44,7 +44,7 @@
      *   Value <i>TRUE</i> if class was included, and vice versa.
      */
     
-    function google_authenticator_loader($class_name)
+    function load_google_authenticator_class($class_name)
     {
         // Core Variables
         
@@ -68,6 +68,6 @@
     
     // Step 2 - Register Autoload Function
     
-    spl_autoload_register("google_authenticator_loader");
+    spl_autoload_register("load_google_authenticator_class");
     
 ?>
