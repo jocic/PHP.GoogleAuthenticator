@@ -53,6 +53,15 @@
         \******************/
         
         /**
+         * String containing manager's unique identifier.
+         * 
+         * @var    string
+         * @access private
+         */
+        
+        private $managerId = "";
+        
+        /**
          * Array containing manager's accounts.
          * 
          * @var    array
@@ -74,11 +83,45 @@
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        // MAGIC FUNCTIONS GO HERE
+        /**
+         * Constructor for the class <i>AccountManager</i>. It's used for
+         * determening and setting unique manager's identifer.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function __construct()
+        {
+            // Logic
+            
+            $this->managerId = sha1(microtime());
+        }
         
         /***************\
         |* GET METHODS *|
         \***************/
+        
+        /**
+         * Returns a manager's unique identifier.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Value of manager's unique identifier.
+         */
+        
+        public function getManagerId()
+        {
+            // Logic
+            
+            return $this->managerId;
+        }
         
         /**
          * Returns an array containing added accounts.
@@ -206,7 +249,7 @@
             
             if ($account->getId() != null)
             {
-                throw new \Exception("Account belongs to a manager.");
+                throw new \Exception("Account belongs to a manager, or has an ID assigned.");
             }
             
             // Step 3 - Add Account
@@ -232,7 +275,22 @@
         
         public function removeAccount($account)
         {
+            // Logic
             
+            if (is_numeric($account))
+            {
+                return $this->removeByAccountId($account);
+            }
+            else if (is_string($account))
+            {
+                return $this->removeByAccountName($account);
+            }
+            else if ($account instanceof Account)
+            {
+                return $this->removeByAccountObject($account);
+            }
+            
+            throw new \Exception("Removal option couldn't be determined.");
         }
         
         public function findAccount($account)
@@ -245,6 +303,133 @@
         \*****************/
         
         // CHECK METHODS GO HERE
+        
+        /*******************\
+        |* REMOVAL METHODS *|
+        \*******************/
+        
+        /**
+         * Removes an account from the manager using account's ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $accountId
+         *   ID of an account that should be removed.
+         * @return bool
+         *   Value <i>TRUE</i> if an account was removed, and vice versa.
+         */
+        
+        public function removeByAccountId($accountId)
+        {
+            // Step 1 - Check Value
+            
+            if (!is_numeric($accountId))
+            {
+                throw new \Exception("Provided ID isn't numeric.");
+            }
+            
+            // Step 2 - Remove Account
+            
+            if (isset($this->accounts[$accountId))
+            {
+                unset($this->accounts[$accountId]);
+                
+                return true;
+            }
+            
+            return false;
+        }
+        
+        /**
+         * Removes an account from the manager using account's name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $accountId
+         *   Name of an account that should be removed.
+         * @return bool
+         *   Value <i>TRUE</i> if an account was removed, and vice versa.
+         */
+        
+        public function removeByAccountName($accountName)
+        {
+            // Core Variables
+            
+            $accounts = $this->getAccounts();
+            
+            // Step 1 - Check Value
+            
+            if (!is_string($accountId))
+            {
+                throw new \Exception("Provided ID isn't numeric.");
+            }
+            
+            // Step 2 - Remove Account
+            
+            foreach ($accounts as $accountId => $accountObject)
+            {
+                if ($accountObject->getAccountName() == $accountName)
+                {
+                    unset($this->accounts[$accountId]);
+                    
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        /**
+         * Removes an account from the manager using account's object.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $accountObject
+         *   Object of an account that should be removed.
+         * @return bool
+         *   Value <i>TRUE</i> if an account was removed, and vice versa.
+         */
+        
+        public function removeByAccountObject($accountObject)
+        {
+            // Core Variables
+            
+            $identifier = null;
+            
+            // Step 1 - Check Object
+            
+            if (!($accountObject instanceof Account))
+            {
+                throw new \Exception("Provided object isn't valid.");
+            }
+            
+            // Step 2 - Check Account's Manager
+            
+            if ($this->getManagerId() != $accountObject->getAccountManager()
+                ->getManagerId())
+            {
+                throw new \Exception("Account doesn't belong to this manager.");
+            }
+            
+            // Step 3 - Remove Account
+            
+            if (($identifier = $accountObject->getAccountId()) != null)
+            {
+                return $this->removeByAccountId($identifier);
+            }
+            else if (($identifier = $accountObject->getAccountName()) != null)
+            {
+                return $this->removeByAccountName($identifier);
+            }
+            
+            return false;
+        }
         
         /*****************\
         |* OTHER METHODS *|

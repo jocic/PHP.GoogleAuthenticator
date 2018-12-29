@@ -154,7 +154,15 @@ $accountManager = $account->getAccountManager();
 
 ### Example 6 - Account Manager (Removing)
 
-...
+Account removal is extremely easy and can be achieved by utilizing the "remove" method and passing an ID value.
+
+```php
+$accountManager->removeAccount(12); // By ID
+$accountManager->removeAccount("john@doe.com"); // By Name
+$accountManager->removeAccount($account); // By Object
+```
+
+Keep in mind that uniqueness of an account name isn't enforced.
 
 ### Example 7 - Account Manager (Finding)
 
