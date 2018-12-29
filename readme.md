@@ -146,7 +146,7 @@ For getting an assigned ID, use the snippet below. Returned value will be "NULL"
 $accountId = $account->getAccountId();
 ```
 
-To get manager's reference use the following snippet. Returned value will be "NULL" if account wasn't assigned.
+To get manager's reference use the following snippet. As with the ID method, returned value will be "NULL" if account wasn't assigned to a manager.
 
 ```php
 $accountManager = $account->getAccountManager();
