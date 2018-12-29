@@ -13,11 +13,11 @@ Following specifications are referenced:
 *   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 *   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code Bar Code Symbology Specification
 
-__Note:__ Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
+**Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
 
-__Project is still under development.__
+**Project is still under development.**
 
 ## Versioning Scheme
 
@@ -37,7 +37,7 @@ Following examples should be more then enough to get you started. I tried my bes
 
 Generating a secret is quite a straightforward process, it is done upon instantiating an object.
 
-__Note:__ Secret is an encoded 80-bit value used for one-time password generation. It should ideally be unique for each account so you perform an appropriate check before assigning it.
+**Note:** Secret is an encoded 80-bit value used for one-time password generation. It should ideally be unique for each account so you perform an appropriate check before assigning it.
 
 ```php
 $secret = new Jocic\GoogleAuthenticator\Secret();
@@ -57,9 +57,9 @@ $secret->setValue($newSecret);
 
 Secret can be generated using two different methods:
 
-*   __Base Method__ - Random values from the base table are picked until an 80-bit value is formed.
-*   __Numerical Method__ - Random numbers, ranging from 0 to 256, are generated until an 80-bit value is formed.
-*   __Binary Method__ - Random bits are chosen until an 80-bit value is formed.
+*   **Base Method** - Random values from the base table are picked until an 80-bit value is formed.
+*   **Numerical Method** - Random numbers, ranging from 0 to 256, are generated until an 80-bit value is formed.
+*   **Binary Method** - Random bits are chosen until an 80-bit value is formed.
 
 The base method is used by default, so you need not specify it. However, if something is compelling you to do otherwise, Satan for example, you can use the following snippet.
 
@@ -138,6 +138,19 @@ Newly added account will receive an ID used for easier referencing. Also, you sh
 
 *   Account ID is only unique in relation to it's manager
 *   Account can only be added to one account manager
+*   Account, belonging to a a manager, will hold it's reference
+
+For getting an assigned ID, use the snippet below. Returned value will be "NULL" if account wasn't assigned.
+
+```php
+$accountId = $account->getAccountId();
+```
+
+To get manager's reference use the following snippet. Returned value will be "NULL" if account wasn't assigned.
+
+```php
+$accountManager = $account->getAccountManager();
+```
 
 ### Example 6 - Account Manager (Removing)
 
@@ -157,7 +170,7 @@ Newly added account will receive an ID used for easier referencing. Also, you sh
 
 ## Installation
 
-There's two ways you can add __Google Authenticator__ library to your project:
+There's two ways you can add **Google Authenticator** library to your project:
 
 *   Copying files from the "source" directory to your project and requiring the "Autoload.php" script
 *   Via Composer, by executing the command below
@@ -170,9 +183,9 @@ composer require jocic/google-authenticator dev-master
 
 Following unit tests are available:
 
-*   __Essentials__ - Base 32 encoder, QR code generator, etc.
-*   __Elements__ - Secret, Account, etc.
-*   __Authenticator__ - Nothing right now.
+*   **Essentials** - Base 32 encoder, QR code generator, etc.
+*   **Elements** - Secret, Account, etc.
+*   **Authenticator** - Nothing right now.
 
 You can execute them easily from the terminal like in the example below.
 

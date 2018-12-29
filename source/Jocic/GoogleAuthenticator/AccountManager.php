@@ -52,7 +52,23 @@
         |* CORE VARIABLES *|
         \******************/
         
-        // CORE VARIABLES GO HERE
+        /**
+         * Array containing manager's accounts.
+         * 
+         * @var    array
+         * @access private
+         */
+        
+        private $accounts = [];
+        
+        /**
+         * Integer containing last used ID.
+         * 
+         * @var    array
+         * @access private
+         */
+        
+        private $lastId = 0;
         
         /*******************\
         |* MAGIC FUNCTIONS *|
@@ -64,19 +80,165 @@
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        /**
+         * Returns an array containing added accounts.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return array
+         *   Array containing all added accounts.
+         */
+        
+        public function getAccounts()
+        {
+            // Logic
+            
+            return $this->accounts;
+        }
+        
+        /**
+         * Returns the last available account ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return integer
+         *   Last available account ID.
+         */
+        
+        public function getLastId()
+        {
+            // Logic
+            
+            return $this->lastId;
+        }
+        
+        /**
+         * Returns the next available account ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return integer
+         *   Next available account ID.
+         */
+        
+        public function getNextId()
+        {
+            // Logic
+            
+            return $this->lastId + 1;
+        }
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        /**
+         * Replaces manager's accounts with new ones.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param array $accounts
+         *   Array containing new accounts that should be assigned.
+         * @return void
+         */
+        
+        public function setAccounts($accounts)
+        {
+            // Step 1 - Check Array
+            
+            if (!is_array($accounts))
+            {
+                throw new \Exception("Provided accounts are not in an array.");
+            }
+            
+            // Step 2 - Check Elements
+            
+            foreach ($accounts as $account)
+            {
+                if (!($account instanceof Account))
+                {
+                    throw new \Exception("Invalid object type.");
+                }
+            }
+            
+            // Step 3 - Set Accounts
+            
+            $this->accounts = $accounts;
+        }
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        /**
+         * Adds an account to the manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be added.
+         */
+        
+        public function addAccount($account)
+        {
+            // Core Variables
+            
+            $nextId = $this->getNextId();
+            
+            // Step 1 - Check Account Type
+            
+            if (!($account instanceof Account))
+            {
+                throw new \Exception("Invalid object type.");
+            }
+            
+            // Step 2 - Check Account State
+            
+            if ($account->getId() != null)
+            {
+                throw new \Exception("Account belongs to a manager.");
+            }
+            
+            // Step 3 - Add Account
+            
+            $this->accounts[$nextId] = $account;
+            
+            $account->setId($nextId);
+            $account->setAccountManager($this);
+        }
+        
+        /**
+         * Removes an account from the manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be removed.
+         * @return bool
+         *   Value <i>TRUE</i> if an account was removed, and vice versa.
+         */
+        
+        public function removeAccount($account)
+        {
+            
+        }
+        
+        public function findAccount($account)
+        {
+            
+        }
         
         /*****************\
         |* CHECK METHODS *|
@@ -88,7 +250,23 @@
         |* OTHER METHODS *|
         \*****************/
         
-        // OTHER METHODS GO HERE
+        /**
+         * Resets account manager, essentially removing all added accounts.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function reset()
+        {
+            // Logic
+            
+            $this->accounts = [];
+            $this->lastId   = 0;
+        }
     }
     
 ?>

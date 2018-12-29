@@ -47,6 +47,16 @@
         \***************/
         
         /**
+         * Returns an account's ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getAccountId();
+        
+        /**
          * Returns an account's service name.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
@@ -79,6 +89,19 @@
         /***************\
         |* SET METHODS *|
         \***************/
+        
+        /**
+         * Sets an account's ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $accountId
+         *   New account's ID.
+         */
+        
+        public function setAccountId($accountId);
         
         /**
          * Sets an account's service name, ex. <i>FastFood ABC</i>.

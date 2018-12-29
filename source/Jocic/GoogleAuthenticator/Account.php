@@ -53,6 +53,24 @@
         \******************/
         
         /**
+         * Assigned account ID.
+         * 
+         * @var    integer
+         * @access private
+         */
+        
+        private $accountId = null;
+        
+        /**
+         * Reference of an account manager storing the account..
+         * 
+         * @var    object
+         * @access private
+         */
+        
+        private $accountManager = null;
+        
+        /**
          * Name of the service used by an account, ex. <i>Hosting ABC</i>.
          * 
          * @var    string
@@ -115,6 +133,42 @@
         \***************/
         
         /**
+         * Returns an account's ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return integer
+         *   ID of an account, ex. <i>123</i>.
+         */
+        
+        public function getAccountId()
+        {
+            // Logic
+            
+            return $this->accountId;
+        }
+        
+        /**
+         * Returns an account's manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return object
+         *   Reference to the account's manager.
+         */
+        
+        public function getAccountManager()
+        {
+            // Logic
+            
+            return $this->accountManager;
+        }
+        
+        /**
          * Returns an account's service name.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
@@ -171,6 +225,58 @@
         /***************\
         |* SET METHODS *|
         \***************/
+        
+        /**
+         * Sets an account's ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $accountId
+         *   New account's ID.
+         * @return void
+         */
+        
+        public function setAccountId($accountId)
+        {
+            // Logic
+            
+            if ($this->accountId != null)
+            {
+                throw new \Exception("ID was already assigned.");
+            }
+            
+            $this->accountId = $accountId;
+        }
+        
+        /**
+         * Sets an account's manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $accountManager
+         *   New account's manager.
+         * @return void
+         */
+        
+        public function setAccountManager($accountManager)
+        {
+            // Logic
+            
+            if ($this->accountManager != null)
+            {
+                throw new \Exception("Manager was already assigned.");
+            }
+            else if (!($accountManager instanceof AccountManager))
+            {
+                throw new \Exception("Invalid object used.");
+            }
+            
+            $this->accountManager = $accountManager;
+        }
         
         /**
          * Sets an account's service name.

@@ -156,11 +156,6 @@
         {
             // Logic
             
-            if ($this->encoder == null)
-            {
-                throw new \Exception("Encoder wasn't instantiated.");
-            }
-            
             return $this->encoder;
         }
         
