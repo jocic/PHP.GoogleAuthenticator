@@ -166,7 +166,13 @@ Keep in mind that uniqueness of an account name isn't enforced.
 
 ### Example 7 - Account Manager (Finding)
 
-...
+Finding stored accounts is done in the same fashion.
+
+```php
+$accountManager->findAccount(12); // By ID
+$accountManager->findAccount("john@doe.com"); // By Name
+$accountManager->findAccount($account); // By Object
+```
 
 ### Example 8 - Account Manager (Saving)
 

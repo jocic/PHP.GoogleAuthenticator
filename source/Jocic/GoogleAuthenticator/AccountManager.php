@@ -267,8 +267,8 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $account
-         *   Account that should be removed.
+         * @param mixed $account
+         *   Account that should be removed - ID, Name, or an Object.
          * @return bool
          *   Value <i>TRUE</i> if an account was removed, and vice versa.
          */
@@ -290,12 +290,40 @@
                 return $this->removeByAccountObject($account);
             }
             
-            throw new \Exception("Removal option couldn't be determined.");
+            throw new \Exception("Option couldn't be determined.");
         }
+        
+        /**
+         * Finds an account in the manager.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param mixed $account
+         *   Account that should be removed - ID, Name, or an Object.
+         * @return object
+         *   Account object that was found, or value <i>NULL</i> if it wasn't.
+         */
         
         public function findAccount($account)
         {
+            // Logic
             
+            if (is_numeric($account))
+            {
+                return $this->findByAccountId($account);
+            }
+            else if (is_string($account))
+            {
+                return $this->findByAccountName($account);
+            }
+            else if ($account instanceof Account)
+            {
+                return $this->findByAccountObject($account);
+            }
+            
+            throw new \Exception("Option couldn't be determined.");
         }
         
         /*****************\
@@ -304,9 +332,9 @@
         
         // CHECK METHODS GO HERE
         
-        /*******************\
-        |* REMOVAL METHODS *|
-        \*******************/
+        /******************\
+        |* REMOVE METHODS *|
+        \******************/
         
         /**
          * Removes an account from the manager using account's ID.
@@ -349,7 +377,7 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param integer $accountId
+         * @param string $accountName
          *   Name of an account that should be removed.
          * @return bool
          *   Value <i>TRUE</i> if an account was removed, and vice versa.
@@ -365,7 +393,7 @@
             
             if (!is_string($accountId))
             {
-                throw new \Exception("Provided ID isn't numeric.");
+                throw new \Exception("Provided ID isn't string.");
             }
             
             // Step 2 - Remove Account
@@ -429,6 +457,121 @@
             }
             
             return false;
+        }
+        
+        /****************\
+        |* FIND METHODS *|
+        \****************/
+        
+        /**
+         * Finds and returns an account from the manager using account's ID.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $accountId
+         *   ID of an account that should be found.
+         * @return object
+         *   Account object that was found, or value <i>NULL</i> if it wasn't.
+         */
+        
+        public function findByAccountId($accountId)
+        {
+            // Step 1 - Check Value
+            
+            if (!is_numeric($accountId))
+            {
+                throw new \Exception("Provided ID isn't numeric.");
+            }
+            
+            // Step 2 - Remove Account
+            
+            if (isset($this->accounts[$accountId))
+            {
+                return $this->accounts[$accountId];
+            }
+            
+            return null;
+        }
+        
+        /**
+         * Finds and returns an account from the manager using account's name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $accountName
+         *   Name of an account that should be found.
+         * @return object
+         *   Account object that was found, or value <i>NULL</i> if it wasn't.
+         */
+        
+        public function findByAccountName($accountName)
+        {
+            // Core Variables
+            
+            $accounts = $this->getAccounts();
+            
+            // Step 1 - Check Value
+            
+            if (!is_string($accountId))
+            {
+                throw new \Exception("Provided ID isn't string.");
+            }
+            
+            // Step 2 - Find Account
+            
+            foreach ($accounts as $accountId => $accountObject)
+            {
+                if ($accountObject->getAccountName() == $accountName)
+                {
+                    return $this->accounts[$accountId];
+                }
+            }
+            
+            return null;
+        }
+        
+        /**
+         * Finds and returns an account from the manager using account's object.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $accountObject
+         *   Object of an account that should be found.
+         * @return object
+         *   Account object that was found, or value <i>NULL</i> if it wasn't.
+         */
+        
+        public function findByAccountObject($accountObject)
+        {
+            // Core Variables
+            
+            $identifier = null;
+            
+            // Step 1 - Check Object
+            
+            if (!($accountObject instanceof Account))
+            {
+                throw new \Exception("Provided object isn't valid.");
+            }
+            
+            // Step 2 - Find Account
+            
+            if (($identifier = $accountObject->getAccountId()) != null)
+            {
+                return $this->findByAccountId($identifier);
+            }
+            else if (($identifier = $accountObject->getAccountName()) != null)
+            {
+                return $this->findByAccountName($identifier);
+            }
+            
+            return null;
         }
         
         /*****************\
