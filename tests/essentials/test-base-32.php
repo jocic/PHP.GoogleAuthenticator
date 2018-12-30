@@ -197,18 +197,23 @@
             {
                 $encoder->applyPadding("#");
                 
-                $this->fail("Exception should be thrown!");
+                $this->fail("Exception should've been thrown!");
             }
             catch (\Exception $e)
             {
                 $this->assertEquals("Invalid encoding provided, padding" .
                     " can't be applied. Encoding: \"#\"", $e->getMessage());
             }
+            
+            // Step 2 - Chunk Conversion
+            
+            $this->assertSame([
+                12, 25, 23, 22, 30
+            ], $encoder->convertInputToChunks("foo"));
         }
         
         /**
-         * Tests <i>stripPadding</i> method of the <i>Base 32</i> class - used
-         * in the <i>decoding</i> process.
+         * Tests decoding process of the <i>Base 32</i> implementation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -217,13 +222,13 @@
          * @return void
          */
         
-        public function testStripPadding()
+        public function testDecodingProcesses()
         {
             // Core Variables
             
             $encoder = new Base32();
             
-            // Logic
+            // Step 1 - Strip Padding
             
             $this->assertSame("MY", $encoder->stripPadding("MY======"));
             
@@ -231,7 +236,7 @@
             {
                 $encoder->stripPadding("#");
                 
-                $this->fail("Exception should be thrown!");
+                $this->fail("Exception should've been thrown!");
             }
             catch (\Exception $e)
             {
@@ -239,26 +244,7 @@
                     " can't be stripped. Encoding: \"#\"", $e->getMessage());
             }
             
-        }
-        
-        /**
-         * Tests <i>convertEncodingToChunks</i> method of the <i>Base 32</i>
-         * class - used in the <i>decoding</i> process.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        
-        public function testConvertEncodingToChunks()
-        {
-            // Core Variables
-            
-            $encoder = new Base32();
-            
-            // Logic
+            // Step 2 - Chunk Conversion
             
             $this->assertSame([
                 12, 24
@@ -268,14 +254,13 @@
             {
                 $encoder->convertEncodingToChunks("#");
                 
-                $this->fail("Exception should be thrown!");
+                $this->fail("Exception should've been thrown!");
             }
             catch (\Exception $e)
             {
                 $this->assertEquals("Invalid encoding provided, it " .
                     "can't be converted. Encoding: \"#\"", $e->getMessage());
             }
-            
         }
         
         /*****************\
