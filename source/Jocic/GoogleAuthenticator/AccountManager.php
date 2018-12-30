@@ -174,7 +174,7 @@
         {
             // Logic
             
-            return $this->lastId + 1;
+            return $this->lastId++;
         }
         
         /***************\
@@ -217,6 +217,30 @@
             $this->accounts = $accounts;
         }
         
+        /**
+         * Sets an ID that was assigned to the newly added account.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $id
+         *   ID that should be set.
+         * @return void
+         */
+        
+        private function setLastId($id)
+        {
+            // Logic
+            
+            if ($this->lastId >= $id)
+            {
+                throw new \Exception("Provided ID was already used.");
+            }
+            
+            $this->lastId = $id;
+        }
+        
         /****************\
         |* CORE METHODS *|
         \****************/
@@ -236,7 +260,7 @@
         {
             // Core Variables
             
-            $nextId = $this->getNextId();
+            $accountId = null;
             
             // Step 1 - Check Account Type
             
@@ -247,16 +271,30 @@
             
             // Step 2 - Check Account State
             
-            if ($account->getId() != null)
+            if ($account->getAccountManager() != null)
             {
                 throw new \Exception("Account belongs to a manager, or has an ID assigned.");
             }
             
-            // Step 3 - Add Account
+            // Step 3 - Handle Account ID
             
-            $this->accounts[$nextId] = $account;
+            if ($account->getAccountId() == null)
+            {
+                $accountId = $this->getNextId();
+                
+                $account->setAccountId($accountId);
+            }
+            else
+            {
+                $this->setLastId($this->getAccountId());
+                
+                $accountId = $this->getLastId();
+            }
             
-            $account->setId($nextId);
+            // Step 4 - Add Account
+            
+            $this->accounts[$accountId] = $account;
+            
             $account->setAccountManager($this);
         }
         
@@ -359,7 +397,8 @@
             
             foreach ($accounts as $account)
             {
-                $data[] = [
+                $data[] = [,
+                    "version"      => "1",
                     "account_id"   => $account->getAccountId(),
                     "service_name" => $account->getServiceName(),
                     "account_name" => $account->getAccountName(),
@@ -368,6 +407,77 @@
             }
             
             return file_put_contents(serialize($data)) > 0;
+        }
+        
+        /**
+         * Loads manager's accounts from a file.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $fileLocation
+         *   File location that should be used for loading.
+         * @return bool
+         *   Value <i>TRUE</i> if accounts were loaded, and vice versa.
+         */
+        
+        public function load($fileLocation)
+        {
+            // Core Variables
+            
+            $accounts = null;
+            $account  = null;
+            
+            // Other Variables
+            
+            $temp = null;
+            
+            // Step 1 - Check If File Is Readable
+            
+            if (is_readable($fileLocation))
+            {
+                throw new \Exception("Provided file isn't readable.");
+            }
+            
+            // Step 2 - Load Accounts
+            
+            $accounts = file_get_contents(unserialize($data));
+            
+            if (!is_array($accounts))
+            {
+                throw new \Exception("File's contents is invalid.");
+            }
+            
+            // Step 3 - Process Accounts
+            
+            $this->reset();
+            
+            foreach ($accounts as $account)
+            {
+                // Check Data
+                
+                if (!(   isset($account["account_id")
+                      && isset($account["service_name")
+                      && isset($account["account_name")
+                      && isset($account["secret"])))
+                {
+                    return false;
+                }
+                
+                // Add Account
+                
+                $account = new Account();
+                
+                $account->setAccountId($account["account_id"]);
+                $account->setServiceName($account["service_name"]);
+                $account->setAccountName($account["account_name"]);
+                $account->setAccountSecret($account["secret"]);
+                
+                $this->addAccount($account);
+            }
+            
+            return true;
         }
         
         /*****************\

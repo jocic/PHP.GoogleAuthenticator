@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jocic/PHP.GoogleAuthenticator.svg?branch=master)](https://travis-ci.org/jocic/PHP.GoogleAuthenticator) [![Coverage Status](https://coveralls.io/repos/github/jocic/PHP.GoogleAuthenticator/badge.svg?branch=master)](https://coveralls.io/github/jocic/PHP.GoogleAuthenticator?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7c18b4866a54e79b185978e5a180f06)](https://www.codacy.com/app/jocic/PHP.GoogleAuthenticator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jocic/PHP.GoogleAuthenticator&amp;utm_campaign=Badge_Grade) [![Latest Stable Version](https://poser.pugx.org/jocic/google-authenticator/v/stable)](https://packagist.org/packages/jocic/google-authenticator) [![License](https://poser.pugx.org/jocic/google-authenticator/license)](https://packagist.org/packages/jocic/google-authenticator)
 
-Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process and has no other dependencies.
+Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process and has no other production dependencies.
 
 ![Project Image](images/project-image-small.png)
 
@@ -13,11 +13,9 @@ Following specifications are referenced:
 *   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 *   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code Bar Code Symbology Specification
 
-**Song of the project:** [Iron Maiden - The Trooper](https://www.youtube.com/watch?v=X4bgXH3sJ2Q)
-
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
 
-**Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
+**Song of the project:** [Iron Maiden - The Trooper](https://www.youtube.com/watch?v=X4bgXH3sJ2Q)
 
 **Project is still under development...slow ride...take it easy...**
 
@@ -178,7 +176,7 @@ $account = $accountManager->findAccount($account); // By Object
 
 ### Example 8 - Account Manager (Saving)
 
-Saving accounts require is done by calling a "save" method.
+Saving accounts is done by calling the "save" method.
 
 ```php
 if (!$accountManager->save("my-writable-file.dat"))
@@ -189,7 +187,14 @@ if (!$accountManager->save("my-writable-file.dat"))
 
 ### Example 9 - Account Manager (Loading)
 
-...
+Loading accounts is just as easy as saving them, it's done by calling the "load" method.
+
+```php
+if (!$accountManager->load("my-writable-file.dat"))
+{
+    // Handle IO Error
+}
+```
 
 ## Installation
 
@@ -215,7 +220,7 @@ You can execute them easily from the terminal like in the example below.
 ```bash
 bash ./scripts/phpunit.sh --testsuite essentials
 bash ./scripts/phpunit.sh --testsuite elements
-bash ./scripts/phpunit.sh --testsuite core
+bash ./scripts/phpunit.sh --testsuite authenticator
 ```
 
 Please don’t forget to install necessary dependencies before attempting to do the God's work above. They may be important.
