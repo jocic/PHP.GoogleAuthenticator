@@ -190,7 +190,7 @@ if (!$accountManager->save("my-writable-file.dat"))
 Loading accounts is just as easy as saving them, it's done by calling the "load" method.
 
 ```php
-if (!$accountManager->load("my-writable-file.dat"))
+if (!$accountManager->load("my-readable-file.dat"))
 {
     // Handle IO Error
 }

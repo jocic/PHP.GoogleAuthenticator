@@ -457,9 +457,9 @@
             {
                 // Check Data
                 
-                if (!(   isset($account["account_id")
-                      && isset($account["service_name")
-                      && isset($account["account_name")
+                if (!(   isset($account["account_id"])
+                      && isset($account["service_name"])
+                      && isset($account["account_name"])
                       && isset($account["secret"])))
                 {
                     return false;
