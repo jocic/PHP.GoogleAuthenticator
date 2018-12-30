@@ -13,9 +13,11 @@ Following specifications are referenced:
 *   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 *   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code Bar Code Symbology Specification
 
-**Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
+Song of the project: [Iron Maiden - The Trooper](https://www.youtube.com/watch?v=X4bgXH3sJ2Q)
 
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
+
+**Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
 **Project is still under development.**
 
@@ -169,14 +171,19 @@ Keep in mind that uniqueness of an account name isn't enforced.
 Finding stored accounts is done in the same fashion.
 
 ```php
-$accountManager->findAccount(12); // By ID
-$accountManager->findAccount("john@doe.com"); // By Name
-$accountManager->findAccount($account); // By Object
+$account = $accountManager->findAccount(12); // By ID
+$account = $accountManager->findAccount("john@doe.com"); // By Name
+$account = $accountManager->findAccount($account); // By Object
 ```
 
 ### Example 8 - Account Manager (Saving)
 
-...
+Saving accounts require is done by calling a "save" method.
+
+if (!$accountManager->save("my-writable-file.dat"))
+{
+    // Handle IO Error
+}
 
 ### Example 9 - Account Manager (Loading)
 

@@ -326,6 +326,50 @@
             throw new \Exception("Option couldn't be determined.");
         }
         
+        /**
+         * Saves manager's accounts to a file.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $fileLocation
+         *   File location that should be used for saving.
+         * @return bool
+         *   Value <i>TRUE</i> if accounts were saved, and vice versa.
+         */
+        
+        public function save($fileLocation)
+        {
+            // Core Variables
+            
+            $accounts = $this->getAccounts();
+            $data     = [];
+            
+            // Step 1 - Check If File Is Writable
+            
+            touch($fileLocation);
+            
+            if (!is_writable($fileLocation))
+            {
+                throw new \Exception("Provided file isn't writable.");
+            }
+            
+            // Step 2 - Save Accounts
+            
+            foreach ($accounts as $account)
+            {
+                $data[] = [
+                    "account_id"   => $account->getAccountId(),
+                    "service_name" => $account->getServiceName(),
+                    "account_name" => $account->getAccountName(),
+                    "secret"       => $account->getAccountSecret()
+                ];
+            }
+            
+            return file_put_contents(serialize($data)) > 0;
+        }
+        
         /*****************\
         |* CHECK METHODS *|
         \*****************/
