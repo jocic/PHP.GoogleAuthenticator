@@ -13,13 +13,13 @@ Following specifications are referenced:
 *   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 *   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code Bar Code Symbology Specification
 
-Song of the project: [Iron Maiden - The Trooper](https://www.youtube.com/watch?v=X4bgXH3sJ2Q)
+**Song of the project:** [Iron Maiden - The Trooper](https://www.youtube.com/watch?v=X4bgXH3sJ2Q)
 
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
 
 **Note:** Composer is only used for managing testing-related libraries for development purposes, ex. PHPUnit.
 
-**Project is still under development.**
+**Project is still under development...slow ride...take it easy...**
 
 ## Versioning Scheme
 
@@ -180,10 +180,12 @@ $account = $accountManager->findAccount($account); // By Object
 
 Saving accounts require is done by calling a "save" method.
 
+```php
 if (!$accountManager->save("my-writable-file.dat"))
 {
     // Handle IO Error
 }
+```
 
 ### Example 9 - Account Manager (Loading)
 
