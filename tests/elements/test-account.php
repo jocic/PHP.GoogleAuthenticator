@@ -133,8 +133,7 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Invalid object used.",
-                    $e->getMessage());
+                $this->assertEquals("Invalid object used.", $e->getMessage());
             }
         }
         

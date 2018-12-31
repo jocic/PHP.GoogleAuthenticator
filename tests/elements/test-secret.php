@@ -90,7 +90,8 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Invalid secret provided. Secret: \"#\"", $e->getMessage());
+                $this->assertEquals("Invalid secret provided. Secret: \"#\"",
+                    $e->getMessage());
             }
         }
         
@@ -195,7 +196,8 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Invalid method selected.", $e->getMessage());
+                $this->assertEquals("Invalid method selected.",
+                    $e->getMessage());
             }
         }
         
