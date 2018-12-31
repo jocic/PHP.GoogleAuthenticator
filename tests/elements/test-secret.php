@@ -71,7 +71,7 @@
                 "YPPMQXR6UGWBP3UI"
             ];
             
-            // Logic
+            // Step 1 - Test Valid Values
             
             foreach ($testValues as $testValue)
             {
@@ -79,13 +79,60 @@
                 
                 $this->assertSame($testValue, $secret->getValue());
             }
+            
+            // Step 2 - Test Invalid Value
+            
+            try
+            {
+                $secret->setValue("#");
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid secret provided. Secret: \"#\"", $e->getMessage());
+            }
         }
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
+        /**
+         * Tests secret validation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testValidation()
+        {
+            // Core Variables
+            
+            $secret = new Secret();
+            
+            // Other Variables
+            
+            $testValues = [
+                "RMB4AMUMDHODBYNR" => true,
+                "4JT4TVALIJOHCRZX" => true,
+                "YPPMQXR6UGWBP3UI" => true,
+                "RMB4AMU=DHODBYNR" => false,
+                "4JT4T#ALIJOHCRZX" => false,
+                "YPPMQXR6UmWBP3UI" => false,
+            ];
+            
+            // Step 1 - Test Valid Values
+            
+            foreach ($testValues as $testValue => $testResult)
+            {
+                $this->assertSame($testResult,
+                    $secret->isSecretValid($testValue), $testValue);
+            }
+        }
         
         /*******************\
         |* PRIMARY METHODS *|
@@ -136,6 +183,19 @@
                 $value = $secret->generateValue(Secret::M_BINARY);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
+            }
+            
+            // Step 4 - Invalid Method
+            
+            try
+            {
+                $secret->generateValue(1337);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid method selected.", $e->getMessage());
             }
         }
         
