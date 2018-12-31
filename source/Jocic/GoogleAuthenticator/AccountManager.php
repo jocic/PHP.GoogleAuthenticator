@@ -138,7 +138,7 @@
         {
             // Logic
             
-            return $this->accounts;
+            return array_values($this->accounts);
         }
         
         /**
@@ -174,7 +174,9 @@
         {
             // Logic
             
-            return $this->lastId++;
+            $this->lastId ++;
+            
+            return $this->lastId;
         }
         
         /***************\
@@ -195,14 +197,18 @@
         
         public function setAccounts($accounts)
         {
-            // Step 1 - Check Array
+            // Step 1 - Reset Manager
+            
+            $this->reset();
+            
+            // Step 2 - Check Array
             
             if (!is_array($accounts))
             {
                 throw new \Exception("Provided accounts are not in an array.");
             }
             
-            // Step 2 - Check Elements
+            // Step 3 - Process Accounts
             
             foreach ($accounts as $account)
             {
@@ -210,11 +216,9 @@
                 {
                     throw new \Exception("Invalid object type.");
                 }
+                
+                $this->addAccount($account);
             }
-            
-            // Step 3 - Set Accounts
-            
-            $this->accounts = $accounts;
         }
         
         /**
@@ -229,16 +233,16 @@
          * @return void
          */
         
-        private function setLastId($id)
+        private function setLastId($lastId)
         {
             // Logic
             
-            if ($this->lastId >= $id)
+            if ($this->lastId >= $lastId)
             {
                 throw new \Exception("Provided ID was already used.");
             }
             
-            $this->lastId = $id;
+            $this->lastId = $lastId;
         }
         
         /****************\
@@ -286,7 +290,7 @@
             }
             else
             {
-                $this->setLastId($this->getAccountId());
+                $this->setLastId($account->getAccountId());
                 
                 $accountId = $this->getLastId();
             }
@@ -429,10 +433,6 @@
             $accounts = null;
             $account  = null;
             
-            // Other Variables
-            
-            $temp = null;
-            
             // Step 1 - Check If File Is Readable
             
             if (is_readable($fileLocation))
@@ -442,7 +442,7 @@
             
             // Step 2 - Load Accounts
             
-            $accounts = file_get_contents(unserialize($data));
+            $accounts = unserialize(file_get_contents($fileLocation));
             
             if (!is_array($accounts))
             {
@@ -545,7 +545,7 @@
             
             // Step 1 - Check Value
             
-            if (!is_string($accountId))
+            if (!is_string($accountName))
             {
                 throw new \Exception("Provided ID isn't string.");
             }
