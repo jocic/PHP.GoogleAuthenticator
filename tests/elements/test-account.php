@@ -44,79 +44,12 @@
     
     class TestAccount extends TestCase
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
-        
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        // GET METHODS GO HERE
-        
-        /***************\
-        |* SET METHODS *|
-        \***************/
-        
-        // SET METHODS GO HERE
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
+        /*********************\
+        |* GET & SET METHODS *|
+        \*********************/
         
         /**
-         * Tests constructor of the class.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        
-        public function testConstructor()
-        {
-            // Core Variables
-            
-            $account = null;
-            
-            // Other Variables
-            
-            $testValues = [
-                [ "",  "",  null ],
-                [ "A", "B", new Secret() ]
-            ];
-            
-            // Logic
-            
-            foreach ($testValues as $testValue)
-            {
-                $account = new Account($testValue[0], $testValue[1],
-                    $testValue[2]);
-                
-                $this->assertSame($testValue[0], $account->getServiceName());
-                $this->assertSame($testValue[1], $account->getAccountName());
-                $this->assertSame($testValue[2], $account->getAccountSecret());
-            }
-        }
-        
-        /**
-         * Tests <i>set</i> & <i>get</i> methods of the <i>serviceName</i>
-         * methods - <i>setServiceName</i> & <i>getServiceName</i>.
+         * Tests <i>setServiceName</i> & <i>getServiceName</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -150,8 +83,7 @@
         }
         
         /**
-         * Tests <i>set</i> & <i>get</i> methods of the <i>accountName</i>
-         * methods - <i>setAccountName</i> & <i>getAccountName</i>.
+         * Tests <i>setAccountName</i> & <i>getAccountName</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -185,8 +117,7 @@
         }
         
         /**
-         * Tests <i>set</i> & <i>get</i> methods of the <i>accountSecret</i>
-         * methods - <i>setAccountSecret</i> & <i>getAccountSecret</i>.
+         * Tests <i>setAccountSecret</i> & <i>getAccountSecret</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -225,11 +156,51 @@
         
         // CHECK METHODS GO HERE
         
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
+        /*******************\
+        |* PRIMARY METHODS *|
+        \*******************/
         
-        // OTHER METHODS GO HERE
+        /**
+         * Tests constructor of the class.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testConstructor()
+        {
+            // Core Variables
+            
+            $account = null;
+            
+            // Other Variables
+            
+            $testValues = [
+                [ "",  "",  null ],
+                [ "A", "B", new Secret() ]
+            ];
+            
+            // Logic
+            
+            foreach ($testValues as $testValue)
+            {
+                $account = new Account($testValue[0], $testValue[1],
+                    $testValue[2]);
+                
+                $this->assertSame($testValue[0], $account->getServiceName());
+                $this->assertSame($testValue[1], $account->getAccountName());
+                $this->assertSame($testValue[2], $account->getAccountSecret());
+            }
+        }
+        
+        /*********************\
+        |* SECONDARY METHODS *|
+        \*********************/
+        
+        // SECONDARY METHODS GO HERE
     }
     
 ?>

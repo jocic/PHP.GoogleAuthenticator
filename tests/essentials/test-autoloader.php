@@ -42,39 +42,21 @@
     
     class TestAutoloader extends TestCase
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
+        /*********************\
+        |* GET & SET METHODS *|
+        \*********************/
         
-        // CORE CONSTANTS GO HERE
+        // GET & SET METHODS GO HERE
         
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
         
-        // CORE VARIABLES GO HERE
+        // CHECK METHODS GO HERE
         
         /*******************\
-        |* MAGIC FUNCTIONS *|
+        |* PRIMARY METHODS *|
         \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        // GET METHODS GO HERE
-        
-        /***************\
-        |* SET METHODS *|
-        \***************/
-        
-        // SET METHODS GO HERE
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
         
         /**
          * Tests the project's autoloading function.
@@ -104,17 +86,11 @@
             }
         }
         
-        /*****************\
-        |* CHECK METHODS *|
-        \*****************/
+        /*********************\
+        |* SECONDARY METHODS *|
+        \*********************/
         
-        // CHECK METHODS GO HERE
-        
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
-        
-        // OTHER METHODS GO HERE
+        // SECONDARY METHODS GO HERE
     }
     
 ?>

@@ -43,39 +43,53 @@
     
     class TestSecret extends TestCase
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
+        /*********************\
+        |* GET & SET METHODS *|
+        \*********************/
         
-        // CORE CONSTANTS GO HERE
+        /**
+         * Tests <i>setValue</i> & <i>getValue</i> methods.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
         
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
+        public function testValueMethods()
+        {
+            // Core Variables
+            
+            $secret = new Secret();
+            
+            // Other Variables
+            
+            $testValues = [
+                "RMB4AMUMDHODBYNR",
+                "4JT4TVALIJOHCRZX",
+                "YPPMQXR6UGWBP3UI"
+            ];
+            
+            // Logic
+            
+            foreach ($testValues as $testValue)
+            {
+                $secret->setValue($testValue);
+                
+                $this->assertSame($testValue, $secret->getValue());
+            }
+        }
         
-        // CORE VARIABLES GO HERE
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
+        
+        // CHECK METHODS GO HERE
         
         /*******************\
-        |* MAGIC FUNCTIONS *|
+        |* PRIMARY METHODS *|
         \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        // GET METHODS GO HERE
-        
-        /***************\
-        |* SET METHODS *|
-        \***************/
-        
-        // SET METHODS GO HERE
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
         
         /**
          * Tests <i>generate</i> method of the <i>Secret</i> class.
@@ -125,52 +139,11 @@
             }
         }
         
-        /**
-         * Tests <i>set</i> & <i>get</i> methods of the <i>value</i> methods -
-         * <i>setValue</i> & <i>getValue</i>.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
+        /*********************\
+        |* SECONDARY METHODS *|
+        \*********************/
         
-        public function testValueMethods()
-        {
-            // Core Variables
-            
-            $secret = new Secret();
-            
-            // Other Variables
-            
-            $testValues = [
-                "RMB4AMUMDHODBYNR",
-                "4JT4TVALIJOHCRZX",
-                "YPPMQXR6UGWBP3UI"
-            ];
-            
-            // Logic
-            
-            foreach ($testValues as $testValue)
-            {
-                $secret->setValue($testValue);
-                
-                $this->assertSame($testValue, $secret->getValue());
-            }
-        }
-        
-        /*****************\
-        |* CHECK METHODS *|
-        \*****************/
-        
-        // CHECK METHODS GO HERE
-        
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
-        
-        // OTHER METHODS GO HERE
+        // SECONDARY METHODS GO HERE
     }
     
 ?>
