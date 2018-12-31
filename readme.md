@@ -238,6 +238,12 @@ Please review the following documents if you are planning to contribute to the p
 *   [Pull Request Template](pull_request_template.md)
 *   [MIT License](license.md)
 
+## Integration
+
+My hourly rate is fairly reasonable so, if you need help with integrating **Google Authenticator** to your existing project, feel free to contact me via the email below.
+
+Integration inquiries: [office@djordjejocic.com](mailto:office@djordjejocic.com)
+
 ## Support
 
 Please don't hesitate to contact me if you have any questions, ideas, or concerns.
