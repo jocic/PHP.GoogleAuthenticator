@@ -98,7 +98,7 @@
          * @version   1.0.0
          * 
          * @param mixed $account
-         *   Account that should be removed - either an object, 
+         *   Account that should be removed - ID, Name, or an Object.
          */
         
         public function removeAccount($account);
@@ -110,14 +110,11 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $key
-         *   Key that should be used for finding an account, ex. <i>ID</i>.
-         * @param mixed $value
-         *   Value that should be used for finding an account, it depends on
-         *   the used key.
+         * @param mixed $account
+         *   Account that should be removed - ID, Name, or an Object.
          */
         
-        public function findAccount($key, $value);
+        public function findAccount($account);
         
         /*****************\
         |* CHECK METHODS *|

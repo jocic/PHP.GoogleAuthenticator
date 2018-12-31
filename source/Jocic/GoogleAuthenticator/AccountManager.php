@@ -397,7 +397,7 @@
             
             foreach ($accounts as $account)
             {
-                $data[] = [,
+                $data[] = [
                     "version"      => "1",
                     "account_id"   => $account->getAccountId(),
                     "service_name" => $account->getServiceName(),
@@ -514,7 +514,7 @@
             
             // Step 2 - Remove Account
             
-            if (isset($this->accounts[$accountId))
+            if (isset($this->accounts[$accountId]))
             {
                 unset($this->accounts[$accountId]);
                 
@@ -641,7 +641,7 @@
             
             // Step 2 - Remove Account
             
-            if (isset($this->accounts[$accountId))
+            if (isset($this->accounts[$accountId]))
             {
                 return $this->accounts[$accountId];
             }

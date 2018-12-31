@@ -266,13 +266,13 @@
         {
             // Logic
             
-            if ($this->accountManager != null)
-            {
-                throw new \Exception("Manager was already assigned.");
-            }
-            else if (!($accountManager instanceof AccountManager))
+            if (!($accountManager instanceof AccountManager))
             {
                 throw new \Exception("Invalid object used.");
+            }
+            else if ($this->accountManager != null)
+            {
+                throw new \Exception("Manager was already assigned.");
             }
             
             $this->accountManager = $accountManager;

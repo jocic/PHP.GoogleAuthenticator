@@ -32,6 +32,7 @@
     use PHPUnit\Framework\TestCase;
     use Jocic\GoogleAuthenticator\Secret;
     use Jocic\GoogleAuthenticator\Account;
+    use Jocic\GoogleAuthenticator\AccountManager;
     
     /**
      * <i>TestAccount</i> class is used for testing method implementation of the
@@ -47,6 +48,95 @@
         /*********************\
         |* GET & SET METHODS *|
         \*********************/
+        
+        /**
+         * Tests <i>setAccountId</i> & <i>getAccountId</i> methods.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testAccountIdMethods()
+        {
+            // Core Variables
+            
+            $account = new Account();
+            
+            // Step 1 - Test Initial Setting
+            
+            $account->setAccountId(1337);
+            
+            $this->assertSame(1337, $account->getAccountId());
+            
+            // Step 2 - Test Repeated Setting
+            
+            try
+            {
+                $account->setAccountId(1337);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("ID was already assigned.",
+                    $e->getMessage());
+            }
+        }
+        
+        /**
+         * Tests <i>setAccountManager</i> & <i>getAccountManager</i> methods.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testAccountManagerMethods()
+        {
+            // Core Variables
+            
+            $account        = new Account();
+            $accountManager = new AccountManager();
+            
+            // Step 1 - Test Initial Setting
+            
+            $account->setAccountManager($accountManager);
+            
+            $this->assertSame($accountManager, $account->getAccountManager());
+            
+            // Step 2 - Test Repeated Setting
+            
+            try
+            {
+                $account->setAccountManager($accountManager);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Manager was already assigned.",
+                    $e->getMessage());
+            }
+            
+            // Step 3 - Test Invalid Setting
+            
+            try
+            {
+                $account->setAccountManager(new Account());
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid object used.",
+                    $e->getMessage());
+            }
+        }
         
         /**
          * Tests <i>setServiceName</i> & <i>getServiceName</i> methods.
