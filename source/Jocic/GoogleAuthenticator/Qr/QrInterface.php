@@ -47,7 +47,7 @@
         \***************/
         
         /**
-         * Returns set account used for QR creation.
+         * Returns set account used for QR code creation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -86,13 +86,22 @@
         
         public function getRelativeLocation();
         
+        /**
+         * Returns QR code's encoded value.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getEncodedValue();
         
         /***************\
         |* SET METHODS *|
         \***************/
         
         /**
-         * Sets account used for QR creation.
+         * Sets account used for QR code creation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -115,7 +124,7 @@
          *   Directory for storing generated QR codes.
          */
         
-        public function setStorageDirectory($directory);
+        public function setStorageDirectory($storageDirectory);
         
         /****************\
         |* CORE METHODS *|
