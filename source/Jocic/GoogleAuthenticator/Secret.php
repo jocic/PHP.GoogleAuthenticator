@@ -116,6 +116,7 @@
             // Logic
             
             $this->encoder = new \Jocic\GoogleAuthenticator\Encoders\Base\Base32();
+            $this->value   = $this->generateValue();
         }
         
         /***************\

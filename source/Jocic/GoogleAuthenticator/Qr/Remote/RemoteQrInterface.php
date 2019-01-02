@@ -56,6 +56,17 @@
         
         public function getApiKey();
         
+        /**
+          * Forms and returns an appropriate URL for that can be used for
+         * generating QR codes remotely by sending a GET request.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getUrl();
+        
         /***************\
         |* SET METHODS *|
         \***************/
@@ -78,17 +89,6 @@
          */
         
         public function setApiKey($apiKey);
-        
-        /**
-         * Forms and returns an appropriate GET request that can be used for
-         * generating QR codes remotely.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
-        
-        public function getUrl();
         
         /*****************\
         |* CHECK METHODS *|
