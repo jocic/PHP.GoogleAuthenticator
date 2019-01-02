@@ -47,14 +47,14 @@
         \***************/
         
         /**
-         * Returns set value used for QR code generation.
+         * Returns set account used for QR creation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          */
         
-        public function getValue();
+        public function getAccount();
         
         /**
          * Returns set directory used for storing generated QR codes.
@@ -67,31 +67,42 @@
         public function getStorageDirectory();
         
         /**
-         * Returns file location of a generated QR code.
+         * Returns QR code's absolute location.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          */
         
-        public function getFileLocation();
+        public function getAbsoluteLocation();
+        
+        /**
+         * Returns QR code's relative location.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function getRelativeLocation();
+        
         
         /***************\
         |* SET METHODS *|
         \***************/
         
         /**
-         * Sets value used for QR code generation.
+         * Sets account used for QR creation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $value
-         *   New value for QR code creation.
+         * @param string $account
+         *   Account that should be used for QR creation.
          */
         
-        public function setValue($value);
+        public function setAccount($account);
         
         /**
          * Sets directory used for storing generated QR codes.
@@ -104,7 +115,7 @@
          *   Directory for storing generated QR codes.
          */
         
-        public function setStorageDirectory();
+        public function setStorageDirectory($directory);
         
         /****************\
         |* CORE METHODS *|
@@ -119,6 +130,16 @@
          */
         
         public function generate();
+        
+        /**
+         * Regenerates a QR code based on the set value.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
+        public function regenerate();
         
         /*****************\
         |* CHECK METHODS *|
