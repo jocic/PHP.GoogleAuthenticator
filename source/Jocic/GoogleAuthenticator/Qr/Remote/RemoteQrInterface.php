@@ -46,6 +46,14 @@
         |* GET METHODS *|
         \***************/
         
+        /**
+         * Returns set API key for the remote QR code generator.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
+        
         public function getApiKey();
         
         /***************\
@@ -58,7 +66,27 @@
         |* CORE METHODS *|
         \****************/
         
-        public function setApiKey();
+        /**
+         * Sets API key for the remote QR code generator.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $apiKey
+         *   API key that should be used.
+         */
+        
+        public function setApiKey($apiKey);
+        
+        /**
+         * Forms and returns an appropriate GET request that can be used for
+         * generating QR codes remotely.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         */
         
         public function getUrl();
         
