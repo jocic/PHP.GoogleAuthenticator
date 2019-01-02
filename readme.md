@@ -94,7 +94,7 @@ echo $secret->generateValue(Secret::M_BINARY);
 
 ### Example 3 - Setting Existing Secret
 
-Settings a pre-existing secret is extremely simple.
+Setting a pre-existing secret is extremely simple.
 
 ```php
 $existingSecret = "3SJRXZHGUVHAGD7R"; // Maybe It's Fetched From The Database
@@ -196,6 +196,31 @@ if (!$accountManager->load("my-readable-file.dat"))
 }
 ```
 
+### Example 10 - QR Code Creation
+
+Currently, you can only generate QR code remotely by utilizing Google's API. Upcoming version will change that, but until that happen, use the following snippet.
+
+```php
+$qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr($account, "/my/storage/directory");
+
+$qrAbsoluteLocation = $qr->getAbsoluteLocation();
+$qrRelativeLocation = $qr->getRelativeLocation();
+```
+
+You can, of course, always just instantiate an object and set parameters later.
+
+```php
+$qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr();
+
+$qr->setStorageDirectory("/my/storage/directory");
+$qr->setAccount($account);
+
+$qrAbsoluteLocation = $qr->getAbsoluteLocation();
+$qrRelativeLocation = $qr->getRelativeLocation();
+```
+
+QR codes are generated only once, when the location is initially requested, but you can always regenerate it using the "regenerate" method, or simply generate them before initial location request.
+
 ## Installation
 
 There's two ways you can add **Google Authenticator** library to your project:
@@ -211,15 +236,17 @@ composer require jocic/google-authenticator dev-master
 
 Following unit tests are available:
 
-*   **Essentials** - Base 32 encoder, QR code generator, etc.
-*   **Elements** - Secret, Account, etc.
-*   **Authenticator** - Nothing right now.
+*   **Essentials** - Tests for library's essentials ex. Autoloader, Base 32 encoder, etc.
+*   **Elements** - Tests for library's core elements ex. Secret, Account, etc.
+*   **QR Generators** - Tests for available QR code generators in the library.
+*   **Authenticator** - Tests for authenticator's methods.
 
 You can execute them easily from the terminal like in the example below.
 
 ```bash
 bash ./scripts/phpunit.sh --testsuite essentials
 bash ./scripts/phpunit.sh --testsuite elements
+bash ./scripts/phpunit.sh --testsuite qr-generators
 bash ./scripts/phpunit.sh --testsuite authenticator
 ```
 
