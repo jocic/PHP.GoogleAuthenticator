@@ -9,6 +9,9 @@
             <file>tests/elements/test-account.php</file>
             <file>tests/elements/test-account-manager.php</file>
         </testsuite>
+        <testsuite name="qr-generators">
+            <file>tests/qr-generators/test-google-qr.php</file>
+        </testsuite>
         <testsuite name="authenticator">
             
         </testsuite>
