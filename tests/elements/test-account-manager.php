@@ -74,7 +74,7 @@
                 new Account("E", "F", new Secret())
             ];
             
-            // Step 1 - Test Valid Setting
+            // Step 2 - Test Valid Setting
             
             $accountManager->setAccounts($testAccounts);
             
@@ -86,10 +86,25 @@
             for ($i = 0; $i < count($testAccounts); $i ++)
             {
                 $this->assertSame($setAccounts[$i]->getAccountSecret(),
-                    $testAccounts[$i]->getAccountSecret(), "Invalid secret found.");
+                    $testAccounts[$i]->getAccountSecret(),
+                    "Invalid secret found.");
             }
             
-            // Step 2 - Test Invalid Setting
+            // Step 2 - Test Invalid Setting - Array
+            
+            try
+            {
+                $accountManager->setAccounts(null);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided accounts are not in an array.",
+                    $e->getMessage());
+            }
+            
+            // Step 3 - Test Invalid Setting - Object
             
             try
             {
@@ -164,7 +179,7 @@
             $this->assertSame(4, $accountManager->getNextId(),
                 "Invalid next ID after generated account ID.");
             
-            // Step 2 - Test Adding Account With & Without ID
+            // Step 2 - Test Adding Account With ID
             
             $account = new Account("X", "X", new Secret());
             
@@ -270,11 +285,159 @@
             }
         }
         
+        /**
+         * Tests <i>findAccount</i> method of the <i>AccountManager</i> class.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testFindAccountMethod()
+        {
+            // Core Variables
+            
+            $accountManager = new AccountManager();
+            $account        = null;
+            
+            // Other Variables
+            
+            $testAccounts = [
+                new Account("A", "B", new Secret()),
+                new Account("C", "D", new Secret()),
+                new Account("E", "F", new Secret()),
+                new Account("G", "H", new Secret()),
+                new Account("I", "J", new Secret())
+            ];
+            
+            // Step 1 - Set Accounts
+            
+            $accountManager->setAccounts($testAccounts);
+            
+            // Step 2 - Test Finding By ID
+            
+            $account = $accountManager->findAccount(1);
+            
+            $this->assertSame("A", $account->getServiceName());
+            
+            // Step 3 - Test Finding By Name
+            
+            $account = $accountManager->findAccount("D");
+            
+            $this->assertSame("C", $account->getServiceName());
+            
+            // Step 4 - Test Finding By Object
+            
+            $account = $accountManager->findAccount($testAccounts[2]);
+            
+            $this->assertSame("E", $account->getServiceName());
+            
+            // Step 5 - Test Invalid Removal Method
+            
+            try
+            {
+                $accountManager->findAccount(new Secret());
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Option couldn't be determined.",
+                    $e->getMessage());
+            }
+        }
+        
+        /**
+         * Tests <i>save</i> and <i>load</i> methods of the project.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testSaveLoad()
+        {
+            // Core Variables
+            
+            $accountManager = new AccountManager();
+            $saveLocation   = tempnam(sys_get_temp_dir(), "tst");
+            
+            // Other Variables
+            
+            $testAccounts = [
+                new Account("A", "B", new Secret()),
+                new Account("C", "D", new Secret()),
+                new Account("E", "F", new Secret()),
+                new Account("G", "H", new Secret()),
+                new Account("I", "J", new Secret())
+            ];
+            
+            // Step 1 - Save Accounts
+            
+            $accountManager->setAccounts($testAccounts);
+            
+            $this->assertTrue($accountManager->save($saveLocation),
+                "Accounts couldn't be saved.");
+            
+            // Step 2 - Load Accounts
+            
+            $this->assertTrue($accountManager->load($saveLocation),
+                "Accounts couldn't be loaded.");
+            
+            // Step 3 - Check Loaded Accounts
+            
+            $loadAccounts = $accountManager->getAccounts();
+            
+            foreach ($loadAccounts as $accountKey => $accountObject)
+            {
+                $this->assertSame($accountObject->getServiceName(),
+                    $testAccounts[$accountKey]->getServiceName());
+            }
+        }
+        
         /*********************\
         |* SECONDARY METHODS *|
         \*********************/
         
-        // SECONDARY METHODS GO HERE
+        /**
+         * Tests various <i>helper</i> methods that didn't warrant creation of
+         * their own tests.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testHelperMethods()
+        {
+            // Core Variables
+            
+            $accountManager = new AccountManager();
+            
+            // Step 1 - Last ID Test
+            
+            $accountManager->setLastId(1337);
+            
+            $this->assertEquals(1337, $accountManager->getLastId());
+            
+            try
+            {
+                $accountManager->setLastId(1000);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided ID was already used.",
+                    $e->getMessage());
+            }
+        }
     }
     
 ?>

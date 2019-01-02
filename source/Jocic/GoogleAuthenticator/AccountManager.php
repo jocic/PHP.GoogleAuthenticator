@@ -233,7 +233,7 @@
          * @return void
          */
         
-        private function setLastId($lastId)
+        public function setLastId($lastId)
         {
             // Logic
             
@@ -388,6 +388,11 @@
             $accounts = $this->getAccounts();
             $data     = [];
             
+            // IO Variables
+            
+            $fileHandler  = null;
+            $bytesWritten = null;
+            
             // Step 1 - Check If File Is Writable
             
             touch($fileLocation);
@@ -397,7 +402,7 @@
                 throw new \Exception("Provided file isn't writable.");
             }
             
-            // Step 2 - Save Accounts
+            // Step 2 - Prepare Data
             
             foreach ($accounts as $account)
             {
@@ -410,7 +415,17 @@
                 ];
             }
             
-            return file_put_contents(serialize($data)) > 0;
+            $data = serialize($data);
+            
+            // Step 3 - Save Data
+            
+            $fileHandler = fopen($fileLocation, "w");
+            
+            $bytesWritten = fwrite($fileHandler, $data);
+            
+            fclose($fileHandler);
+            
+            return $bytesWritten > 0;
         }
         
         /**
@@ -422,62 +437,78 @@
          * 
          * @param string $fileLocation
          *   File location that should be used for loading.
+         * @param integer $bufferSize
+         *   Buffer size in bytes that will be used for loading.
          * @return bool
          *   Value <i>TRUE</i> if accounts were loaded, and vice versa.
          */
         
-        public function load($fileLocation)
+        public function load($fileLocation, $bufferSize = 1024)
         {
             // Core Variables
             
             $accounts = null;
             $account  = null;
             
+            // IO Variables
+            
+            $fileHandler = null;
+            $bytesWritten = null;
+            
             // Step 1 - Check If File Is Readable
             
-            if (is_readable($fileLocation))
+            if (!is_readable($fileLocation))
             {
                 throw new \Exception("Provided file isn't readable.");
             }
             
             // Step 2 - Load Accounts
             
-            $accounts = unserialize(file_get_contents($fileLocation));
+            $fileHandler = fopen($fileLocation, "r");
             
-            if (!is_array($accounts))
+            while (!feof($fileHandler))
             {
-                throw new \Exception("File's contents is invalid.");
+                $accounts .= fread($fileHandler, 1024);
             }
+            
+            fclose($fileHandler);
+            
+            $accounts = unserialize($accounts);
             
             // Step 3 - Process Accounts
             
-            $this->reset();
-            
-            foreach ($accounts as $account)
+            if (is_array($accounts))
             {
-                // Check Data
+                $this->reset();
                 
-                if (!(   isset($account["account_id"])
-                      && isset($account["service_name"])
-                      && isset($account["account_name"])
-                      && isset($account["secret"])))
+                foreach ($accounts as $account)
                 {
-                    return false;
+                    // Check Data
+                    
+                    if (!(   isset($account["account_id"])
+                          && isset($account["service_name"])
+                          && isset($account["account_name"])
+                          && isset($account["secret"])))
+                    {
+                        return false;
+                    }
+                    
+                    // Add Account
+                    
+                    $loadedAccount = new Account();
+                    
+                    $loadedAccount->setAccountId($account["account_id"]);
+                    $loadedAccount->setServiceName($account["service_name"]);
+                    $loadedAccount->setAccountName($account["account_name"]);
+                    $loadedAccount->setAccountSecret($account["secret"]);
+                    
+                    $this->addAccount($loadedAccount);
                 }
                 
-                // Add Account
-                
-                $account = new Account();
-                
-                $account->setAccountId($account["account_id"]);
-                $account->setServiceName($account["service_name"]);
-                $account->setAccountName($account["account_name"]);
-                $account->setAccountSecret($account["secret"]);
-                
-                $this->addAccount($account);
+                return true;
             }
             
-            return true;
+            return false;
         }
         
         /*****************\
@@ -670,18 +701,18 @@
             
             // Step 1 - Check Value
             
-            if (!is_string($accountId))
+            if (!is_string($accountName))
             {
                 throw new \Exception("Provided ID isn't string.");
             }
             
             // Step 2 - Find Account
             
-            foreach ($accounts as $accountId => $accountObject)
+            foreach ($accounts as $accountObject)
             {
                 if ($accountObject->getAccountName() == $accountName)
                 {
-                    return $this->accounts[$accountId];
+                    return $accountObject;
                 }
             }
             
