@@ -198,7 +198,7 @@ if (!$accountManager->load("my-readable-file.dat"))
 
 ### Example 10 - QR Code Creation
 
-Currently, you can only generate QR code remotely by utilizing Google's API. Upcoming version will change that, but until that happen, use the following snippet.
+Currently, you can only generate QR code remotely by utilizing Google's API. Upcoming version will change that, but until that happens, use the following snippet.
 
 ```php
 $qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr($account, "/my/storage/directory");
@@ -219,7 +219,7 @@ $qrAbsoluteLocation = $qr->getAbsoluteLocation();
 $qrRelativeLocation = $qr->getRelativeLocation();
 ```
 
-QR codes are generated only once, when the location is initially requested, but you can always regenerate it using the "regenerate" method, or simply generate them before initial location request.
+QR codes are generated only once, when the location is initially requested, but you can always regenerate them if something goes wrong using the "regenerate" method. Aslo, keep in mind that, using the "generate" method before requesting QR code's location may improve overall performance if implemented correctly.
 
 ## Installation
 
