@@ -8,9 +8,9 @@ Google Authenticator is a mini PHP library for implementing Multi-Factor Authent
 
 Following specifications are referenced:
 
-*   [RFC 4648](documentation/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
-*   [RFC 6238](documentation/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
-*   [RFC 6287](documentation/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
+*   [RFC 4648](other/specifications/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
+*   [RFC 6238](other/specifications/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
+*   [RFC 6287](other/specifications/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 *   [ISO/IEC 18004:2015](https://www.iso.org/standard/62021.html) - QR Code Bar Code Symbology Specification
 
 [![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
