@@ -201,10 +201,10 @@ if (!$accountManager->load("my-readable-file.dat"))
 Currently, you can only generate QR code remotely by utilizing Google's API. Upcoming version will change that, but until that happens, use the following snippet.
 
 ```php
-$qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr($account, "/my/storage/directory");
+$qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr("/my/storage/directory", 200);
 
-$qrAbsoluteLocation = $qr->getAbsoluteLocation();
-$qrRelativeLocation = $qr->getRelativeLocation();
+$qrAbsoluteLocation = $qr->getAbsoluteLocation($account);
+$qrRelativeLocation = $qr->getRelativeLocation($account);
 ```
 
 You can, of course, always just instantiate an object and set parameters later.
@@ -213,13 +213,13 @@ You can, of course, always just instantiate an object and set parameters later.
 $qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr();
 
 $qr->setStorageDirectory("/my/storage/directory");
-$qr->setAccount($account);
+$qr->setQrCodeSize(200);
 
-$qrAbsoluteLocation = $qr->getAbsoluteLocation();
-$qrRelativeLocation = $qr->getRelativeLocation();
+$qrAbsoluteLocation = $qr->getAbsoluteLocation($account);
+$qrRelativeLocation = $qr->getRelativeLocation($account);
 ```
 
-QR codes are generated only once, when the location is initially requested, but you can always regenerate them if something goes wrong using the "regenerate" method. Aslo, keep in mind that, using the "generate" method before requesting QR code's location may improve overall performance if implemented correctly.
+QR codes are generated only once, when the location is initially requested, but you can always regenerate them if something goes wrong using the "regenerate" method. Also, keep in mind that, using the "generate" method before requesting QR code's location may improve overall performance if implemented correctly.
 
 ## Installation
 

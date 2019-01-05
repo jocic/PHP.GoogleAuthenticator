@@ -325,7 +325,7 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $accountSecret
+         * @param mixed $accountSecret
          *   New account's secret.
          * @return void
          */
@@ -333,6 +333,11 @@
         public function setAccountSecret($accountSecret)
         {
             // Logic
+            
+            if (is_string($accountSecret))
+            {
+                $accountSecret = new Secret($accountSecret);
+            }
             
             $this->accountSecret = $accountSecret;
         }

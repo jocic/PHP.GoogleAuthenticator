@@ -109,14 +109,23 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param string $value
+         *   Value that should be set.
          */
         
-        public function __construct()
+        public function __construct($value = null)
         {
             // Logic
             
             $this->encoder = new \Jocic\GoogleAuthenticator\Encoders\Base\Base32();
-            $this->value   = $this->generateValue();
+            
+            if ($value == null)
+            {
+                $value = $this->generateValue();
+            }
+            
+            $this->setValue($value);
         }
         
         /***************\

@@ -56,13 +56,13 @@
         \******************/
         
         /**
-         * Account object that should be used for generating the QR code.
+         * Size of the generated QR codes - width & height.
          * 
-         * @var    string
+         * @var    integer
          * @access private
          */
         
-        private $account = null;
+        private $qrCodeSize = null;
         
         /**
          * Directory location that should be used for storing the QR code.
@@ -85,27 +85,27 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $account
-         *   Account object that should be set.
          * @param string $storageDirectory
          *   Storage directory that should be set.
+         * @param integer $qrCodeSize
+         *   Size of the QR codes that should be generated.
          * @return void
          */
         
-        public function __construct($account = null, $storageDirectory = null)
+        public function __construct($storageDirectory = null, $qrCodeSize = null)
         {
-            // Step 1 - Handle Account
-            
-            if ($account != null)
-            {
-                $this->setAccount($account);
-            }
-            
-            // Step 2 - Handle Storage Directory
+            // Step 1 - Handle Storage Directory
             
             if ($storageDirectory != null)
             {
                 $this->setStorageDirectory($storageDirectory);
+            }
+            
+            // Step 2 - Handle QR Code Size
+            
+            if ($qrCodeSize != null)
+            {
+                $this->setQrCodeSize($qrCodeSize);
             }
         }
         
@@ -114,21 +114,21 @@
         \***************/
         
         /**
-         * Returns set account used for QR code creation.
+         * Returns set QR code size - width and height.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @return object
-         *   Set account.
+         * @return integer
+         *   Set QR code size.
          */
         
-        public function getAccount()
+        public function getQrCodeSize()
         {
             // Logic
             
-            return $this->account;
+            return $this->qrCodeSize;
         }
         
         /**
@@ -162,7 +162,7 @@
          *   Return absolute location of the generated QR code.
          */
         
-        public function getAbsoluteLocation()
+        public function getAbsoluteLocation($account)
         {
             // Step 1 - Check Parameters
             
@@ -192,7 +192,7 @@
          *   Return relative location of the generated QR code.
          */
         
-        public function getRelativeLocation()
+        public function getRelativeLocation($account)
         {
             // Step 1 - Check Parameters
             
@@ -253,39 +253,52 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          * @return string
-         *   Formed r
+         *   Formed url that can be used for generating QR codes.
          */
         
-        public function getUrl()
+        public function getUrl($account)
         {
             // Core Variables
             
-            $account    = $this->getAccount();
-            $identifier = "";
-            $secret     = "";
+            $codeSize = $this->getQrCodeSize();
+            
+            // Format Variables
+            
+            $otpFormat  = "otpauth://totp/%s?secret=%s";
+            $urlFormat  = "https://chart.googleapis.com/chart?chs=%s&" .
+                "chld=M|0&cht=qr&chl=%s";
             
             // Other Variables
             
-            $otpFormat = "otpauth://totp/%s?secret=%s";
-            $urlFormat = "https://chart.googleapis.com/chart?chs=200x200&" .
-                "chld=M|0&cht=qr&chl=%s";
+            $otpRequest = "";
+            $identifier = "";
+            $secret     = "";
             
-            // Step 1 - Check Account Secret
+            // Step 1 - Check Account Object
+            
+            if (!($account instanceof Account))
+            {
+                throw new \Exception("Invalid object provided.");
+            }
+            
+            // Step 2 - Check Account Secret
             
             if ($account->getAccountSecret() == null)
             {
                 throw new \Exception("Set account is without a secret.");
             }
             
-            // Step 2 - Check Account Details
+            // Step 3 - Check Account Details
             
             if ($account->getServiceName() == "" && $account->getAccountName())
             {
                 throw new \Exception("Set account is without details.");
             }
             
-            // Step 3 - Generate Identifier & Secret
+            // Step 4 - Generate Identifier & Secret
             
             if ($account->getServiceName() != "")
             {
@@ -303,12 +316,12 @@
             }
             
             $secret = $account->getAccountSecret()->getValue();
-                
-            // Step 4 - Generate & Return URL
+            
+            // Step 5 - Generate & Return URL
             
             $otpRequest = sprintf($otpFormat, $identifier, $secret);
             
-            return sprintf($urlFormat, urlencode($otpRequest));
+            return sprintf($urlFormat, "${codeSize}x${codeSize}", urlencode($otpRequest));
         }
         
         /***************\
@@ -316,27 +329,27 @@
         \***************/
         
         /**
-         * Sets account used for QR code creation.
+         * Sets QR code size - width and height.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for QR creation.
+         * @param integer $qrCodeSize
+         *   Size of the QR codes that should be generated.
          * @return void
          */
         
-        public function setAccount($account)
+        public function setQrCodeSize($qrCodeSize)
         {
             // Logic
             
-            if (!($account instanceof Account))
+            if (!is_numeric($qrCodeSize))
             {
-                throw new \Exception("Invalid object used.");
+                throw new \Exception("Invalid value provided.");
             }
             
-            $this->account = $account;
+            $this->qrCodeSize = $qrCodeSize;
         }
         
         /**
@@ -394,9 +407,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
         
-        public function generate()
+        public function generate($account)
         {
             // Core Variables
             
@@ -414,9 +430,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
     
-        public function regenerate()
+        public function regenerate($account)
         {
             // Core Variables
             
@@ -448,7 +467,7 @@
         {
             // Logic
             
-            return !($this->account == null || $this->storageDirectory == null);
+            return !($this->storageDirectory == null || $this->qrCodeSize == null);
         }
         
         /*****************\

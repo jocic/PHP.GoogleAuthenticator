@@ -50,7 +50,7 @@
         \*********************/
         
         /**
-         * Tests <i>setAccount</i> & <i>getAccount</i> methods.
+         * Tests <i>setQrCodeSize</i> & <i>getQrCodeSize</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -59,30 +59,29 @@
          * @return void
          */
         
-        public function testAccountMethods()
+        public function testQrCodeSize()
         {
             // Core Variables
             
-            $qr      = new GoogleQr();
-            $account = new Account();
+            $qr = new GoogleQr();
             
-            // Step 1 - Set Valid Setting
+            // Step 1 - Set Valid Value
             
-            $qr->setAccount($account);
+            $qr->setQrCodeSize(400);
             
-            $this->assertSame($account, $qr->getAccount());
+            $this->assertSame(400, $qr->getQrCodeSize());
             
-            // Step 2 - Set Invalid Setting
+            // Step 2 - Set Invalid Value
             
             try
             {
-                $qr->setAccount(1337);
+                $qr->setQrCodeSize("#");
                 
                 $this->fail("Exception should've been thrown!");
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Invalid object used.", $e->getMessage());
+                $this->assertEquals("Invalid value provided.", $e->getMessage());
             }
         }
         
@@ -271,17 +270,20 @@
                 "serviceName" => "A",
                 "accountName" => "B",
                 "secretValue" => "RMB4AMUMDHODBYNR",
+                "qrCodeSize"  => 200,
                 "qrUrl"       => "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2FA+-+B%3Fsecret%3DRMB4AMUMDHODBYNR"
             ], [
                 "serviceName" => "C",
                 "accountName" => "D",
                 "secretValue" => "4JT4TVALIJOHCRZX",
-                "qrUrl"       => "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2FC+-+D%3Fsecret%3D4JT4TVALIJOHCRZX"
+                "qrCodeSize"  => 300,
+                "qrUrl"       => "https://chart.googleapis.com/chart?chs=300x300&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2FC+-+D%3Fsecret%3D4JT4TVALIJOHCRZX"
             ], [
                 "serviceName" => "E",
                 "accountName" => "F",
                 "secretValue" => "YPPMQXR6UGWBP3UI",
-                "qrUrl"       => "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2FE+-+F%3Fsecret%3DYPPMQXR6UGWBP3UI"
+                "qrCodeSize"  => 400,
+                "qrUrl"       => "https://chart.googleapis.com/chart?chs=400x400&chld=M|0&cht=qr&chl=otpauth%3A%2F%2Ftotp%2FE+-+F%3Fsecret%3DYPPMQXR6UGWBP3UI"
             ]];
             
             // Logic
@@ -290,13 +292,12 @@
             {
                 $secret  = new Secret();
                 $account = new Account($testCombination["serviceName"],
-                    $testCombination["accountName"], $secret);
+                    $testCombination["accountName"],
+                    $testCombination["secretValue"]);
                 
-                $secret->setValue($testCombination["secretValue"]);
+                $qr->setQrCodeSize($testCombination["qrCodeSize"]);
                 
-                $qr->setAccount($account);
-                
-                $this->assertSame($testCombination["qrUrl"], $qr->getUrl());
+                $this->assertSame($testCombination["qrUrl"], $qr->getUrl($account));
             }
         }
         
@@ -324,20 +325,20 @@
             
             $testCombinations = [
                 false => [
-                    "account" => null,
-                    "storage" => null
+                    "storage" => null,
+                    "size"    => null
                 ],
                 false => [
-                    "account" => new Account(),
-                    "storage" => null
+                    "storage" => sys_get_temp_dir(),
+                    "size"    => null
                 ],
                 false => [
-                    "account" => null,
-                    "storage" => sys_get_temp_dir()
+                    "storage" => null,
+                    "size"    => 400
                 ],
                 true => [
-                    "account" => new Account(),
-                    "storage" => sys_get_temp_dir()
+                    "storage" => sys_get_temp_dir(),
+                    "size"    => 400
                 ]
             ];
             
@@ -347,14 +348,14 @@
             {
                 $qr = new GoogleQr();
                 
-                if ($testCombination["account"] != null)
-                {
-                    $qr->setAccount($testCombination["account"]);
-                }
-                
                 if ($testCombination["storage"] != null)
                 {
                     $qr->setStorageDirectory($testCombination["storage"]);
+                }
+                
+                if ($testCombination["size"] != null)
+                {
+                    $qr->setQrCodeSize($testCombination["size"]);
                 }
                 
                 $this->assertEquals($testResult, $qr->areParametersValid());
@@ -384,24 +385,23 @@
             // Other Variables
             
             $testValues = [[
-                "account"   => null,
-                "directory" => null
+                "directory" => null,
+                "size"      => null
             ], [
-                "account"   => new Account(),
-                "directory" => sys_get_temp_dir()
+                "directory" => sys_get_temp_dir(),
+                "size"      => 400
             ]];
             
             // Logic
             
             foreach ($testValues as $testValue)
             {
-                $qr = new GoogleQr($testValue["account"],
-                    $testValue["directory"]);
-                
-                $this->assertSame($testValue["account"], $qr->getAccount());
+                $qr = new GoogleQr($testValue["directory"], $testValue["size"]);
                 
                 $this->assertSame($testValue["directory"],
                         $qr->getStorageDirectory());
+                
+                $this->assertSame($testValue["size"], $qr->getQrCodeSize());
             }
         }
         

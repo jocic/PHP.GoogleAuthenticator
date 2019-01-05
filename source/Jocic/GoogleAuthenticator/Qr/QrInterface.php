@@ -47,14 +47,14 @@
         \***************/
         
         /**
-         * Returns set account used for QR code creation.
+         * Returns set QR code size - width and height.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          */
         
-        public function getAccount();
+        public function getQrCodeSize();
         
         /**
          * Returns set directory used for storing generated QR codes.
@@ -72,9 +72,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
         
-        public function getAbsoluteLocation();
+        public function getAbsoluteLocation($account);
         
         /**
          * Returns QR code's relative location.
@@ -82,9 +85,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
         
-        public function getRelativeLocation();
+        public function getRelativeLocation($account);
         
         /**
          * Returns QR code's encoded value.
@@ -101,17 +107,17 @@
         \***************/
         
         /**
-         * Sets account used for QR code creation.
+         * Sets QR code size - width and height.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for QR creation.
+         * @param integer $qrCodeSize
+         *   Size of the QR codes that should be generated.
          */
         
-        public function setAccount($account);
+        public function setQrCodeSize($qrCodeSize);
         
         /**
          * Sets directory used for storing generated QR codes.
@@ -136,9 +142,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
         
-        public function generate();
+        public function generate($account);
         
         /**
          * Regenerates a QR code based on the set value.
@@ -146,9 +155,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
         
-        public function regenerate();
+        public function regenerate($account);
         
         /*****************\
         |* CHECK METHODS *|

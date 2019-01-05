@@ -63,9 +63,12 @@
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the QR code.
          */
         
-        public function getUrl();
+        public function getUrl($account);
         
         /***************\
         |* SET METHODS *|
