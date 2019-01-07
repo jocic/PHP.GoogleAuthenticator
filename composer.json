@@ -8,7 +8,11 @@
         "email" : "office@djordjejocic.com"
     }],
     "keywords" : [
-        "mfa"
+        "2fa",
+        "mfa",
+        "authenticator",
+        "google-authenticator",
+        "security"
     ],
     "config" : {
         "vendor-dir" : "./dependencies"
