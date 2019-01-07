@@ -229,9 +229,18 @@ $qrUrl = $qr->getUrl($account); // Possible Without Storage Location
 
 QR codes are generated only once, when the location is initially requested, but you can always regenerate them if something goes wrong using the "regenerate" method. Also, keep in mind that, using the "generate" method before requesting QR code's location may improve overall performance if implemented correctly.
 
-### Example 11 - Authenticator
+### Example 11 - Validator
 
-...
+Validating provided 6-digit codes is extremely simple, you just need to instantiate the validator and utilize the "isCodeValid" method.
+
+```php
+$validator = Jocic\GoogleAuthenticator\Validator();
+
+if (!$validator->isCodeValid($code, $account))
+{
+    // Handle Invalid Code
+}
+```
 
 ## Installation
 
@@ -249,17 +258,15 @@ composer require jocic/google-authenticator dev-master
 Following unit tests are available:
 
 *   **Essentials** - Tests for library's essentials ex. Autoloader, Base 32 encoder, etc.
-*   **Elements** - Tests for library's core elements ex. Secret, Account, etc.
 *   **QR Generators** - Tests for available QR code generators in the library.
-*   **Authenticator** - Tests for authenticator's methods.
+*   **Elements** - Tests for library's core elements ex. Secret, Account, etc.
 
 You can execute them easily from the terminal like in the example below.
 
 ```bash
 bash ./scripts/phpunit.sh --testsuite essentials
-bash ./scripts/phpunit.sh --testsuite elements
 bash ./scripts/phpunit.sh --testsuite qr-generators
-bash ./scripts/phpunit.sh --testsuite authenticator
+bash ./scripts/phpunit.sh --testsuite elements
 ```
 
 Please don’t forget to install necessary dependencies before attempting to do the God's work above. They may be important.

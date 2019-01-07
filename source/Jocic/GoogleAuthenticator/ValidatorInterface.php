@@ -32,37 +32,64 @@
     namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>GoogleAuthenticatorInterface</i> class is an interface used to enforce
-     * implementation of core authenticator's methods.
+     * <i>ValidatorInterface</i> class is an interface used to enforce
+     * implementation of core validator's methods.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface GoogleAuthenticatorInterface
+    interface ValidatorInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        public function getSecret();
+        /**
+         * Returns previous code generated for the account.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $account
+         *   Account that should be used for code generation.
+         */
         
-        public function getAccount();
+        public function getPreviousCode($account);
         
-        public function getPreviousCode();
+        /**
+         * Returns current code generated for the account.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $account
+         *   Account that should be used for code generation.
+         */
         
-        public function getCurrentCode();
+        public function getCurrentCode($account);
         
-        public function getNextCode();
+        /**
+         * Returns next code generated for the account.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $account
+         *   Account that should be used for code generation.
+         */
+        
+        public function getNextCode($account);
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        public function setSecret();
-        
-        public function setAccount();
+        // SET METHODS GO HERE
         
         /****************\
         |* CORE METHODS *|
@@ -74,7 +101,20 @@
         |* CHECK METHODS *|
         \*****************/
         
-        public function isCodeValid();
+        /**
+         * Returns previous code generated for the account.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $code
+         *   Six-digit code that should be used for validation.
+         * @param string $account
+         *   Account that should be used for code validation.
+         */
+        
+        public function isCodeValid($code, $account);
         
         /*****************\
         |* OTHER METHODS *|
