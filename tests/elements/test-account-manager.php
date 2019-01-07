@@ -50,6 +50,28 @@
         \*********************/
         
         /**
+         * Tests <i>getManagerId</i> method.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testGetManagerId()
+        {
+            // Core Variables
+            
+            $accountManager = new AccountManager();
+            
+            // Logic
+            
+            $this->assertTrue(strlen($accountManager->getManagerId()) == 40);
+            $this->assertTrue(preg_match("/^[A-z0-9]+$/", $accountManager->getManagerId()) == true);
+        }
+        
+        /**
          * Tests <i>setAccounts</i> & <i>getAccounts</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
@@ -315,6 +337,9 @@
             $this->assertFalse($accountManager->removeAccount(new Account("E", "F")),
                 "Removal by \"Object\" failed - non-existing.");
             
+            $this->assertFalse($accountManager->removeAccount(new Account()),
+                "Removal by \"Object\" failed - no parameters.");
+            
             // Step 5 - Test Invalid Removal Method
             
             try
@@ -379,6 +404,10 @@
             
             $this->assertSame("A", $account->getServiceName());
             
+            $account = $accountManager->findAccount(1337);
+            
+            $this->assertSame(null, $account);
+            
             // Step 3 - Test Finding By Name
             
             try
@@ -397,7 +426,23 @@
             
             $this->assertSame("C", $account->getServiceName());
             
+            $account = $accountManager->findAccount("Cake is a lie!");
+            
+            $this->assertSame(null, $account);
+            
             // Step 4 - Test Finding By Object
+            
+            try
+            {
+                $accountManager->findByAccountObject(new Secret());
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided object isn't valid.",
+                    $e->getMessage());
+            }
             
             $account = $accountManager->findAccount($testAccounts[2]);
             
@@ -406,6 +451,10 @@
             $account = $accountManager->findAccount(new Account("E", "F"));
             
             $this->assertSame("E", $account->getServiceName());
+            
+            $account = $accountManager->findAccount(new Account());
+            
+            $this->assertSame(null, $account);
             
             // Step 5 - Test Invalid Removal Method
             
