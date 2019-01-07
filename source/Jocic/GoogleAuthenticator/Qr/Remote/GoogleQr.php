@@ -85,27 +85,27 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $storageDirectory
-         *   Storage directory that should be set.
          * @param integer $qrCodeSize
          *   Size of the QR codes that should be generated.
+         * @param string $storageDirectory
+         *   Storage directory that should be set.
          * @return void
          */
         
-        public function __construct($storageDirectory = null, $qrCodeSize = null)
+        public function __construct($qrCodeSize = null, $storageDirectory = null)
         {
-            // Step 1 - Handle Storage Directory
-            
-            if ($storageDirectory != null)
-            {
-                $this->setStorageDirectory($storageDirectory);
-            }
-            
-            // Step 2 - Handle QR Code Size
+            // Step 1 - Handle QR Code Size
             
             if ($qrCodeSize != null)
             {
                 $this->setQrCodeSize($qrCodeSize);
+            }
+            
+            // Step 2 - Handle Storage Directory
+            
+            if ($storageDirectory != null)
+            {
+                $this->setStorageDirectory($storageDirectory);
             }
         }
         
@@ -151,59 +151,64 @@
         
         /**
          * Generates the QR code based on the set parameters and returns it's
-         * absolute location. If the QR code was already generated only the
-         * location is returned.
+         * location. If the QR code was already generated only the location is
+         * returned.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
-         *   Return absolute location of the generated QR code.
+         *   Return location of the generated QR code.
          */
         
-        public function getAbsoluteLocation($account)
+        public function getFileLocation($account)
         {
             // Step 1 - Check Parameters
             
-            if (!$this->areParametersValid())
+            if ($this->qrCodeSize == null)
             {
-                throw new \Exception("Account or storage directory wasn't set.");
+                throw new \Exception("QR code size wasn't set.");
             }
             
             // Step 2 - Generate QR Code & Return It's Location
             
+            if ($this->getStorageDirectory() == null)
+            {
+                return "." . DIRECTORY_SEPARATOR . $this->generate($account);
+            }
+            
             return join(DIRECTORY_SEPARATOR, [
-                $this->getStorageDirectory().
-                $this->generate()
+                $this->getStorageDirectory(),
+                $this->generate($account)
             ]);
         }
         
         /**
          * Generates the QR code based on the set parameters and returns it's
-         * relative location. If the QR code was already generated only the
-         * location is returned.
+         * filename. If the QR code was already generated only the filename is
+         * returned.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
-         *   Return relative location of the generated QR code.
+         *   Return filename of the generated QR code.
          */
         
-        public function getRelativeLocation($account)
+        public function getFilename($account)
         {
             // Step 1 - Check Parameters
             
-            if (!$this->areParametersValid())
+            if ($this->qrCodeSize == null)
             {
-                throw new \Exception("Account or storage directory wasn't set.");
+                throw new \Exception("QR code size wasn't set.");
             }
             
             // Step 2 - Generate QR Code & Return It's Location
             
-            return $this->generate();
+            return $this->generate($account);
         }
         
         /**
@@ -410,18 +415,70 @@
          * 
          * @param object $account
          *   Account that should be used for generating the QR code.
+         * @param integer $bufferSize
+         *   Buffer size in bytes that will be used for loading.
+         * @return string
+         *   Filename of a generated QR code.
          */
         
-        public function generate($account)
+        public function generate($account, $bufferSize = 1024)
         {
             // Core Variables
             
-            $url      = $this->getUrl();
-            $filename = sha1($url) . ".png";
+            $requestUrl = $this->getUrl($account);
+            $directory  = $this->getStorageDirectory();
+            $filename   = sha1($requestUrl) . ".png";
             
-            // Logic
+            // File Variables
             
-            // TBI
+            $fileHandler  = null;
+            $bytesWritten = 0;
+            $fileLocation = "." . DIRECTORY_SEPARATOR . $filename;
+            
+            // Other Variables
+            
+            $temp = null;
+            
+            // Step 1 - Determine File Location
+            
+            if ($directory != null)
+            {
+                $fileLocation = $directory . DIRECTORY_SEPARATOR . $filename;
+            }
+            
+            // Step 2 - Generate QR Code & Return It's Location
+            
+            if (!is_file($fileLocation))
+            {
+                // Get QR Code
+                
+                try
+                {
+                    $fileHandler = fopen($requestUrl, "r");
+                    
+                    while (!feof($fileHandler))
+                    {
+                        $temp .= fread($fileHandler, $bufferSize);
+                    }
+                    
+                    fclose($fileHandler);
+                }
+                catch (\Exception $e) {}
+                
+                // Save QR Code
+                
+                try
+                {
+                    $fileHandler = fopen($fileLocation, "w");
+                    
+                    $bytesWritten = fwrite($fileHandler, $temp);
+                    
+                    fclose($fileHandler);
+                }
+                catch (\Exception $e) {}
+            }
+            
+            return $filename;
         }
         
         /**
@@ -433,42 +490,42 @@
          * 
          * @param object $account
          *   Account that should be used for generating the QR code.
+         * @return string
+         *   Filename of a regenerated QR code.
          */
     
         public function regenerate($account)
         {
             // Core Variables
             
-            $url      = $this->getUrl();
-            $filename = sha1($url) . ".png";
-        
+            $requestUrl = $this->getUrl($account);
+            $directory  = $this->getStorageDirectory();
+            $filename   = sha1($requestUrl) . ".png";
+            
+            // File Variables
+            
+            $fileLocation = "." . DIRECTORY_SEPARATOR . $filename;
+            
             // Logic
             
-            // TBI
+            if ($directory != null)
+            {
+                $fileLocation = $directory . DIRECTORY_SEPARATOR . $filename;
+            }
+            
+            if (is_file($fileLocation))
+            {
+                unlink($fileLocation);
+            }
+            
+            $this->generate($account);
         }
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        /**
-         * Checks if set parameters are valid and can be used for generating
-         * the QR code or not.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return bool
-         *   Value <i>TRUE</i> if parameters are valid, and vice versa.
-         */
-        
-        public function areParametersValid()
-        {
-            // Logic
-            
-            return !($this->storageDirectory == null || $this->qrCodeSize == null);
-        }
+        // CHECK METHODS GO HERE
         
         /*****************\
         |* OTHER METHODS *|

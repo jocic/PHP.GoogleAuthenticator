@@ -127,7 +127,7 @@
         }
         
         /**
-         * Tests <i>getAbsoluteLocation</i> method.
+         * Tests <i>getFileLocation</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -136,41 +136,41 @@
          * @return void
          */
         
-        /*public function testAbsoluteLocationMethod()
+        public function testFileLocationMethod()
         {
             // Core Variables
             
-            $qr = new GoogleQr();
+            $qr      = new GoogleQr();
+            $account = new Account("A", "B", "RMB4AMUMDHODBYNR");
             
             // Other Variables
             
             $tempDirectory = sys_get_temp_dir();
             
-            // Step 1 - Test Before Directory Setting
+            // Step 1 - Test Valid Parameter
+            
+            $qr->setQrCodeSize(200);
+            $qr->setStorageDirectory($tempDirectory);
+            
+            $this->assertEquals("/tmp/e5fd6380b30bce7e3cf1a722ea3af2d8a6dc2051.png",
+                $qr->getFileLocation($account));
+            
+            // Step 2 - Test Invalid Parameter
             
             try
             {
-                $qr->getAbsoluteLocation(1337);
+                $qr->getFileLocation(1337);
                 
                 $this->fail("Exception should've been thrown!");
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Invalid storage directory used.",
-                    $e->getMessage());
+                $this->assertEquals("Invalid object provided.", $e->getMessage());
             }
-            
-            // Step 2 - Test Before Account Setting
-            
-            
-            
-            // Step 3 - Test After Directory Setting
-            
-            
-        }*/
+        }
         
         /**
-         * Tests <i>getRelativeLocation</i> method.
+         * Tests <i>getFilename</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -179,29 +179,38 @@
          * @return void
          */
         
-        /*public function testRelativeLocationMethod()
+        public function testGetFilenameMethod()
         {
             // Core Variables
             
-            $qr = new GoogleQr();
+            $qr      = new GoogleQr();
+            $account = new Account("A", "B", "RMB4AMUMDHODBYNR");
             
             // Other Variables
             
             $tempDirectory = sys_get_temp_dir();
             
-            // Step 1 - Test Before Directory Setting
+            // Step 1 - Test Valid Parameter
             
+            $qr->setQrCodeSize(200);
+            $qr->setStorageDirectory($tempDirectory);
             
+            $this->assertEquals("e5fd6380b30bce7e3cf1a722ea3af2d8a6dc2051.png",
+                $qr->getFilename($account));
             
+            // Step 2 - Test Invalid Parameter
             
-            // Step 2 - Test Before Account Setting
-            
-            
-            
-            // Step 3 - Test After Directory Setting
-            
-            
-        }*/
+            try
+            {
+                $qr->getFilename(1337);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Invalid object provided.", $e->getMessage());
+            }
+        }
         
         /**
          * Tests <i>setApiKey</i> & <i>getApiKey</i> methods.
@@ -258,7 +267,7 @@
          * @return void
          */
         
-        public function testUrlMethtod()
+        public function atestUrlMethtod()
         {
             // Core Variables
             
@@ -305,62 +314,7 @@
         |* CHECK METHODS *|
         \*****************/
         
-        /**
-         * Tests <i>areParametersValid</i> method.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        
-        public function testParametersMethod()
-        {
-            // Core Variables
-            
-            $qr = new GoogleQr();
-            
-            // Other Variables
-            
-            $testCombinations = [
-                false => [
-                    "storage" => null,
-                    "size"    => null
-                ],
-                false => [
-                    "storage" => sys_get_temp_dir(),
-                    "size"    => null
-                ],
-                false => [
-                    "storage" => null,
-                    "size"    => 400
-                ],
-                true => [
-                    "storage" => sys_get_temp_dir(),
-                    "size"    => 400
-                ]
-            ];
-            
-            // Logic
-            
-            foreach ($testCombinations as $testResult => $testCombination)
-            {
-                $qr = new GoogleQr();
-                
-                if ($testCombination["storage"] != null)
-                {
-                    $qr->setStorageDirectory($testCombination["storage"]);
-                }
-                
-                if ($testCombination["size"] != null)
-                {
-                    $qr->setQrCodeSize($testCombination["size"]);
-                }
-                
-                $this->assertEquals($testResult, $qr->areParametersValid());
-            }
-        }
+        // CHECK METHODS GO HERE
         
         /*******************\
         |* PRIMARY METHODS *|
@@ -385,23 +339,23 @@
             // Other Variables
             
             $testValues = [[
-                "directory" => null,
-                "size"      => null
+                "size"      => null,
+                "directory" => null
             ], [
-                "directory" => sys_get_temp_dir(),
-                "size"      => 400
+                "size"      => 400,
+                "directory" => sys_get_temp_dir()
             ]];
             
             // Logic
             
             foreach ($testValues as $testValue)
             {
-                $qr = new GoogleQr($testValue["directory"], $testValue["size"]);
+                $qr = new GoogleQr($testValue["size"], $testValue["directory"]);
+                
+                $this->assertSame($testValue["size"], $qr->getQrCodeSize());
                 
                 $this->assertSame($testValue["directory"],
                         $qr->getStorageDirectory());
-                
-                $this->assertSame($testValue["size"], $qr->getQrCodeSize());
             }
         }
         

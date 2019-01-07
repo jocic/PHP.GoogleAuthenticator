@@ -468,7 +468,7 @@
             
             while (!feof($fileHandler))
             {
-                $accounts .= fread($fileHandler, 1024);
+                $accounts .= fread($fileHandler, $bufferSize);
             }
             
             fclose($fileHandler);

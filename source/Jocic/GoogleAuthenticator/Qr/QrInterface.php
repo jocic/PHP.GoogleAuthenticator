@@ -67,7 +67,7 @@
         public function getStorageDirectory();
         
         /**
-         * Returns QR code's absolute location.
+         * Returns QR code's file location.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -77,10 +77,10 @@
          *   Account that should be used for generating the QR code.
          */
         
-        public function getAbsoluteLocation($account);
+        public function getFileLocation($account);
         
         /**
-         * Returns QR code's relative location.
+         * Returns QR code's filename.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -90,7 +90,7 @@
          *   Account that should be used for generating the QR code.
          */
         
-        public function getRelativeLocation($account);
+        public function getFilename($account);
         
         /**
          * Returns QR code's encoded value.
