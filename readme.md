@@ -206,6 +206,8 @@ $qr = Jocic\GoogleAuthenticator\Qr\Remote\GoogleQr(200, "/my/storage/directory")
 $qrAbsoluteLocation = $qr->getFileLocation($account);
 $qrRelativeLocation = $qr->getFilename($account);
 
+$encodedValue = $qr->getEncodedValue($account);
+
 $qrUrl = $qr->getUrl($account); // Possible Without Storage Location
 ```
 
@@ -220,10 +222,16 @@ $qr->setStorageDirectory("/my/storage/directory");
 $qrAbsoluteLocation = $qr->getFileLocation($account);
 $qrRelativeLocation = $qr->getFilename($account);
 
+$encodedValue = $qr->getEncodedValue($account);
+
 $qrUrl = $qr->getUrl($account); // Possible Without Storage Location
 ```
 
 QR codes are generated only once, when the location is initially requested, but you can always regenerate them if something goes wrong using the "regenerate" method. Also, keep in mind that, using the "generate" method before requesting QR code's location may improve overall performance if implemented correctly.
+
+### Example 11 - Authenticator
+
+...
 
 ## Installation
 

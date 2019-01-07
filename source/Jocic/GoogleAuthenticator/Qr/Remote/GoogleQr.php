@@ -31,6 +31,7 @@
     
     namespace Jocic\GoogleAuthenticator\Qr\Remote;
     
+    use Jocic\GoogleAuthenticator\Encoders\Base\Base32;
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
     use Jocic\GoogleAuthenticator\Account;
     
@@ -222,13 +223,40 @@
          * 
          * @return string
          *   Encoded value of the generated QR code in <i>Base 32</i> format.
+         * @param integer $bufferSize
+         *   Buffer size in bytes that will be used for loading.
+         * @return string
+         *   Encoded value of the QR code - Base 32 encoding.
          */
         
-        public function getEncodedValue()
+        public function getEncodedValue($account, $bufferSize = 1024)
         {
+            // Core Variables
+            
+            $encoder = new Base32();
+            
+            // File Variables
+            
+            $fileLocation = $this->getFileLocation($account);
+            $fileHandler  = null;
+            $fileData     = null;
+            
             // Logic
             
-            // TBI
+            try
+            {
+                $fileHandler = fopen($fileLocation, "r");
+                
+                while (!feof($fileHandler))
+                {
+                    $fileData .= fread($fileHandler, $bufferSize);
+                }
+                
+                fclose($fileHandler);
+            }
+            catch (\Exception $e) {}
+            
+            return $encoder->encode($fileData);
         }
         
         /**
@@ -518,7 +546,7 @@
                 unlink($fileLocation);
             }
             
-            $this->generate($account);
+            return $this->generate($account);
         }
         
         /*****************\
