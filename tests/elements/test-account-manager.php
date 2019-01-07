@@ -257,18 +257,63 @@
             
             // Step 2 - Test Removal By ID
             
+            try
+            {
+                $accountManager->removeByAccountId("#");
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided ID isn't numeric.",
+                    $e->getMessage());
+            }
+            
             $this->assertTrue($accountManager->removeAccount(1),
-                "Removal by \"ID\" failed.");
+                "Removal by \"ID\" failed - existing.");
+            
+            $this->assertFalse($accountManager->removeAccount(1),
+                "Removal by \"ID\" failed - non-existing.");
             
             // Step 3 - Test Removal By Name
             
+            try
+            {
+                $accountManager->removeByAccountName(1337);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided ID isn't string.",
+                    $e->getMessage());
+            }
+            
             $this->assertTrue($accountManager->removeAccount("D"),
-                "Removal by \"Name\" failed.");
+                "Removal by \"Name\" failed - existing.");
+            
+            $this->assertFalse($accountManager->removeAccount("D"),
+                "Removal by \"Name\" failed - non-existing.");
             
             // Step 4 - Test Removal By Object
             
+            try
+            {
+                $accountManager->removeByAccountObject(new Secret());
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided object isn't valid.",
+                    $e->getMessage());
+            }
+            
             $this->assertTrue($accountManager->removeAccount($testAccounts[2]),
-                "Removal by \"Object\" failed.");
+                "Removal by \"Object\" failed - existing.");
+            
+            $this->assertFalse($accountManager->removeAccount(new Account("E", "F")),
+                "Removal by \"Object\" failed - non-existing.");
             
             // Step 5 - Test Invalid Removal Method
             
@@ -318,11 +363,35 @@
             
             // Step 2 - Test Finding By ID
             
+            try
+            {
+                $accountManager->findByAccountId("#");
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided ID isn't numeric.",
+                    $e->getMessage());
+            }
+            
             $account = $accountManager->findAccount(1);
             
             $this->assertSame("A", $account->getServiceName());
             
             // Step 3 - Test Finding By Name
+            
+            try
+            {
+                $accountManager->findByAccountName(1337);
+                
+                $this->fail("Exception should've been thrown!");
+            }
+            catch (\Exception $e)
+            {
+                $this->assertEquals("Provided ID isn't string.",
+                    $e->getMessage());
+            }
             
             $account = $accountManager->findAccount("D");
             
@@ -331,6 +400,10 @@
             // Step 4 - Test Finding By Object
             
             $account = $accountManager->findAccount($testAccounts[2]);
+            
+            $this->assertSame("E", $account->getServiceName());
+            
+            $account = $accountManager->findAccount(new Account("E", "F"));
             
             $this->assertSame("E", $account->getServiceName());
             
@@ -397,6 +470,11 @@
                 $this->assertSame($accountObject->getServiceName(),
                     $testAccounts[$accountKey]->getServiceName());
             }
+            
+            // Step 4 - Test Invalid Save & Load
+            
+            $this->assertFalse($accountManager->save("/etc/shadow"));
+            $this->assertFalse($accountManager->load("/etc/shadow"));
         }
         
         /*********************\

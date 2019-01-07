@@ -393,16 +393,7 @@
             $fileHandler  = null;
             $bytesWritten = null;
             
-            // Step 1 - Check If File Is Writable
-            
-            touch($fileLocation);
-            
-            if (!is_writable($fileLocation))
-            {
-                throw new \Exception("Provided file isn't writable.");
-            }
-            
-            // Step 2 - Prepare Data
+            // Logic
             
             foreach ($accounts as $account)
             {
@@ -419,11 +410,15 @@
             
             // Step 3 - Save Data
             
-            $fileHandler = fopen($fileLocation, "w");
-            
-            $bytesWritten = fwrite($fileHandler, $data);
-            
-            fclose($fileHandler);
+            try
+            {
+                $fileHandler = fopen($fileLocation, "w");
+                
+                $bytesWritten = fwrite($fileHandler, $data);
+                
+                fclose($fileHandler);
+            }
+            catch (\Exception $e) {}
             
             return $bytesWritten > 0;
         }
@@ -454,27 +449,24 @@
             
             $fileHandler = null;
             
-            // Step 1 - Check If File Is Readable
+            // Step 1 - Load Accounts
             
-            if (!is_readable($fileLocation))
+            try
             {
-                throw new \Exception("Provided file isn't readable.");
+                $fileHandler = fopen($fileLocation, "r");
+                
+                while (!feof($fileHandler))
+                {
+                    $accounts .= fread($fileHandler, $bufferSize);
+                }
+                
+                fclose($fileHandler);
+                
+                $accounts = unserialize($accounts);
             }
+            catch (\Exception $e) {}
             
-            // Step 2 - Load Accounts
-            
-            $fileHandler = fopen($fileLocation, "r");
-            
-            while (!feof($fileHandler))
-            {
-                $accounts .= fread($fileHandler, $bufferSize);
-            }
-            
-            fclose($fileHandler);
-            
-            $accounts = unserialize($accounts);
-            
-            // Step 3 - Process Accounts
+            // Step 2 - Process Accounts
             
             if (is_array($accounts))
             {
@@ -482,26 +474,22 @@
                 
                 foreach ($accounts as $account)
                 {
-                    // Check Data
+                    // Only Add Valid Data
                     
-                    if (!(   isset($account["account_id"])
-                          && isset($account["service_name"])
-                          && isset($account["account_name"])
-                          && isset($account["secret"])))
+                    if (    isset($account["account_id"])
+                         && isset($account["service_name"])
+                         && isset($account["account_name"])
+                         && isset($account["secret"]))
                     {
-                        return false;
+                        $loadedAccount = new Account();
+                        
+                        $loadedAccount->setAccountId($account["account_id"]);
+                        $loadedAccount->setServiceName($account["service_name"]);
+                        $loadedAccount->setAccountName($account["account_name"]);
+                        $loadedAccount->setAccountSecret($account["secret"]);
+                        
+                        $this->addAccount($loadedAccount);
                     }
-                    
-                    // Add Account
-                    
-                    $loadedAccount = new Account();
-                    
-                    $loadedAccount->setAccountId($account["account_id"]);
-                    $loadedAccount->setServiceName($account["service_name"]);
-                    $loadedAccount->setAccountName($account["account_name"]);
-                    $loadedAccount->setAccountSecret($account["secret"]);
-                    
-                    $this->addAccount($loadedAccount);
                 }
                 
                 return true;
@@ -535,6 +523,10 @@
         
         public function removeByAccountId($accountId)
         {
+            // Core Variables
+            
+            $accounts = $this->getAccounts();
+            
             // Step 1 - Check Value
             
             if (!is_numeric($accountId))
@@ -544,11 +536,16 @@
             
             // Step 2 - Remove Account
             
-            if (isset($this->accounts[$accountId]))
+            foreach ($accounts as $accountKey => $accountObject)
             {
-                unset($this->accounts[$accountId]);
-                
-                return true;
+                if ($accountObject->getAccountId() == $accountId)
+                {
+                    unset($accounts[$accountKey]);
+                    
+                    $this->accounts = $accounts;
+                    
+                    return true;
+                }
             }
             
             return false;
@@ -586,7 +583,9 @@
             {
                 if ($accountObject->getAccountName() == $accountName)
                 {
-                    unset($this->accounts[$accountId]);
+                    unset($accounts[$accountId]);
+                    
+                    $this->accounts = $accounts;
                     
                     return true;
                 }
@@ -621,15 +620,7 @@
                 throw new \Exception("Provided object isn't valid.");
             }
             
-            // Step 2 - Check Account's Manager
-            
-            if ($this->getManagerId() != $accountObject->getAccountManager()
-                ->getManagerId())
-            {
-                throw new \Exception("Account doesn't belong to this manager.");
-            }
-            
-            // Step 3 - Remove Account
+            // Step 2 - Remove Account
             
             if (($identifier = $accountObject->getAccountId()) != null)
             {
@@ -662,6 +653,10 @@
         
         public function findByAccountId($accountId)
         {
+            // Core Variables
+            
+            $accounts = $this->getAccounts();
+            
             // Step 1 - Check Value
             
             if (!is_numeric($accountId))
@@ -671,9 +666,12 @@
             
             // Step 2 - Remove Account
             
-            if (isset($this->accounts[$accountId]))
+            foreach ($accounts as $accountObject)
             {
-                return $this->accounts[$accountId];
+                if ($accountObject->getAccountId() == $accountId)
+                {
+                    return $this->accounts[$accountId];
+                }
             }
             
             return null;
