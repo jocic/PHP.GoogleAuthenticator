@@ -29,19 +29,19 @@ Complete documentation can be found by following the link above.
 
 Following examples should be more then enough to get you started. I tried my best to make them as simple as possible so that everyone, even junior developers, can successfully use them for implementing two-factor authentication.
 
-1.   [Creating a Secret](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-a-Secret)
-2.   [Secret Creation Methods](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Secret-Creation-Methods)
-3.   [Setting Existing Secrets](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Setting-Existing-Secrets)
-4.   [Creating an Account](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-an-Account)
-5.   [Account Management](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Account-Management)
-6.   [QR Codes](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/QR-Codes)
-7.   [Code Validation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Code-Validation)
+1.  [Creating a Secret](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-a-Secret)
+2.  [Secret Creation Methods](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Secret-Creation-Methods)
+3.  [Setting Existing Secrets](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Setting-Existing-Secrets)
+4.  [Creating an Account](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-an-Account)
+5.  [Account Management](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Account-Management)
+6.  [QR Codes](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/QR-Codes)
+7.  [Code Validation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Code-Validation)
 
 For additional examples please review the official project's [wiki](https://github.com/jocic/PHP.GoogleAuthenticator/wiki).
 
 ## Requirements
 
-You only need to have PHP 7.0 available on your system to use **Google Authenticator** in your application. However, for running unit tests, you need to have the following extensions installed:
+You only need to have PHP >=7.0 available on your system to use **Google Authenticator** in your application. However, for running unit tests, you need to have the following extensions installed:
 
 *   [Multibyte String](https://secure.php.net/manual/en/book.mbstring.php)
 *   [DOM](https://secure.php.net/manual/en/dom.setup.php)

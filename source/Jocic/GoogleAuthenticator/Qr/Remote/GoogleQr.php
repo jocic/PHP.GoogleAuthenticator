@@ -354,7 +354,7 @@
             
             $otpRequest = sprintf($otpFormat, $identifier, $secret);
             
-            return sprintf($urlFormat, "${codeSize}x${codeSize}", urlencode($otpRequest));
+            return sprintf($urlFormat, ($codeSize . "x" . $codeSize), urlencode($otpRequest));
         }
         
         /***************\
@@ -423,11 +423,11 @@
          * @return void
          */
         
-        public function setApiKey($apiKey = null)
+        public function setApiKey($apiKey)
         {
             // Logic
             
-            throw new \Exception("Google's API doesn't require a key.");
+            throw new \Exception("Google's API doesn't require a key: $apiKey");
         }
         
         /****************\

@@ -453,7 +453,6 @@
             // IO Variables
             
             $fileHandler = null;
-            $bytesWritten = null;
             
             // Step 1 - Check If File Is Readable
             

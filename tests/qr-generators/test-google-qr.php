@@ -238,8 +238,8 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Google's API doesn't require a key.",
-                    $e->getMessage());
+                $this->assertEquals("Google's API doesn't require a key: " .
+                    "The cake is a lie!", $e->getMessage());
             }
             
             // Step 2 - Test Getting
@@ -299,7 +299,6 @@
             
             foreach ($testCombinations as $testCombination)
             {
-                $secret  = new Secret();
                 $account = new Account($testCombination["serviceName"],
                     $testCombination["accountName"],
                     $testCombination["secretValue"]);
