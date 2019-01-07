@@ -290,6 +290,12 @@
         \*********************/
         
         // SECONDARY METHODS GO HERE
+        
+        /*****************\
+        |* OTHER METHODS *|
+        \*****************/
+        
+        // OTHER METHODS GO HERE
     }
     
 ?>

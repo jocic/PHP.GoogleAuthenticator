@@ -565,6 +565,12 @@
                     $e->getMessage());
             }
         }
+        
+        /*****************\
+        |* OTHER METHODS *|
+        \*****************/
+        
+        // OTHER METHODS GO HERE
     }
     
 ?>
