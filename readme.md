@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/jocic/PHP.GoogleAuthenticator.svg?branch=master)](https://travis-ci.org/jocic/PHP.GoogleAuthenticator) [![Coverage Status](https://coveralls.io/repos/github/jocic/PHP.GoogleAuthenticator/badge.svg?branch=master)](https://coveralls.io/github/jocic/PHP.GoogleAuthenticator?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7c18b4866a54e79b185978e5a180f06)](https://www.codacy.com/app/jocic/PHP.GoogleAuthenticator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jocic/PHP.GoogleAuthenticator&amp;utm_campaign=Badge_Grade) [![Latest Stable Version](https://poser.pugx.org/jocic/google-authenticator/v/stable)](https://packagist.org/packages/jocic/google-authenticator) [![License](https://poser.pugx.org/jocic/google-authenticator/license)](https://packagist.org/packages/jocic/google-authenticator)
 
-Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process.
+Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the usually complicated implementation process.
 
 ![Project Image](images/project-image-small.png)
 
 Following specifications are referenced:
-s
+
 *   [RFC 6238](other/specifications/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
 *   [RFC 6287](other/specifications/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 
@@ -38,6 +38,13 @@ Following examples should be more then enough to get you started. I tried my bes
 7.   [Code Validation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Code-Validation)
 
 For additional examples please review the official project's [wiki](https://github.com/jocic/PHP.GoogleAuthenticator/wiki).
+
+## Requirements
+
+You only need to have PHP 7.0 available on your system to use **Google Authenticator** in your application. However, for running unit tests, you need to have the following extensions installed:
+
+*   [Multibyte String](https://secure.php.net/manual/en/book.mbstring.php)
+*   [DOM](https://secure.php.net/manual/en/dom.setup.php)
 
 ## Installation
 
