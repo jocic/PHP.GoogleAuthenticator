@@ -31,7 +31,7 @@
     
     namespace Jocic\GoogleAuthenticator\Qr\Remote;
     
-    use Jocic\GoogleAuthenticator\Encoders\Base\Base32;
+    use Jocic\Encoders\Base\Base32;
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
     use Jocic\GoogleAuthenticator\Account;
     

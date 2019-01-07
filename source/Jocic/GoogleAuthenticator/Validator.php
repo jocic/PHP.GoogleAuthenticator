@@ -31,7 +31,7 @@
     
     namespace Jocic\GoogleAuthenticator;
     
-    use Jocic\GoogleAuthenticator\Encoders\Base\Base32;
+    use Jocic\Encoders\Base\Base32;
     
     /**
      * <i>Validator</i> class is used for generating QR codes, and validating

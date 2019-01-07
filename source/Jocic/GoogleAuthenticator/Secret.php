@@ -31,6 +31,8 @@
     
     namespace Jocic\GoogleAuthenticator;
     
+    use Jocic\Encoders\Base\Base32;
+    
     /**
      * <i>Secret</i> class is used for generating secrets required for one-time
      * password generation and validation of the same.
@@ -118,7 +120,7 @@
         {
             // Logic
             
-            $this->encoder = new \Jocic\GoogleAuthenticator\Encoders\Base\Base32();
+            $this->encoder = new Base32();
             
             if ($value == null)
             {

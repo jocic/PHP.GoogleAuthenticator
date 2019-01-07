@@ -2,13 +2,12 @@
 
 [![Build Status](https://travis-ci.org/jocic/PHP.GoogleAuthenticator.svg?branch=master)](https://travis-ci.org/jocic/PHP.GoogleAuthenticator) [![Coverage Status](https://coveralls.io/repos/github/jocic/PHP.GoogleAuthenticator/badge.svg?branch=master)](https://coveralls.io/github/jocic/PHP.GoogleAuthenticator?branch=master) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7c18b4866a54e79b185978e5a180f06)](https://www.codacy.com/app/jocic/PHP.GoogleAuthenticator?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jocic/PHP.GoogleAuthenticator&amp;utm_campaign=Badge_Grade) [![Latest Stable Version](https://poser.pugx.org/jocic/google-authenticator/v/stable)](https://packagist.org/packages/jocic/google-authenticator) [![License](https://poser.pugx.org/jocic/google-authenticator/license)](https://packagist.org/packages/jocic/google-authenticator)
 
-Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process and has no other production dependencies.
+Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the implementation process.
 
 ![Project Image](images/project-image-small.png)
 
 Following specifications are referenced:
-
-*   [RFC 4648](other/specifications/rfc4648.txt) - Base 16, Base 32 & Base 64 Data Encodings
+s
 *   [RFC 6238](other/specifications/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
 *   [RFC 6287](other/specifications/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 
@@ -44,11 +43,11 @@ For additional examples please review the official project's [wiki](https://gith
 
 There's two ways you can add **Google Authenticator** library to your project:
 
-*   Copying files from the "source" directory to your project and requiring the "Autoload.php" script
+*   Copying files from the "source" directory to your project and requiring the "Autoload.php" script (this includes doing the same for project's dependencies ex. Encoders)
 *   Via Composer, by executing the command below
 
 ```bash
-composer require jocic/google-authenticator dev-master
+composer require jocic/google-authenticator 1.0.0
 ```
 
 ## Tests
@@ -77,9 +76,9 @@ bash ./scripts/composer.sh install
 
 Please review the following documents if you are planning to contribute to the project:
 
-*   [Contributor Covenant Code of Conduct](code_of_conduct.md)
+*   [Contributor Covenant Code of Conduct](code-of-conduct.md)
 *   [Contribution Guidelines](contributing.md)
-*   [Pull Request Template](pull_request_template.md)
+*   [Pull Request Template](pull-request-template.md)
 *   [MIT License](license.md)
 
 ## Integration
