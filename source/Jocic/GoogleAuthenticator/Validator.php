@@ -217,18 +217,13 @@
                 $bitMask = ($bitMask << 4) | 0x0F;
             }
             
-            // Step 2 - Generate Code
+            // Step 2 - Generate & Return Code
             
             $code = unpack("N", $hashPart);
             
-            if (isset($code[1]))
-            {
-                $code = $code[1] & $bitMask;
-                
-                return str_pad(($code % $moduo), $codeLength, "0", STR_PAD_LEFT);
-            }
+            $code = $code[1] & $bitMask;
             
-            return "0";
+            return str_pad(($code % $moduo), $codeLength, "0", STR_PAD_LEFT);
         }
     }
     

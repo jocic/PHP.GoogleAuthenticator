@@ -31,6 +31,7 @@
     
     namespace Jocic\GoogleAuthenticator\Qr\Remote;
     
+    use Jocic\Encoders\Base\Base16;
     use Jocic\Encoders\Base\Base32;
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
     use Jocic\GoogleAuthenticator\Account;
@@ -50,7 +51,23 @@
         |* CORE CONSTANTS *|
         \******************/
         
-        // CORE CONSTANTS GO HERE
+        /**
+         * Encoding constant - for getting QR code image in <i>Base 16</i>.
+         * 
+         * @var    integer
+         * @access public
+         */
+        
+        public const E_BASE_16 = 0;
+        
+        /**
+         * Encoding constant - for getting QR code image in <i>Base 32</i>.
+         * 
+         * @var    integer
+         * @access public
+         */
+        
+        public const E_BASE_32 = 1;
         
         /******************\
         |* CORE VARIABLES *|
@@ -221,19 +238,21 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @return string
-         *   Encoded value of the generated QR code in <i>Base 32</i> format.
+         * @param $account
+         *   Account that should be used for generating the QR code.
+         * @param integer $encoding
+         *   ID of an encoding that should be used.
          * @param integer $bufferSize
          *   Buffer size in bytes that will be used for loading.
          * @return string
-         *   Encoded value of the QR code - Base 32 encoding.
+         *   Encoded value of the QR code in a selected format.
          */
         
-        public function getEncodedValue($account, $bufferSize = 1024)
+        public function getEncodedValue($account, $encoding = 1, $bufferSize = 1024)
         {
             // Core Variables
             
-            $encoder = new Base32();
+            $encoder = null;
             
             // File Variables
             
@@ -241,7 +260,23 @@
             $fileHandler  = null;
             $fileData     = null;
             
-            // Logic
+            // Step 1 - 
+            
+            switch ($encoding)
+            {
+                case 0:
+                    $encoder = new Base16();
+                    break;
+                
+                case 1:
+                    $encoder = new Base32();
+                    break;
+                
+                default:
+                    throw new \Exception("Invalid encoding ID provided.");
+            }
+            
+            // Step 2 - Encode Generated Code
             
             try
             {
@@ -326,7 +361,7 @@
             
             // Step 3 - Check Account Details
             
-            if ($account->getServiceName() == "" && $account->getAccountName())
+            if ($account->getServiceName() == "" && $account->getAccountName() == "")
             {
                 throw new \Exception("Set account is without details.");
             }
