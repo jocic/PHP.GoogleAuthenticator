@@ -358,6 +358,8 @@
         /**
          * Tests <i>findAccount</i> method of the <i>AccountManager</i> class.
          * 
+         * Note: Finding by Account ID.
+         * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
@@ -365,7 +367,7 @@
          * @return void
          */
         
-        public function testFindAccountMethod()
+        public function testFindAccountByIdMethod()
         {
             // Core Variables
             
@@ -407,8 +409,42 @@
             $account = $accountManager->findAccount(1337);
             
             $this->assertSame(null, $account);
+        }
+        
+        /**
+         * Tests <i>findAccount</i> method of the <i>AccountManager</i> class.
+         * 
+         * Note: Finding by Account Name.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testFindAccountByNameMethod()
+        {
+            // Core Variables
             
-            // Step 3 - Test Finding By Name
+            $accountManager = new AccountManager();
+            $account        = null;
+            
+            // Other Variables
+            
+            $testAccounts = [
+                new Account("A", "B", new Secret()),
+                new Account("C", "D", new Secret()),
+                new Account("E", "F", new Secret()),
+                new Account("G", "H", new Secret()),
+                new Account("I", "J", new Secret())
+            ];
+            
+            // Step 1 - Set Accounts
+            
+            $accountManager->setAccounts($testAccounts);
+            
+            // Step 2- Test Finding By Name
             
             try
             {
@@ -429,8 +465,42 @@
             $account = $accountManager->findAccount("Cake is a lie!");
             
             $this->assertSame(null, $account);
+        }
+        
+        /**
+         * Tests <i>findAccount</i> method of the <i>AccountManager</i> class.
+         * 
+         * Note: Finding by Account Object.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testFindAccountByObjectMethod()
+        {
+            // Core Variables
             
-            // Step 4 - Test Finding By Object
+            $accountManager = new AccountManager();
+            $account        = null;
+            
+            // Other Variables
+            
+            $testAccounts = [
+                new Account("A", "B", new Secret()),
+                new Account("C", "D", new Secret()),
+                new Account("E", "F", new Secret()),
+                new Account("G", "H", new Secret()),
+                new Account("I", "J", new Secret())
+            ];
+            
+            // Step 1 - Set Accounts
+            
+            $accountManager->setAccounts($testAccounts);
+            
+            // Step 2 - Test Finding By Object
             
             try
             {
@@ -455,8 +525,42 @@
             $account = $accountManager->findAccount(new Account());
             
             $this->assertSame(null, $account);
+        }
+        
+        /**
+         * Tests <i>findAccount</i> method of the <i>AccountManager</i> class.
+         * 
+         * Note: Invalid option passed.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testFindAccountMethodInvalid()
+        {
+            // Core Variables
             
-            // Step 5 - Test Invalid Removal Method
+            $accountManager = new AccountManager();
+            $account        = null;
+            
+            // Other Variables
+            
+            $testAccounts = [
+                new Account("A", "B", new Secret()),
+                new Account("C", "D", new Secret()),
+                new Account("E", "F", new Secret()),
+                new Account("G", "H", new Secret()),
+                new Account("I", "J", new Secret())
+            ];
+            
+            // Step 1 - Set Accounts
+            
+            $accountManager->setAccounts($testAccounts);
+            
+            // Step 2 - Attempt Finding
             
             try
             {

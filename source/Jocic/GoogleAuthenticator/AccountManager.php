@@ -40,7 +40,8 @@
      * @version   1.0.0
      */
     
-    class AccountManager implements AccountManagerInterface
+    class AccountManager extends AccountManagerCore
+        implements AccountManagerInterface
     {
         /******************\
         |* CORE CONSTANTS *|
@@ -52,54 +53,13 @@
         |* CORE VARIABLES *|
         \******************/
         
-        /**
-         * String containing manager's unique identifier.
-         * 
-         * @var    string
-         * @access private
-         */
-        
-        private $managerId = "";
-        
-        /**
-         * Array containing manager's accounts.
-         * 
-         * @var    array
-         * @access private
-         */
-        
-        private $accounts = [];
-        
-        /**
-         * Integer containing last used ID.
-         * 
-         * @var    array
-         * @access private
-         */
-        
-        private $lastId = 0;
+        // CORE VARIABLES GO HERE
         
         /*******************\
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        /**
-         * Constructor for the class <i>AccountManager</i>. It's used for
-         * determening and setting unique manager's identifer.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        
-        public function __construct()
-        {
-            // Logic
-            
-            $this->managerId = sha1(microtime());
-        }
+        // MAGIC FUNCTIONS GO HERE
         
         /***************\
         |* GET METHODS *|
@@ -174,9 +134,7 @@
         {
             // Logic
             
-            $this->lastId ++;
-            
-            return $this->lastId;
+            return $this->lastId + 1;
         }
         
         /***************\
@@ -262,10 +220,6 @@
         
         public function addAccount($account)
         {
-            // Core Variables
-            
-            $accountId = null;
-            
             // Step 1 - Check Account Type
             
             if (!($account instanceof Account))
@@ -284,20 +238,14 @@
             
             if ($account->getAccountId() == null)
             {
-                $accountId = $this->getNextId();
-                
-                $account->setAccountId($accountId);
+                $account->setAccountId($this->getNextId());
             }
-            else
-            {
-                $this->setLastId($account->getAccountId());
-                
-                $accountId = $this->getLastId();
-            }
+            
+            $this->setLastId($account->getAccountId());
             
             // Step 4 - Add Account
             
-            $this->accounts[$accountId] = $account;
+            $this->accounts[] = $account;
             
             $account->setAccountManager($this);
         }
@@ -503,258 +451,6 @@
         \*****************/
         
         // CHECK METHODS GO HERE
-        
-        /******************\
-        |* REMOVE METHODS *|
-        \******************/
-        
-        /**
-         * Removes an account from the manager using account's ID.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $accountId
-         *   ID of an account that should be removed.
-         * @return bool
-         *   Value <i>TRUE</i> if an account was removed, and vice versa.
-         */
-        
-        public function removeByAccountId($accountId)
-        {
-            // Core Variables
-            
-            $accounts = $this->getAccounts();
-            
-            // Step 1 - Check Value
-            
-            if (!is_numeric($accountId))
-            {
-                throw new \Exception("Provided ID isn't numeric.");
-            }
-            
-            // Step 2 - Remove Account
-            
-            foreach ($accounts as $accountKey => $accountObject)
-            {
-                if ($accountObject->getAccountId() == $accountId)
-                {
-                    unset($accounts[$accountKey]);
-                    
-                    $this->accounts = $accounts;
-                    
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-        
-        /**
-         * Removes an account from the manager using account's name.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $accountName
-         *   Name of an account that should be removed.
-         * @return bool
-         *   Value <i>TRUE</i> if an account was removed, and vice versa.
-         */
-        
-        public function removeByAccountName($accountName)
-        {
-            // Core Variables
-            
-            $accounts = $this->getAccounts();
-            
-            // Step 1 - Check Value
-            
-            if (!is_string($accountName))
-            {
-                throw new \Exception("Provided ID isn't string.");
-            }
-            
-            // Step 2 - Remove Account
-            
-            foreach ($accounts as $accountId => $accountObject)
-            {
-                if ($accountObject->getAccountName() == $accountName)
-                {
-                    unset($accounts[$accountId]);
-                    
-                    $this->accounts = $accounts;
-                    
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-        
-        /**
-         * Removes an account from the manager using account's object.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $accountObject
-         *   Object of an account that should be removed.
-         * @return bool
-         *   Value <i>TRUE</i> if an account was removed, and vice versa.
-         */
-        
-        public function removeByAccountObject($accountObject)
-        {
-            // Core Variables
-            
-            $identifier = null;
-            
-            // Step 1 - Check Object
-            
-            if (!($accountObject instanceof Account))
-            {
-                throw new \Exception("Provided object isn't valid.");
-            }
-            
-            // Step 2 - Remove Account
-            
-            if (($identifier = $accountObject->getAccountId()) != null)
-            {
-                return $this->removeByAccountId($identifier);
-            }
-            else if (($identifier = $accountObject->getAccountName()) != null)
-            {
-                return $this->removeByAccountName($identifier);
-            }
-            
-            return false;
-        }
-        
-        /****************\
-        |* FIND METHODS *|
-        \****************/
-        
-        /**
-         * Finds and returns an account from the manager using account's ID.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $accountId
-         *   ID of an account that should be found.
-         * @return object
-         *   Account object that was found, or value <i>NULL</i> if it wasn't.
-         */
-        
-        public function findByAccountId($accountId)
-        {
-            // Core Variables
-            
-            $accounts = $this->getAccounts();
-            
-            // Step 1 - Check Value
-            
-            if (!is_numeric($accountId))
-            {
-                throw new \Exception("Provided ID isn't numeric.");
-            }
-            
-            // Step 2 - Remove Account
-            
-            foreach ($accounts as $accountObject)
-            {
-                if ($accountObject->getAccountId() == $accountId)
-                {
-                    return $this->accounts[$accountId];
-                }
-            }
-            
-            return null;
-        }
-        
-        /**
-         * Finds and returns an account from the manager using account's name.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $accountName
-         *   Name of an account that should be found.
-         * @return object
-         *   Account object that was found, or value <i>NULL</i> if it wasn't.
-         */
-        
-        public function findByAccountName($accountName)
-        {
-            // Core Variables
-            
-            $accounts = $this->getAccounts();
-            
-            // Step 1 - Check Value
-            
-            if (!is_string($accountName))
-            {
-                throw new \Exception("Provided ID isn't string.");
-            }
-            
-            // Step 2 - Find Account
-            
-            foreach ($accounts as $accountObject)
-            {
-                if ($accountObject->getAccountName() == $accountName)
-                {
-                    return $accountObject;
-                }
-            }
-            
-            return null;
-        }
-        
-        /**
-         * Finds and returns an account from the manager using account's object.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $accountObject
-         *   Object of an account that should be found.
-         * @return object
-         *   Account object that was found, or value <i>NULL</i> if it wasn't.
-         */
-        
-        public function findByAccountObject($accountObject)
-        {
-            // Core Variables
-            
-            $identifier = null;
-            
-            // Step 1 - Check Object
-            
-            if (!($accountObject instanceof Account))
-            {
-                throw new \Exception("Provided object isn't valid.");
-            }
-            
-            // Step 2 - Find Account
-            
-            if (($identifier = $accountObject->getAccountId()) != null)
-            {
-                return $this->findByAccountId($identifier);
-            }
-            else if (($identifier = $accountObject->getAccountName()) != null)
-            {
-                return $this->findByAccountName($identifier);
-            }
-            
-            return null;
-        }
         
         /*****************\
         |* OTHER METHODS *|
