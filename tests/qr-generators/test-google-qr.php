@@ -415,6 +415,36 @@
             }
         }
         
+        /**
+         * Tests <i>regenerate</i> method.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function testRegenerateMethod()
+        {
+            // Core Variables
+            
+            $googleQr = new GoogleQr();
+            $account  = new Account("A", "B", "RMB4AMUMDHODBYNR");
+            
+            // Other Variables
+            
+            $testFile = "171fac1957f9625d712b639dfaf3e8569a204486.png";
+            
+            // Logic
+            
+            $googleQr->saveToFile($testFile, "...");
+            
+            $googleQr->regenerate($account);
+            
+            $this->assertFalse($this->loadFromFile($testFile) == "...");
+        }
+        
         /*****************\
         |* CHECK METHODS *|
         \*****************/

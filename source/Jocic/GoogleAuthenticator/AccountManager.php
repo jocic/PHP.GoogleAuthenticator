@@ -336,12 +336,7 @@
             $accounts = $this->getAccounts();
             $data     = [];
             
-            // IO Variables
-            
-            $fileHandler  = null;
-            $bytesWritten = null;
-            
-            // Logic
+            // Step 1 - Serialize Data
             
             foreach ($accounts as $account)
             {
@@ -356,19 +351,16 @@
             
             $data = serialize($data);
             
-            // Step 3 - Save Data
+            // Step 2 - Save Data
             
             try
             {
-                $fileHandler = fopen($fileLocation, "w");
-                
-                $bytesWritten = fwrite($fileHandler, $data);
-                
-                fclose($fileHandler);
+                return $this->saveToFile($fileLocation, $data);
             }
-            catch (\Exception $e) {}
-            
-            return $bytesWritten > 0;
+            catch (\Exception $e)
+            {
+                return false;
+            }
         }
         
         /**
@@ -395,24 +387,20 @@
             
             // IO Variables
             
-            $fileHandler = null;
+            $fileContents = null;
             
             // Step 1 - Load Accounts
             
             try
             {
-                $fileHandler = fopen($fileLocation, "r");
+                $fileContents = $this->loadFromFile($fileLocation, $bufferSize);
                 
-                while (!feof($fileHandler))
-                {
-                    $accounts .= fread($fileHandler, $bufferSize);
-                }
-                
-                fclose($fileHandler);
-                
-                $accounts = unserialize($accounts);
+                $accounts = unserialize($fileContents);
             }
-            catch (\Exception $e) {}
+            catch (\Exception $e)
+            {
+                return false;
+            }
             
             // Step 2 - Process Accounts
             

@@ -40,7 +40,7 @@
      * @version   1.0.0
      */
     
-    class AccountManagerCore
+    class AccountManagerCore extends FileSystem
     {
         /******************\
         |* CORE CONSTANTS *|

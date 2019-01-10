@@ -34,6 +34,7 @@
     use Jocic\Encoders\Base\Base16;
     use Jocic\Encoders\Base\Base32;
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
+    use Jocic\GoogleAuthenticator\Qr\QrCore;
     use Jocic\GoogleAuthenticator\Account;
     
     /**
@@ -45,7 +46,7 @@
      * @version   1.0.0
      */
     
-    class GoogleQr implements QrInterface, RemoteQrInterface
+    class GoogleQr extends QrCore implements QrInterface, RemoteQrInterface
     {
         /******************\
         |* CORE CONSTANTS *|
@@ -242,23 +243,16 @@
          *   Account that should be used for generating the QR code.
          * @param integer $encoding
          *   ID of an encoding that should be used.
-         * @param integer $bufferSize
-         *   Buffer size in bytes that will be used for loading.
          * @return string
          *   Encoded value of the QR code in a selected format.
          */
         
-        public function getEncodedValue($account, $encoding = 1, $bufferSize = 1024)
+        public function getEncodedValue($account, $encoding = 1)
         {
             // Core Variables
             
-            $encoder = null;
-            
-            // File Variables
-            
-            $fileLocation = $this->getFileLocation($account);
-            $fileHandler  = null;
-            $fileData     = null;
+            $encoder      = null;
+            $codeLocation = $this->getFileLocation($account);
             
             // Step 1 - 
             
@@ -278,20 +272,7 @@
             
             // Step 2 - Encode Generated Code
             
-            try
-            {
-                $fileHandler = fopen($fileLocation, "r");
-                
-                while (!feof($fileHandler))
-                {
-                    $fileData .= fread($fileHandler, $bufferSize);
-                }
-                
-                fclose($fileHandler);
-            }
-            catch (\Exception $e) {}
-            
-            return $encoder->encode($fileData);
+            return $encoder->encode($this->loadFromFile($codeLocation));
         }
         
         /**
@@ -478,29 +459,22 @@
          * 
          * @param object $account
          *   Account that should be used for generating the QR code.
-         * @param integer $bufferSize
-         *   Buffer size in bytes that will be used for loading.
          * @return string
          *   Filename of a generated QR code.
          */
         
-        public function generate($account, $bufferSize = 1024)
+        public function generate($account)
         {
             // Core Variables
             
-            $requestUrl = $this->getUrl($account);
-            $directory  = $this->getStorageDirectory();
-            $filename   = sha1($requestUrl) . ".png";
-            
-            // File Variables
-            
-            $fileHandler  = null;
-            $bytesWritten = 0;
+            $requestUrl   = $this->getUrl($account);
+            $directory    = $this->getStorageDirectory();
+            $filename     = sha1($requestUrl) . ".png";
             $fileLocation = "." . DIRECTORY_SEPARATOR . $filename;
             
             // Other Variables
             
-            $temp = null;
+            $codeData = null;
             
             // Step 1 - Determine File Location
             
@@ -515,30 +489,11 @@
             {
                 // Get QR Code
                 
-                try
-                {
-                    $fileHandler = fopen($requestUrl, "r");
-                    
-                    while (!feof($fileHandler))
-                    {
-                        $temp .= fread($fileHandler, $bufferSize);
-                    }
-                    
-                    fclose($fileHandler);
-                }
-                catch (\Exception $e) {}
+                $codeData = $this->loadFromFile($requestUrl, 1024, true);
                 
                 // Save QR Code
                 
-                try
-                {
-                    $fileHandler = fopen($fileLocation, "w");
-                    
-                    $bytesWritten = fwrite($fileHandler, $temp);
-                    
-                    fclose($fileHandler);
-                }
-                catch (\Exception $e) {}
+                $this->saveToFile($fileLocation, $codeData);
             }
             
             return $filename;
