@@ -442,7 +442,7 @@
             
             $googleQr->regenerate($account);
             
-            $this->assertFalse($this->loadFromFile($testFile) == "...");
+            $this->assertFalse($googleQr->loadFromFile($testFile) == "...");
         }
         
         /*****************\
