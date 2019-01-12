@@ -63,11 +63,60 @@
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        // MAGIC FUNCTIONS GO HERE
+        /**
+         * Constructor for the class <i>GoQr</i>. It's used for setting core
+         * class parameters upon object instantiation.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $qrCodeSize
+         *   Size of the QR codes that should be generated.
+         * @param string $storageDirectory
+         *   Storage directory that should be set.
+         * @return void
+         */
+        
+        public function __construct($qrCodeSize = null, $storageDirectory = null)
+        {
+            // Step 1 - Handle QR Code Size
+            
+            if ($qrCodeSize != null)
+            {
+                $this->setQrCodeSize($qrCodeSize);
+            }
+            
+            // Step 2 - Handle Storage Directory
+            
+            if ($storageDirectory != null)
+            {
+                $this->setStorageDirectory($storageDirectory);
+            }
+        }
         
         /***************\
         |* GET METHODS *|
         \***************/
+        
+        /**
+         * Generally this method is used for getting the set API key of a remote
+         * QR code generator, but as GoQr's API doesn't require it, method
+         * will only throw an exception.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function getApiKey()
+        {
+            // Logic
+            
+            throw new \Exception("GoQr's API doesn't require a key.");
+        }
         
         /**
          * Forms and returns an appropriate URL for that can be used for
@@ -152,7 +201,26 @@
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        /**
+         * Generally this method is used for setting the API key of a remote
+         * QR code generator, but as GoQr's API doesn't require it, method
+         * will only throw an exception.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $apiKey
+         *   API key that should be used.
+         * @return void
+         */
+        
+        public function setApiKey($apiKey)
+        {
+            // Logic
+            
+            throw new \Exception("GoQr's API doesn't require a key: $apiKey");
+        }
         
         /****************\
         |* CORE METHODS *|
