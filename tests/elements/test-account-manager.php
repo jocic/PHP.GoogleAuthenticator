@@ -544,7 +544,6 @@
             // Core Variables
             
             $accountManager = new AccountManager();
-            $account        = null;
             
             // Other Variables
             
@@ -590,7 +589,7 @@
             // Core Variables
             
             $accountManager = new AccountManager();
-            $saveLocation   = tempnam(sys_get_temp_dir(), "tst");
+            $saveLocation   = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "ga";
             
             // Other Variables
             
@@ -628,6 +627,10 @@
             
             $this->assertFalse($accountManager->save("/etc/shadow"));
             $this->assertFalse($accountManager->load("/etc/shadow"));
+            
+            $accountManager->saveToFile($saveLocation, "");
+            
+            $this->assertFalse($accountManager->load($saveLocation));
         }
         
         /*********************\
