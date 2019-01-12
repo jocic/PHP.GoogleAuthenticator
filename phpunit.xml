@@ -6,6 +6,7 @@
         </testsuite>
         <testsuite name="qr-generators">
             <file>tests/qr-generators/test-google-qr.php</file>
+            <file>tests/qr-generators/test-go-qr.php</file>
         </testsuite>
         <testsuite name="elements">
             <file>tests/elements/test-secret.php</file>

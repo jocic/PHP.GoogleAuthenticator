@@ -240,7 +240,7 @@
          * @return void
          */
         
-        public function atestEncodedValueMethod()
+        public function testEncodedValueMethod()
         {
             // Core Variables
             
