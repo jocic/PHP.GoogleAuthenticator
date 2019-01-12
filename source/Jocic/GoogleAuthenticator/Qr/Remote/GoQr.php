@@ -36,15 +36,15 @@
     use Jocic\GoogleAuthenticator\Account;
     
     /**
-     * <i>GoogleQr</i> class is used for generating QR codes using pubilcly
-     * available Google's API.
+     * <i>GoQr</i> class is used for generating QR codes using pubilcly
+     * available GoQr's API.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    class GoogleQr extends RemoteQrCore implements QrInterface,
+    class GoQr extends RemoteQrCore implements QrInterface,
         RemoteQrInterface
     {
         /******************\
@@ -63,60 +63,11 @@
         |* MAGIC FUNCTIONS *|
         \*******************/
         
-        /**
-         * Constructor for the class <i>GoogleQr</i>. It's used for setting
-         * core class parameters upon object instantiation.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $qrCodeSize
-         *   Size of the QR codes that should be generated.
-         * @param string $storageDirectory
-         *   Storage directory that should be set.
-         * @return void
-         */
-        
-        public function __construct($qrCodeSize = null, $storageDirectory = null)
-        {
-            // Step 1 - Handle QR Code Size
-            
-            if ($qrCodeSize != null)
-            {
-                $this->setQrCodeSize($qrCodeSize);
-            }
-            
-            // Step 2 - Handle Storage Directory
-            
-            if ($storageDirectory != null)
-            {
-                $this->setStorageDirectory($storageDirectory);
-            }
-        }
+        // MAGIC FUNCTIONS GO HERE
         
         /***************\
         |* GET METHODS *|
         \***************/
-        
-        /**
-         * Generally this method is used for getting the set API key of a remote
-         * QR code generator, but as Google's API doesn't require it, method
-         * will only throw an exception.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        
-        public function getApiKey()
-        {
-            // Logic
-            
-            throw new \Exception("Google's API doesn't require a key.");
-        }
         
         /**
          * Forms and returns an appropriate URL for that can be used for
@@ -141,8 +92,8 @@
             // Format Variables
             
             $otpFormat  = "otpauth://totp/%s?secret=%s";
-            $urlFormat  = "https://chart.googleapis.com/chart?chs=%s&" .
-                "chld=M|0&cht=qr&chl=%s";
+            $urlFormat  = "https://api.qrserver.com/v1/create-qr-code/?" .
+                "size=%s&data=%s";
             
             // Other Variables
             
@@ -201,26 +152,7 @@
         |* SET METHODS *|
         \***************/
         
-        /**
-         * Generally this method is used for setting the API key of a remote
-         * QR code generator, but as Google's API doesn't require it, method
-         * will only throw an exception.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $apiKey
-         *   API key that should be used.
-         * @return void
-         */
-        
-        public function setApiKey($apiKey)
-        {
-            // Logic
-            
-            throw new \Exception("Google's API doesn't require a key: $apiKey");
-        }
+        // SET METHODS GO HERE
         
         /****************\
         |* CORE METHODS *|
