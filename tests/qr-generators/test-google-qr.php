@@ -240,7 +240,7 @@
          * @return void
          */
         
-        public function testEncodedValueMethod()
+        public function atestEncodedValueMethod()
         {
             // Core Variables
             
@@ -451,19 +451,23 @@
             // Other Variables
             
             $tempDirectory = sys_get_temp_dir();
-            $testFile      = "171fac1957f9625d712b639dfaf3e8569a204486.png";
+            $tempFilename  = "171fac1957f9625d712b639dfaf3e8569a204486.png";
+            $tempLocation  = join(DIRECTORY_SEPARATOR, [
+                $tempDirectory,
+                $tempFilename
+            ]);
             
             // Logic
             
             $googleQr->setStorageDirectory($tempDirectory);
             
-            $googleQr->saveToFile($testFile, "...");
+            $googleQr->saveToFile($tempLocation, "...");
             
             $googleQr->regenerate($account);
             
-            $this->assertFalse($googleQr->loadFromFile($testFile) == "...");
+            $this->assertFalse($googleQr->loadFromFile($tempLocation) == "...");
             
-            unlink($testFile);
+            unlink($tempLocation);
         }
         
         /*****************\

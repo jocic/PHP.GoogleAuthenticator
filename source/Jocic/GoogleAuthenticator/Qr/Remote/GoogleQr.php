@@ -46,51 +46,20 @@
      * @version   1.0.0
      */
     
-    class GoogleQr extends QrCore implements QrInterface, RemoteQrInterface
+    class GoogleQr extends RemoteQrCore implements QrInterface,
+        RemoteQrInterface
     {
         /******************\
         |* CORE CONSTANTS *|
         \******************/
         
-        /**
-         * Encoding constant - for getting QR code image in <i>Base 16</i>.
-         * 
-         * @var    integer
-         * @access public
-         */
-        
-        public const E_BASE_16 = 0;
-        
-        /**
-         * Encoding constant - for getting QR code image in <i>Base 32</i>.
-         * 
-         * @var    integer
-         * @access public
-         */
-        
-        public const E_BASE_32 = 1;
+        // CORE CONSTANTS GO HERE
         
         /******************\
         |* CORE VARIABLES *|
         \******************/
         
-        /**
-         * Size of the generated QR codes - width & height.
-         * 
-         * @var    integer
-         * @access private
-         */
-        
-        private $qrCodeSize = null;
-        
-        /**
-         * Directory location that should be used for storing the QR code.
-         * 
-         * @var    string
-         * @access private
-         */
-        
-        private $storageDirectory = null;
+        // CORE VARIABLES GO HERE
         
         /*******************\
         |* MAGIC FUNCTIONS *|
@@ -131,149 +100,6 @@
         /***************\
         |* GET METHODS *|
         \***************/
-        
-        /**
-         * Returns set QR code size - width and height.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return integer
-         *   Set QR code size.
-         */
-        
-        public function getQrCodeSize()
-        {
-            // Logic
-            
-            return $this->qrCodeSize;
-        }
-        
-        /**
-         * Returns get directory used for storing generated QR codes.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return string
-         *   Set storage directory.
-         */
-        
-        public function getStorageDirectory()
-        {
-            // Logic
-            
-            return $this->storageDirectory;
-        }
-        
-        /**
-         * Generates the QR code based on the set parameters and returns it's
-         * location. If the QR code was already generated only the location is
-         * returned.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         *   Return location of the generated QR code.
-         */
-        
-        public function getFileLocation($account)
-        {
-            // Step 1 - Check Parameters
-            
-            if ($this->qrCodeSize == null)
-            {
-                throw new \Exception("QR code size wasn't set.");
-            }
-            
-            // Step 2 - Generate QR Code & Return It's Location
-            
-            if ($this->getStorageDirectory() == null)
-            {
-                return "." . DIRECTORY_SEPARATOR . $this->generate($account);
-            }
-            
-            return join(DIRECTORY_SEPARATOR, [
-                $this->getStorageDirectory(),
-                $this->generate($account)
-            ]);
-        }
-        
-        /**
-         * Generates the QR code based on the set parameters and returns it's
-         * filename. If the QR code was already generated only the filename is
-         * returned.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         *   Return filename of the generated QR code.
-         */
-        
-        public function getFilename($account)
-        {
-            // Step 1 - Check Parameters
-            
-            if ($this->qrCodeSize == null)
-            {
-                throw new \Exception("QR code size wasn't set.");
-            }
-            
-            // Step 2 - Generate QR Code & Return It's Location
-            
-            return $this->generate($account);
-        }
-        
-        /**
-         * Generates the QR code based on the set parameters and returns it's
-         * encoded value. If the QR code was already generated only encoded
-         * value will be returned.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param $account
-         *   Account that should be used for generating the QR code.
-         * @param integer $encoding
-         *   ID of an encoding that should be used.
-         * @return string
-         *   Encoded value of the QR code in a selected format.
-         */
-        
-        public function getEncodedValue($account, $encoding = 1)
-        {
-            // Core Variables
-            
-            $encoder      = null;
-            $codeLocation = $this->getFileLocation($account);
-            
-            // Step 1 - 
-            
-            switch ($encoding)
-            {
-                case 0:
-                    $encoder = new Base16();
-                    break;
-                
-                case 1:
-                    $encoder = new Base32();
-                    break;
-                
-                default:
-                    throw new \Exception("Invalid encoding ID provided.");
-            }
-            
-            // Step 2 - Encode Generated Code
-            
-            return $encoder->encode($this->loadFromFile($codeLocation));
-        }
         
         /**
          * Generally this method is used for getting the set API key of a remote
@@ -378,54 +204,6 @@
         \***************/
         
         /**
-         * Sets QR code size - width and height.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $qrCodeSize
-         *   Size of the QR codes that should be generated.
-         * @return void
-         */
-        
-        public function setQrCodeSize($qrCodeSize)
-        {
-            // Logic
-            
-            if (!is_numeric($qrCodeSize))
-            {
-                throw new \Exception("Invalid value provided.");
-            }
-            
-            $this->qrCodeSize = $qrCodeSize;
-        }
-        
-        /**
-         * Sets directory used for storing generated QR codes.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $directory
-         *   Directory for storing generated QR codes.
-         * @return void
-         */
-        
-        public function setStorageDirectory($storageDirectory)
-        {
-            // Logic
-            
-            if (!is_string($storageDirectory))
-            {
-                throw new \Exception("Invalid storage directory used.");
-            }
-            
-            $this->storageDirectory = $storageDirectory;
-        }
-        
-        /**
          * Generally this method is used for setting the API key of a remote
          * QR code generator, but as Google's API doesn't require it, method
          * will only throw an exception.
@@ -450,94 +228,7 @@
         |* CORE METHODS *|
         \****************/
         
-        /**
-         * Generates a QR code based on the set value.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $account
-         *   Account that should be used for generating the QR code.
-         * @return string
-         *   Filename of a generated QR code.
-         */
-        
-        public function generate($account)
-        {
-            // Core Variables
-            
-            $requestUrl   = $this->getUrl($account);
-            $directory    = $this->getStorageDirectory();
-            $filename     = sha1($requestUrl) . ".png";
-            $fileLocation = "." . DIRECTORY_SEPARATOR . $filename;
-            
-            // Other Variables
-            
-            $codeData = null;
-            
-            // Step 1 - Determine File Location
-            
-            if ($directory != null)
-            {
-                $fileLocation = $directory . DIRECTORY_SEPARATOR . $filename;
-            }
-            
-            // Step 2 - Generate QR Code & Return It's Location
-            
-            if (!is_file($fileLocation))
-            {
-                // Get QR Code
-                
-                $codeData = $this->loadFromFile($requestUrl, 1024, true);
-                
-                // Save QR Code
-                
-                $this->saveToFile($fileLocation, $codeData);
-            }
-            
-            return $filename;
-        }
-        
-        /**
-         * Regenerates a QR code based on the set value.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $account
-         *   Account that should be used for generating the QR code.
-         * @return string
-         *   Filename of a regenerated QR code.
-         */
-    
-        public function regenerate($account)
-        {
-            // Core Variables
-            
-            $requestUrl = $this->getUrl($account);
-            $directory  = $this->getStorageDirectory();
-            $filename   = sha1($requestUrl) . ".png";
-            
-            // File Variables
-            
-            $fileLocation = "." . DIRECTORY_SEPARATOR . $filename;
-            
-            // Logic
-            
-            if ($directory != null)
-            {
-                $fileLocation = $directory . DIRECTORY_SEPARATOR . $filename;
-            }
-            
-            if (is_file($fileLocation))
-            {
-                unlink($fileLocation);
-            }
-            
-            return $this->generate($account);
-        }
+        // CORE METHODS GO HERE
         
         /*****************\
         |* CHECK METHODS *|
