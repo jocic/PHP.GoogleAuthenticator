@@ -33,6 +33,7 @@
     
     use Jocic\Encoders\Base\Base16;
     use Jocic\Encoders\Base\Base32;
+    use Jocic\Encoders\Base\Base64;
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
     use Jocic\GoogleAuthenticator\Qr\QrCore;
     use Jocic\GoogleAuthenticator\Account;
