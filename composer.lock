@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b799de126e4dd21b3356709373dbe47",
+    "content-hash": "674e92c6c69a76b1935393768acd308e",
     "packages": [
         {
             "name": "jocic/encoders",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jocic/PHP.Encoders.git",
-                "reference": "2b8800cdb3bd658c8f9ef91669f1e5fccefefbaf"
+                "reference": "8115eef3c19067f469a0aacf4d6ad895e61bc2bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jocic/PHP.Encoders/zipball/2b8800cdb3bd658c8f9ef91669f1e5fccefefbaf",
-                "reference": "2b8800cdb3bd658c8f9ef91669f1e5fccefefbaf",
+                "url": "https://api.github.com/repos/jocic/PHP.Encoders/zipball/8115eef3c19067f469a0aacf4d6ad895e61bc2bb",
+                "reference": "8115eef3c19067f469a0aacf4d6ad895e61bc2bb",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
             "keywords": [
                 "encoders"
             ],
-            "time": "2019-01-06T02:20:30+00:00"
+            "time": "2019-01-17T23:47:18+00:00"
         }
     ],
     "packages-dev": [
@@ -991,16 +991,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "7.5.1",
+            "version": "7.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f"
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c23d78776ad415d5506e0679723cb461d71f488f",
-                "reference": "c23d78776ad415d5506e0679723cb461d71f488f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7c89093bd00f7d5ddf0ab81dee04f801416b4944",
+                "reference": "7c89093bd00f7d5ddf0ab81dee04f801416b4944",
                 "shasum": ""
             },
             "require": {
@@ -1071,7 +1071,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-12-12T07:20:32+00:00"
+            "time": "2019-01-15T08:19:08+00:00"
         },
         {
             "name": "psr/http-message",
@@ -2343,9 +2343,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jocic/encoders": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
