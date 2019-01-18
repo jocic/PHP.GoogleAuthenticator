@@ -70,6 +70,15 @@
         
         public const E_BASE_32 = 1;
         
+        /**
+         * Encoding constant - for getting QR code image in <i>Base 64</i>.
+         * 
+         * @var    integer
+         * @access public
+         */
+        
+        public const E_BASE_64 = 2;
+        
         /******************\
         |* CORE VARIABLES *|
         \******************/
@@ -301,6 +310,10 @@
                 
                 case 1:
                     $encoder = new Base32();
+                    break;
+                
+                case 2:
+                    $encoder = new Base64();
                     break;
                 
                 default:
