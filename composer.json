@@ -19,7 +19,7 @@
     },
     "require" : {
         "php" : ">=7.0",
-        "jocic/encoders" : "dev-master"
+        "jocic/encoders" : "1.0.0"
     },
     "require-dev" : {
         "php" : ">=7.2",
