@@ -49,7 +49,9 @@
         \******************/
         
         /**
-         * Method constant - for generating secrets using <i>base</i> method.
+         * Method constant for generating secrets using the <i>base</i>
+         * creation method - picking random <i>Base 32</i> values until an
+         * 80-bit secret is generated.
          * 
          * @var    integer
          * @access public
@@ -58,7 +60,9 @@
         public const M_BASE = 0;
         
         /**
-         * Method constant - for generating secrets using <i>numerical</i> method.
+         * Method constant for generating secrets using <i>numerical</i>
+         * creation method - picking random numbers between 0 and 256 until an
+         * 80-bit secret is generated.
          * 
          * @var    integer
          * @access public
@@ -67,7 +71,8 @@
         public const M_NUMERICAL = 1;
         
         /**
-         * Method constant - for generating secrets using <i>binary</i> method.
+         * Method constant for generating secrets using <i>binary</i> creation
+         * method - picking random bits until an 80-bit secret is generated.
          * 
          * @var    integer
          * @access public

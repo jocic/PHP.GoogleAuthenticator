@@ -102,7 +102,7 @@
         \*****************/
         
         /**
-         * Returns previous code generated for the account.
+         * Checks if the provided code is valid for the given account.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved

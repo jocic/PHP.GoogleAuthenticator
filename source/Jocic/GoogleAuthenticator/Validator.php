@@ -143,7 +143,7 @@
         \*****************/
         
         /**
-         * Returns previous code generated for the account.
+         * Checks if the provided code is valid for the given account.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -171,9 +171,110 @@
         \*****************/
         
         /**
-         * Returns previous code generated for the account.
+         * Calculates time factor per <i>RFC 6238</i> specifications.
          * 
-         * Note: This method will be refactored as it is not good.
+         * Note: Review page 3, section 4 of the mentioned document for
+         * additional details.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $offset
+         *   Unix time to start counting time steps - default value is 0.
+         * @param integer $timeStep
+         *   Time step in seconds - default value is 30 seconds.
+         * @return string
+         *   Calculated time factor in a binary format.
+         */
+        
+        private function calculateTimeFactor($offset = 0, $timeStep = 30)
+        {
+            // Core Variables
+            
+            $timeFactor = floor(time() / $timeStep) + $offset;
+            
+            // Logic
+            
+            return sprintf("%c%c%c%c", 0x00, 0x00, 0x00, 0x00)
+                . sprintf("%c", ($timeFactor & 0xFF000000) >> 0x18)
+                . sprintf("%c", ($timeFactor & 0x00FF0000) >> 0x10)
+                . sprintf("%c", ($timeFactor & 0x0000FF00) >> 0x08)
+                . sprintf("%c", ($timeFactor & 0x000000FF) >> 0x00);
+        }
+        
+        /**
+         * Calculates time-based password per <i>RFC 6238</i> specifications.
+         * 
+         * Note: Review page 3, section 4 of the mentioned document for
+         * additional details.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $secret
+         *  Secret that should be used in the calculation.
+         * @param integer $timeFactor
+         *   Time factor that should be used in the calculation.
+         * @return string
+         *   Calculated time-based password.
+         */
+        
+        public function calculateTimeBasedPassword($secret, $timeFactor)
+        {
+            // Logic
+            
+            return hash_hmac("sha1", $timeFactor, $secret, true);
+        }
+        
+        /**
+         * Calculates a 6-digit time code per <i>RFC 6238</i> specifications.
+         * 
+         * Note: Review page 12, section 4 of the mentioned document for
+         * additional details.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $timePassword
+         *   Time-based password that should be used in the calculation.
+         * @return string
+         *   Calculated 6-digit time code.
+         */
+        
+        public function calculateTimeCode($timePassword)
+        {
+            // Core Variables
+            
+            $timeCode   = null;
+            $timeDigest = str_split($timePassword);
+            $codeModuo  = 0x000F4240;
+            $codeMask   = 0x7FFFFFFF;
+            
+            // Other Variables
+            
+            $offset = ord($timeDigest[19]) & 0x0F;
+            $binary = (ord($timeDigest[$offset]) << 0x18)
+                | (ord($timeDigest[$offset + 1]) << 0x10)
+                | (ord($timeDigest[$offset + 2]) << 0x08)
+                | (ord($timeDigest[$offset + 3]) << 0x00);
+            
+            // Logic
+            
+            $timeCode = strval(($binary & $codeMask) % $codeModuo);
+            
+            while (strlen($timeCode) < 0x06)
+            {
+                $timeCode = "0" . $timeCode;
+            }
+            
+            return $timeCode;
+        }
+        
+        /**
+         * Returns previous code generated for the account.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -183,47 +284,39 @@
          *   Secret object that should be used for code generation.
          * @param string $offset
          *   Offset of the time slice.
-         * @param string $codeLength
-         *   Length of the generated code.
          * @return string
          *   Generated 6-digit code.
          */
         
-        private function generateCode($secret, $offset, $codeLength = 6)
+        private function generateCode($secret, $offset)
         {
             // Core Variables
             
             $encoder      = new Base32();
-            $binarySecret = $encoder->decode($secret->getValue());
+            $binarySecret = null;
             
-            // Primary Algorithm Variables
+            // Other Variables
             
-            $timeSlice  = floor(time() / 30) + $offset;
-            $timePacked = (chr(0) . chr(0) . chr(0) . chr(0) . pack("N*", $timeSlice));
-            $timeHmac   = hash_hmac("sha1", $timePacked, $binarySecret, true);
+            $timeFactor   = null;
+            $timePassword = null;
             
-            // Secondary Algorithm Variables
+            // Step 1 - Check Secret
             
-            $offset   = ord(substr($timeHmac, -1)) & 0x0F;
-            $hashPart = substr($timeHmac, $offset, 4);
-            $moduo    = pow(10, $codeLength);
-            $bitMask  = 0x7;
-            $code     = null;
-            
-            // Step 1 - Generate Bit Mask
-            
-            for ($i = 0; $i <= $codeLength; $i ++)
+            if (!($secret instanceof Secret))
             {
-                $bitMask = ($bitMask << 4) | 0x0F;
+                throw new \Exception("Invalid object used.");
             }
             
-            // Step 2 - Generate & Return Code
+            // Step 2 - Calculate Time Code
             
-            $code = unpack("N", $hashPart);
+            $binarySecret = $encoder->decode($secret->getValue());
             
-            $code = $code[1] & $bitMask;
+            $timeFactor = $this->calculateTimeFactor($offset);
             
-            return str_pad(($code % $moduo), $codeLength, "0", STR_PAD_LEFT);
+            $timePassword = $this->calculateTimeBasedPassword($binarySecret, 
+                $timeFactor);
+            
+            return $this->calculateTimeCode($timePassword);
         }
     }
     

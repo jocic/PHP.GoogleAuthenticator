@@ -39,7 +39,7 @@
      * @version   1.0.0
      * 
      * @param string $class_name
-     *   Name of the class, ex. <i>Security\Mfa\GoogleAuthenticator</i>.
+     *   Name of the class, ex. <i>Jocic\GoogleAuthenticator\Secret</i>.
      * @return bool
      *   Value <i>TRUE</i> if class was included, and vice versa.
      */
@@ -48,17 +48,16 @@
     {
         // Core Variables
         
-        $class_name = str_replace("\\", DIRECTORY_SEPARATOR, $class_name) . ".php";
-        $class_file = join(DIRECTORY_SEPARATOR, [
+        $class_location = join(DIRECTORY_SEPARATOR, [
             __DIR__,
-            $class_name
-        ]);
+            str_replace("\\", DIRECTORY_SEPARATOR, $class_name)
+        ]) . ".php";
         
         // Logic
         
-        if (is_file($class_file))
+        if (is_file($class_location))
         {
-            include $class_file;
+            include $class_location;
             
             return true;
         }

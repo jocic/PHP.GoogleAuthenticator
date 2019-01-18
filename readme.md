@@ -6,8 +6,9 @@ Google Authenticator is a mini PHP library for implementing Multi-Factor Authent
 
 ![Project Image](images/project-image-small.png)
 
-Following specifications are referenced:
+Following specifications were referenced:
 
+*   [RFC 4226](other/specifications/rfc4226.txt) - HMAC-Based One-Time Password Algorithm
 *   [RFC 6238](other/specifications/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
 *   [RFC 6287](other/specifications/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 
