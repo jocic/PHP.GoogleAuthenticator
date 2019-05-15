@@ -57,7 +57,7 @@
          * @access public
          */
         
-        public const M_BASE = 0;
+        const M_BASE = 0;
         
         /**
          * Method constant for generating secrets using <i>numerical</i>
@@ -68,7 +68,7 @@
          * @access public
          */
         
-        public const M_NUMERICAL = 1;
+        const M_NUMERICAL = 1;
         
         /**
          * Method constant for generating secrets using <i>binary</i> creation
@@ -78,7 +78,7 @@
          * @access public
          */
         
-        public const M_BINARY = 2;
+        const M_BINARY = 2;
         
         /******************\
         |* CORE VARIABLES *|

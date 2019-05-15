@@ -60,7 +60,7 @@
          * @access public
          */
         
-        public const E_BASE_16 = 0;
+        const E_BASE_16 = 0;
         
         /**
          * Encoding constant - for getting QR code image in <i>Base 32</i>.
@@ -69,7 +69,7 @@
          * @access public
          */
         
-        public const E_BASE_32 = 1;
+        const E_BASE_32 = 1;
         
         /**
          * Encoding constant - for getting QR code image in <i>Base 64</i>.
@@ -78,7 +78,7 @@
          * @access public
          */
         
-        public const E_BASE_64 = 2;
+        const E_BASE_64 = 2;
         
         /******************\
         |* CORE VARIABLES *|
