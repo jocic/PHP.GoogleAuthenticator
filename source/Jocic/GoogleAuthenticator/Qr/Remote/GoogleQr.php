@@ -192,9 +192,11 @@
             
             // Step 5 - Generate & Return URL
             
-            $otpRequest = sprintf($otpFormat, $identifier, $secret);
+            $otpRequest = sprintf($otpFormat, rawurlencode($identifier),
+                $secret);
             
-            return sprintf($urlFormat, ($codeSize . "x" . $codeSize), urlencode($otpRequest));
+            return sprintf($urlFormat, ($codeSize . "x" . $codeSize),
+                rawurlencode($otpRequest));
         }
         
         /***************\
