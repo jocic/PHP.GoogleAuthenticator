@@ -37,6 +37,7 @@
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
     use Jocic\GoogleAuthenticator\Qr\QrCore;
     use Jocic\GoogleAuthenticator\Account;
+    use Jocic\GoogleAuthenticator\Helper;
     
     /**
      * <i>RemoteQrCore</i> class contains core methods used for remote QR code
@@ -116,8 +117,8 @@
         \*******************/
         
         /**
-         * Constructor for the class <i>RemoteQrCore</i>. It's used for setting
-         * core class parameters upon object instantiation.
+         * Constructor for the class <i>RemoteQrCore</i>. It's used
+         * for setting core class parameters upon object instantiation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -216,9 +217,9 @@
         }
         
         /**
-         * Generates the QR code based on the set parameters and returns it's
-         * location. If the QR code was already generated only the location is
-         * returned.
+         * Generates the QR code based on the set parameters and
+         * returns it's location. If the QR code was already
+         * generated only the location is returned.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -251,9 +252,9 @@
         }
         
         /**
-         * Generates the QR code based on the set parameters and returns it's
-         * filename. If the QR code was already generated only the filename is
-         * returned.
+         * Generates the QR code based on the set parameters and
+         * returns it's filename. If the QR code was already generated
+         * only the filename is returned.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -278,9 +279,9 @@
         }
         
         /**
-         * Generates the QR code based on the set parameters and returns it's
-         * encoded value. If the QR code was already generated only encoded
-         * value will be returned.
+         * Generates the QR code based on the set parameters and
+         * returns it's encoded value. If the QR code was already
+         * generated only encoded value will be returned.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
@@ -467,7 +468,7 @@
          * @return string
          *   Filename of a regenerated QR code.
          */
-    
+        
         public function regenerate($account)
         {
             // Core Variables
@@ -505,7 +506,84 @@
         |* OTHER METHODS *|
         \*****************/
         
-        // OTHER METHODS GO HERE
+        /**
+         * Compiles and returns an account identifier.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the identifier.
+         * @return string
+         *   Compiled identifier, ex. <i>Wordpress - Jon Doe</i>.
+         */
+        
+        protected function compileIdentifier($account)
+        {
+            // Core Variables
+            
+            $identifier = "";
+            
+            // Logic
+            
+            if (   $account->getServiceName() == ""
+                && $account->getAccountName() == "")
+            {
+                return "Default";
+            }
+            
+            if ($account->getServiceName() != "")
+            {
+                $identifier .= $account->getServiceName();
+            }
+            
+            if ($account->getAccountName() != "")
+            {
+                if ($identifier != "")
+                {
+                    $identifier .= " - ";
+                }
+                
+                $identifier .= $account->getAccountName();
+            }
+            
+            return rawurlencode($identifier);
+        }
+        
+        /**
+         * Compiles and returns an OTP/TOTP request.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param object $account
+         *   Account that should be used for generating the request.
+         * @return string
+         *   Compiled request, ex. <i>otpauth://totp/XXXX?secret=XXXX</i>.
+         */
+        
+        protected function compileRequest($account)
+        {
+            // Core Variables
+            
+            $secret     = null;
+            $identifier = null;
+            
+            // Logic
+            
+            if (!($account instanceof Account))
+            {
+                throw new \Exception("Invalid object provided.");
+            }
+            
+            $secret     = Helper::getInstance()->fetchSecret($account);
+            $identifier = $this->compileIdentifier($account);
+            
+            return rawurlencode(sprintf("otpauth://totp/%s?secret=%s",
+                $identifier, $secret));
+        }
     }
     
 ?>

@@ -34,6 +34,7 @@
     use Jocic\GoogleAuthenticator\Qr\QrInterface;
     use Jocic\GoogleAuthenticator\Qr\QrCore;
     use Jocic\GoogleAuthenticator\Account;
+    use Jocic\GoogleAuthenticator\Helper;
     
     /**
      * <i>GoQr</i> class is used for generating QR codes using pubilcly
@@ -115,7 +116,7 @@
         {
             // Logic
             
-            throw new \Exception("GoQr's API doesn't require a key.");
+            throw new \Exception("API doesn't require a key.");
         }
         
         /**
@@ -136,67 +137,16 @@
         {
             // Core Variables
             
-            $codeSize = $this->getQrCodeSize();
-            
-            // Format Variables
-            
-            $otpFormat  = "otpauth://totp/%s?secret=%s";
-            $urlFormat  = "https://api.qrserver.com/v1/create-qr-code/?" .
+            $urlFormat = "https://api.qrserver.com/v1/create-qr-code/?" .
                 "size=%s&data=%s";
+            $codeSize  = $this->getQrCodeSize();
             
-            // Other Variables
+            // Logic
             
-            $otpRequest = "";
-            $identifier = "";
-            $secret     = "";
-            
-            // Step 1 - Check Account Object
-            
-            if (!($account instanceof Account))
-            {
-                throw new \Exception("Invalid object provided.");
-            }
-            
-            // Step 2 - Check Account Secret
-            
-            if ($account->getAccountSecret() == null)
-            {
-                throw new \Exception("Set account is without a secret.");
-            }
-            
-            // Step 3 - Check Account Details
-            
-            if ($account->getServiceName() == "" && $account->getAccountName() == "")
-            {
-                throw new \Exception("Set account is without details.");
-            }
-            
-            // Step 4 - Generate Identifier & Secret
-            
-            if ($account->getServiceName() != "")
-            {
-                $identifier .= $account->getServiceName();
-            }
-            
-            if ($account->getAccountName() != "")
-            {
-                if ($identifier != "")
-                {
-                    $identifier .= " - ";
-                }
-                
-                $identifier .= $account->getAccountName();
-            }
-            
-            $secret = $account->getAccountSecret()->getValue();
-            
-            // Step 5 - Generate & Return URL
-            
-            $otpRequest = sprintf($otpFormat, rawurlencode($identifier),
-                $secret);
-            
-            return sprintf($urlFormat, ($codeSize . "x" . $codeSize),
-                rawurlencode($otpRequest));
+            return vsprintf($urlFormat, [
+                "code-size" => ($codeSize . "x" . $codeSize),
+                "request"   => $this->compileRequest($account)
+            ]);
         }
         
         /***************\
@@ -221,7 +171,7 @@
         {
             // Logic
             
-            throw new \Exception("GoQr's API doesn't require a key: $apiKey");
+            throw new \Exception("API doesn't require a key: $apiKey");
         }
         
         /****************\

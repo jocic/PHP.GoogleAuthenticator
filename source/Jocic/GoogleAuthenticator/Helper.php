@@ -29,47 +29,104 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator\Qr\Remote;
+    namespace Jocic\GoogleAuthenticator;
     
     /**
-     * <i>RemoteQrInterface</i> is an interface used to enforce
-     * implementation of additional QR & QR-related methods
-     * used by remote QR generators.
+     * <i>Helper</i> is a class containing various generic
+     * methods used throughout the library.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2018 All Rights Reserved
      * @version   1.0.0
      */
     
-    interface RemoteQrInterface
+    class Helper
     {
+        /******************\
+        |* CORE CONSTANTS *|
+        \******************/
+        
+        // CORE CONSTANTS GO HERE
+        
+        /******************\
+        |* CORE VARIABLES *|
+        \******************/
+        
+        /**
+         * Instance of the singleton class.
+         * 
+         * @var    object
+         * @access private
+         */
+        
+        private static $instance = null;
+        
+        /*******************\
+        |* MAGIC FUNCTIONS *|
+        \*******************/
+        
+        /**
+         * Generic private constructor for a Singleton.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        protected function __construct() {}
+        
+        /**
+         * Generic clone function for a Singleton.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        protected function __clone() {}
+        
+        /**
+         * Generic wakeup function for a Singleton.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2018 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
+        
+        public function __wakeup() {}
+        
         /***************\
         |* GET METHODS *|
         \***************/
         
         /**
-         * Returns set API key for the remote QR code generator.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
-        
-        public function getApiKey();
-        
-        /**
-         * Forms and returns an appropriate URL for that can be used
-         * for generating QR codes remotely by sending a GET request.
+         * Generic getter method for the Singleton's instance.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $account
-         *   Account that should be used for generating the URL.
+         * @return object
+         *   Reference to the one and only Singleton's instance.
          */
         
-        public function getUrl($account);
+        public static function getInstance()
+        {
+            // Logic
+            
+            if (static::$instance == null)
+            {
+                static::$instance = new static;
+            }
+            
+            return static::$instance;
+        }
         
         /***************\
         |* SET METHODS *|
@@ -82,17 +139,40 @@
         \****************/
         
         /**
-         * Sets API key for the remote QR code generator.
+         * Extracts & returns value of a set secret from the
+         * provided entity ex. Account.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $apiKey
-         *   API key that should be used.
+         * @param object $entity
+         *   Entity that should be used in the process.
+         * @return string
+         *   Value of the set secret.
          */
         
-        public function setApiKey($apiKey);
+        public function fetchSecret($entity)
+        {
+            // Logic
+            
+            if (!($entity instanceof Account || $entity instanceof Secret))
+            {
+                throw new \Exception("Invalid object provided.");
+            }
+            
+            if ($entity instanceof Account)
+            {
+                if ($entity->getAccountSecret() == null)
+                {
+                    throw new \Exception("Account is without a secret.");
+                }
+                
+                return $entity->getAccountSecret()->getValue();
+            }
+            
+            return $entity->getValue();
+        }
         
         /*****************\
         |* CHECK METHODS *|

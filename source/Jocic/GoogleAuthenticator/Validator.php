@@ -83,12 +83,8 @@
         {
             // Logic
             
-            if ($entity instanceof Account)
-            {
-                return $this->generateCode($entity->getAccountSecret(), -1);
-            }
-            
-            return $this->generateCode($entity, -1);
+            return $this->generateCode(Helper::getInstance()
+                ->fetchSecret($entity), -1);
         }
         
         /**
@@ -108,12 +104,8 @@
         {
             // Logic
             
-            if ($entity instanceof Account)
-            {
-                return $this->generateCode($entity->getAccountSecret(), 0);
-            }
-            
-            return $this->generateCode($entity, 0);
+            return $this->generateCode(Helper::getInstance()
+                ->fetchSecret($entity), 0);
         }
         
         /**
@@ -133,12 +125,8 @@
         {
             // Logic
             
-            if ($entity instanceof Account)
-            {
-                return $this->generateCode($entity->getAccountSecret(), 1);
-            }
-            
-            return $this->generateCode($entity, 1);
+            return $this->generateCode(Helper::getInstance()
+                ->fetchSecret($entity), 1);
         }
         
         /***************\
@@ -295,8 +283,8 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $secret
-         *   Secret object that should be used for code generation.
+         * @param string $secret
+         *   Secret that should be used for code generation.
          * @param string $offset
          *   Offset of the time slice.
          * @return string
@@ -315,16 +303,9 @@
             $timeFactor   = null;
             $timePassword = null;
             
-            // Step 1 - Check Secret
+            // Logic
             
-            if (!($secret instanceof Secret))
-            {
-                throw new \Exception("Invalid object used.");
-            }
-            
-            // Step 2 - Calculate Time Code
-            
-            $binarySecret = $encoder->decode($secret->getValue());
+            $binarySecret = $encoder->decode($secret);
             
             $timeFactor = $this->calculateTimeFactor($offset);
             

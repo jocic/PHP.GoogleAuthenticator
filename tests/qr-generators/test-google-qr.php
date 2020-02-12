@@ -309,7 +309,7 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Google's API doesn't require a key: " .
+                $this->assertEquals("API doesn't require a key: " .
                     "The cake is a lie!", $e->getMessage());
             }
             
@@ -323,7 +323,7 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Google's API doesn't require a key.",
+                $this->assertEquals("API doesn't require a key.",
                     $e->getMessage());
             }
         }
@@ -411,25 +411,7 @@
             }
             catch (\Exception $e)
             {
-                $this->assertEquals("Set account is without a secret.",
-                    $e->getMessage());
-            }
-            
-            // Step 4 - Test Method Without Details
-            
-            try
-            {
-                $account = new Account();
-                
-                $account->setAccountSecret(new Secret());
-                
-                $googleQr->getUrl($account);
-                
-                $this->fail("Exception should've been thrown!");
-            }
-            catch (\Exception $e)
-            {
-                $this->assertEquals("Set account is without details.",
+                $this->assertEquals("Account is without a secret.",
                     $e->getMessage());
             }
         }
