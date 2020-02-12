@@ -625,12 +625,16 @@
             
             // Step 4 - Test Invalid Save & Load
             
-            $this->assertFalse($accountManager->save("/etc/shadow"));
-            $this->assertFalse($accountManager->load("/etc/shadow"));
+            $this->assertFalse($accountManager->save("/tmp"),
+                "\"TMP\" should be a directory.");
+            
+            $this->assertFalse($accountManager->load("/tmp"),
+                "\"TMP\" shouldn't be a readable file.");
             
             $accountManager->saveToFile($saveLocation, "");
             
-            $this->assertFalse($accountManager->load($saveLocation));
+            $this->assertFalse($accountManager->load($saveLocation),
+                "Empty file shouldn't be loadable.");
         }
         
         /*********************\

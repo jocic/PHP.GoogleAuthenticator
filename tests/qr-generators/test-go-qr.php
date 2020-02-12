@@ -122,19 +122,19 @@
                 "accountName" => "B",
                 "secretValue" => "RMB4AMUMDHODBYNR",
                 "qrCodeSize"  => 200,
-                "qrUrl"       => "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=otpauth%3A%2F%2Ftotp%2FA+-+B%3Fsecret%3DRMB4AMUMDHODBYNR"
+                "qrUrl"       => "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=otpauth%3A%2F%2Ftotp%2FA%2520-%2520B%3Fsecret%3DRMB4AMUMDHODBYNR"
             ], [
                 "serviceName" => "C",
                 "accountName" => "D",
                 "secretValue" => "4JT4TVALIJOHCRZX",
                 "qrCodeSize"  => 300,
-                "qrUrl"       => "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=otpauth%3A%2F%2Ftotp%2FC+-+D%3Fsecret%3D4JT4TVALIJOHCRZX"
+                "qrUrl"       => "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=otpauth%3A%2F%2Ftotp%2FC%2520-%2520D%3Fsecret%3D4JT4TVALIJOHCRZX"
             ], [
                 "serviceName" => "E",
                 "accountName" => "F",
                 "secretValue" => "YPPMQXR6UGWBP3UI",
                 "qrCodeSize"  => 400,
-                "qrUrl"       => "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=otpauth%3A%2F%2Ftotp%2FE+-+F%3Fsecret%3DYPPMQXR6UGWBP3UI"
+                "qrUrl"       => "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=otpauth%3A%2F%2Ftotp%2FE%2520-%2520F%3Fsecret%3DYPPMQXR6UGWBP3UI"
             ]];
             
             // Step 1 - Test Combinations
