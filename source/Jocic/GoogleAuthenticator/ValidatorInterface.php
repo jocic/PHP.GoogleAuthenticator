@@ -53,11 +53,11 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for code generation.
+         * @param object $entity
+         *   Account or Secret that should be used for code generation.
          */
         
-        public function getPreviousCode($account);
+        public function getPreviousCode($entity);
         
         /**
          * Returns current code generated for the account.
@@ -66,11 +66,11 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for code generation.
+         * @param object $entity
+         *   Account or Secret that should be used for code generation.
          */
         
-        public function getCurrentCode($account);
+        public function getCurrentCode($entity);
         
         /**
          * Returns next code generated for the account.
@@ -79,11 +79,11 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for code generation.
+         * @param object $entity
+         *   Account or Secret that should be used for code generation.
          */
         
-        public function getNextCode($account);
+        public function getNextCode($entity);
         
         /***************\
         |* SET METHODS *|
@@ -110,11 +110,11 @@
          * 
          * @param integer $code
          *   Six-digit code that should be used for validation.
-         * @param string $account
-         *   Account that should be used for code validation.
+         * @param object $entity
+         *   Account or Secret that should be used for code validation.
          */
         
-        public function isCodeValid($code, $account);
+        public function isCodeValid($code, $entity);
         
         /*****************\
         |* OTHER METHODS *|

@@ -73,17 +73,22 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for code generation.
+         * @param object $entity
+         *   Account or Secret that should be used for code generation.
          * @return string
          *   6-digit code that was valid in the previous cycle.
          */
         
-        public function getPreviousCode($account)
+        public function getPreviousCode($entity)
         {
             // Logic
             
-            return $this->generateCode($account->getAccountSecret(), -1);
+            if ($entity instanceof Account)
+            {
+                return $this->generateCode($entity->getAccountSecret(), -1);
+            }
+            
+            return $this->generateCode($entity, -1);
         }
         
         /**
@@ -93,17 +98,22 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for code generation.
+         * @param object $entity
+         *   Account or Secret that should be used for code generation.
          * @return string
          *   6-digit code that is valid in the current cycle.
          */
         
-        public function getCurrentCode($account)
+        public function getCurrentCode($entity)
         {
             // Logic
             
-            return $this->generateCode($account->getAccountSecret(), 0);
+            if ($entity instanceof Account)
+            {
+                return $this->generateCode($entity->getAccountSecret(), 0);
+            }
+            
+            return $this->generateCode($entity, 0);
         }
         
         /**
@@ -113,17 +123,22 @@
          * @copyright 2018 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $account
-         *   Account that should be used for code generation.
+         * @param object $entity
+         *   Account or Secret that should be used for code generation.
          * @return string
          *   6-digit code that is going to be valid in the next cycle.
          */
         
-        public function getNextCode($account)
+        public function getNextCode($entity)
         {
             // Logic
             
-            return $this->generateCode($account->getAccountSecret(), 1);
+            if ($entity instanceof Account)
+            {
+                return $this->generateCode($entity->getAccountSecret(), 1);
+            }
+            
+            return $this->generateCode($entity, 1);
         }
         
         /***************\
@@ -151,19 +166,19 @@
          * 
          * @param integer $code
          *   Six-digit code that should be used for validation.
-         * @param string $account
-         *   Account that should be used for code validation.
+         * @param object $entity
+         *   Account or Secret that should be used for code validation.
          * @return bool
          *   Value <i>TRUE</i> if the provide code is valid, and vice versa.
          */
         
-        public function isCodeValid($code, $account)
+        public function isCodeValid($code, $entity)
         {
             // Logic
             
-            return (   $this->getPreviousCode($account) == $code
-                    || $this->getCurrentCode($account) == $code
-                    || $this->getNextCode($account) == $code);
+            return (   $this->getPreviousCode($entity) == $code
+                    || $this->getCurrentCode($entity) == $code
+                    || $this->getNextCode($entity) == $code);
         }
         
         /*****************\
