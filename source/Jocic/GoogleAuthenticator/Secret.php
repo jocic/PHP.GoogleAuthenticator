@@ -282,7 +282,7 @@
             
             // Step 1 - Check Length
             
-            if (count($characters) != 16)
+            if (count($characters) < 8)
             {
                 return false;
             }
