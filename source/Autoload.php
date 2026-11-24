@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -35,7 +35,7 @@
      * Loads a desired class from the project's source directory.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      * 
      * @param string $class_name
@@ -43,7 +43,6 @@
      * @return bool
      *   Value <i>TRUE</i> if the class was included, and vice versa.
      */
-    
     function load_google_authenticator_class($class_name)
     {
         // Core Variables
@@ -55,7 +54,8 @@
         
         // Logic
         
-        if (class_exists($class_name)) {
+        if (class_exists($class_name))
+        {
             return true;
         }
         

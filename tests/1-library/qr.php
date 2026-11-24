@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -29,67 +29,64 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator\Qr;
+    use PHPUnit\Framework\TestCase;
     
-    use Jocic\GoogleAuthenticator\FileSystem;
+    use Jocic\GoogleAuthenticator\Secret;
+    use Jocic\GoogleAuthenticator\Account;
+    use Jocic\GoogleAuthenticator\Encoderkjfdfdf;
+    use Jocic\GoogleAuthenticator\QrCode;
+    
+    use Jocic\GoogleAuthenticator\Encoders\Go;
     
     /**
-     * <i>QrCore</i> class contains core methods used for QR code creation.
+     * <i>TestQr</i> class is used for testing method implementation
+     * of the class <i>QrCode</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2018 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    
-    class QrCore extends FileSystem
+    class TestQr extends TestCase
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
+        /*********************\
+        |* GET & SET METHODS *|
+        \*********************/
         
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        // GET METHODS GO HERE
-        
-        /***************\
-        |* SET METHODS *|
-        \***************/
-        
-        // SET METHODS GO HERE
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
-        
-        // CORE METHODS GO HERE
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        // CHECK METHODS GO HERE
         
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
+        /*******************\
+        |* PRIMARY METHODS *|
+        \*******************/
         
-        // OTHER METHODS GO HERE
+        public function testTest() : void
+        {
+            $account = new Account();
+            
+            $account->setService("My Service");
+            $account->setName("john@doe.com");
+            $account->setSecret("RMB4AMUMDHODBYNR");
+            
+            /////////////////////////////
+            
+            $encoder = new Go();
+            
+            $encoder->setErrorCorrection(Go::ECC_LOW);
+            
+            /////////////////////////////
+            
+            $qrCode = new QrCode();
+            
+            $qrCode->setSize(200);
+            $qrCode->setEncoder($encoder);
+            
+            if ($qrCode->generate($account)) {
+                echo $qrCode->getEncoder()->getEmbeddable();
+            }
+        }
     }
     
 ?>

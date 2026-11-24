@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -34,11 +34,11 @@
     use Jocic\Encoders\Base\Base32;
     
     /**
-     * <i>Secret</i> class is used for generating secrets required for one-time
-     * password generation and validation of the same.
+     * <i>Secret</i> class is used for generating secrets required for
+     * one-time password generation and validation of the same.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
     class Secret implements Interfaces\SecretInterface
@@ -49,10 +49,10 @@
         
         /**
          * Method constant for generating secrets using the <i>base</i>
-         * creation method - picking random <i>Base 32</i> values until an
+         * creation method - picking random <i>BASE32</i> values until an
          * 80-bit long secret is generated.
          * 
-         * @var    integer
+         * @var    int
          * @access public
          */
         const M_BASE = 0;
@@ -62,7 +62,7 @@
          * creation method - picking random numbers between 0 and 256 until an
          * 80-bit long secret is generated.
          * 
-         * @var    integer
+         * @var    int
          * @access public
          */
         const M_NUMERICAL = 1;
@@ -72,7 +72,7 @@
          * creation method - picking random bits until an 80-bit long secret
          * is generated.
          * 
-         * @var    integer
+         * @var    int
          * @access public
          */
         const M_BINARY = 2;
@@ -109,7 +109,7 @@
          * Generic PHP constructor for the class <i>Secret</i>.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param string|null $value
@@ -119,6 +119,8 @@
         public function __construct(string|null $value = null)
         {
             // Logic
+            
+            $this->encoder = new Base32();
             
             if ($value == null)
             {
@@ -133,10 +135,10 @@
         \***************/
         
         /**
-         * Returns a value of the secret.
+         * Returns the secret's value.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string
@@ -149,53 +151,32 @@
             return $this->value;
         }
         
-        /**
-         * Returns an instantiated <i>Base 32</i> encoder object.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return object
-         *   Instantiated <i>Base 32</i> encoder object.
-         */
-        private function getEncoder() : Base32
-        {
-            // Logic
-            
-            if ($this->encoder == null) {
-                $this->encoder = new Base32();
-            }
-            
-            return $this->encoder;
-        }
-        
         /***************\
         |* SET METHODS *|
         \***************/
         
         /**
-         * Sets a value of the secret.
+         * Sets the secret's value.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $secret
+         * @param string $value
          *   New value of the secret.
          * @return object
          *   Reference to the object calling the method - current object.
          */
-        public function setValue(string $secret) : self
+        public function setValue(string $value) : self
         {
             // Logic
             
-            if (!$this->isSecretValid($secret))
+            if (!$this->isSecretValid($value))
             {
-                throw new \Exception("Invalid secret provided: \"$secret\"");
+                throw new \Exception("Invalid secret provided: \"$value\"");
             }
             
-            $this->value = $secret;
+            $this->value = $value;
             
             return $this;
         }
@@ -207,10 +188,11 @@
         /**
          * Generates a random secret that may be used for implementing MFA.
          * 
-         * Note: Secrets are random 80-bit values encoded using BASE32.
+         * <strong>Note:</string> Secrets are random 80-bit values
+         * encoded using the <i>BASE32</i> encoding.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param integer $method
@@ -219,33 +201,23 @@
          * @return string
          *   Value of the secret - randomly-generated.
          */
-        public function generateValue($method = self::M_BASE) : string
+        public function generateValue(int $method = self::M_BASE) : string
         {
-            // Core Variables
-            
-            $value = "";
-            
             // Logic
             
             switch ($method)
             {
                 case self::M_BASE:
-                    $value = $this->generateValue__BASE();
-                    break;
-                
+                    return $this->__generateValue_BASE();
                 case self::M_NUMERICAL:
-                    $value = $this->generateValue__NUMERICAL();
-                    break;
-                
+                    return $this->__generateValue_NUMERICAL();
                 case self::M_BINARY:
-                    $value = $this->generateValue__BINARY();
-                    break;
-                
+                    return $this->__generateValue_BINARY();
                 default:
                     throw new \Exception("Invalid method selected.");
             }
             
-            return $value;
+            return "";
         }
         
         /*****************\
@@ -256,7 +228,7 @@
          * Checks if the provided secret is valid or not.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param string $secret
@@ -268,7 +240,7 @@
         {
             // Core Variables
             
-            $baseTable = $this->getEncoder()->getBaseTable();
+            $baseTable = $this->encoder->getBaseTable();
             
             // Other Variables
             
@@ -302,17 +274,17 @@
          * Generates a random secret using the <i>base</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string
          *   Value of the secret - randomly-generated.
          */
-        private function generateValue__BASE() : string
+        private function __generateValue_BASE() : string
         {
             // Core Variables
             
-            $baseTable = $this->getEncoder()->getBaseTable();
+            $baseTable = $this->encoder->getBaseTable();
             
             // Other Variables
             
@@ -324,7 +296,7 @@
             
             for ($i = 0; $i < 16; $i ++)
             {
-                $index  = rand(0, $maxIndex);
+                $index  = random_int(0, $maxIndex);
                 $value .= $baseTable[$index];
             }
             
@@ -335,13 +307,13 @@
          * Generates a random secret using the <i>numerical</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string
          *   Value of the secret - randomly-generated.
          */
-        private function generateValue__NUMERICAL() : string
+        private function __generateValue_NUMERICAL() : string
         {
             // Core Variables
             
@@ -352,24 +324,24 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $number = rand(0, 256);
+                $number = random_int(0, 255);
                 $value .= sprintf("%c", $number);
             }
             
-            return $this->getEncoder()->encode($value);
+            return $this->encoder->encode($value);
         }
         
         /**
          * Generates a random secret using the <i>binary</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string
          *   Value of the secret - randomly-generated.
          */
-        private function generateValue__BINARY() : string
+        private function __generateValue_BINARY() : string
         {
             // Core Variables
             
@@ -384,13 +356,13 @@
                 
                 for ($j = 0; $j < 8; $j ++)
                 {
-                    $byte = ($byte << 1) | rand(0, 1);
+                    $byte = ($byte << 1) | random_int(0, 1);
                 }
                 
                 $value .= sprintf("%c", $byte);
             }
             
-            return $this->getEncoder()->encode($value);
+            return $this->encoder->encode($value);
         }
     }
     

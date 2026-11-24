@@ -2,7 +2,7 @@
 
 ###################################################################
 # Script Author: Djordje Jocic                                    #
-# Script Year: 2024                                               #
+# Script Year: 2026                                               #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -33,31 +33,27 @@
 # Core Variables #
 ##################
 
-source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
+source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)"
 
-#################
-# PHP Variables #
-#################
+composer_version="2.11.2"
+composer_location="$source_dir/../other/composer/$composer_version/composer.phar"
 
-php_command="$(command -v php)";
+###################
+# Probe Variables #
+###################
 
-######################
-# Composer Variables #
-######################
-
-composer_version="2.7.4";
-composer_location="./other/composer/$composer_version/composer.phar";
+probe_php="$(which php 2>/dev/null)"
+probe_composer="$(ls "$composer_location" 2>/dev/null)"
 
 #########
 # Logic #
 #########
 
-cd "$source_dir/../";
 
-if [ -z "$php_command" ]; then
-    echo "Error: You don't have PHP installed on your machine." && exit 1;
-elif [ ! -e "$composer_location" ]; then
-    echo "Error: Composer executable is missing." && exit 1;
+if [ -z "$probe_php" ]; then
+    echo "Error: You don't have PHP installed on your machine." && exit 1
+elif [ -z "$probe_composer" ]; then
+    echo "Error: Composer executable is missing." && exit 1
 fi
 
-php "$composer_location" "$@" && exit $?;
+php "$composer_location" "$@" && exit $?

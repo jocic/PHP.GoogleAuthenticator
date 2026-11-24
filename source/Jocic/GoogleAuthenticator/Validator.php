@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -34,15 +34,14 @@
     use Jocic\Encoders\Base\Base32;
     
     /**
-     * <i>Validator</i> class is used for generating QR codes, and validating
-     * provided one-time passwords.
+     * <i>Validator</i> class is used for generating and validating
+     * one-time passwords.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2018 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    
-    class Validator implements ValidatorInterface
+    class Validator implements Interfaces\ValidatorInterface
     {
         /******************\
         |* CORE CONSTANTS *|
@@ -67,66 +66,98 @@
         \***************/
         
         /**
-         * Returns previous code generated for the account.
+         * Returns the OTP valid in the previous cycle.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $entity
-         *   Account or Secret that should be used for code generation.
+         * @param mixed $entity
+         *   Value that should be used for code generation.
          * @return string
          *   6-digit code that was valid in the previous cycle.
          */
-        
-        public function getPreviousCode($entity)
+        public function getPreviousCode(mixed $entity) : string
         {
             // Logic
             
-            return $this->generateCode(Helper::getInstance()
-                ->fetchSecret($entity), -1);
+            $secret = $this->getSecret($entity);
+            
+            return $this->generateCode($secret, -1);
         }
         
         /**
-         * Returns current code generated for the account.
+         * Returns the OTP valid in the current cycle.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $entity
+         * @param mixed $entity
          *   Account or Secret that should be used for code generation.
          * @return string
          *   6-digit code that is valid in the current cycle.
          */
-        
-        public function getCurrentCode($entity)
+        public function getCurrentCode(mixed $entity) : string
         {
             // Logic
             
-            return $this->generateCode(Helper::getInstance()
-                ->fetchSecret($entity), 0);
+            $secret = $this->getSecret($entity);
+            
+            return $this->generateCode($secret, 0);
         }
         
         /**
-         * Returns next code generated for the account.
+         * Returns the OTP valid in the next cycle.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param object $entity
+         * @param mixed $entity
          *   Account or Secret that should be used for code generation.
          * @return string
          *   6-digit code that is going to be valid in the next cycle.
          */
-        
-        public function getNextCode($entity)
+        public function getNextCode(mixed $entity) : string
         {
             // Logic
             
-            return $this->generateCode(Helper::getInstance()
-                ->fetchSecret($entity), 1);
+            $secret = $this->getSecret($entity);
+            
+            return $this->generateCode($secret, 1);
+        }
+        
+        /**
+         * Helper method that extracts the secret from the provided object.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param mixed $entity
+         *   Account or Secret that should be used for code generation.
+         * @return string
+         *   Value of the secret.
+         */
+        private function getSecret(mixed $entity) : string {
+            
+            $secret = "";
+            
+            if ($entity instanceof Account)
+            {
+                $secret = $entity->getSecret()->getValue();
+            }
+            else if ($entity instanceof Secret)
+            {
+                $secret = $entity->getValue();
+            }
+            else if (is_string($entity))
+            {
+                $secret = $entity;
+            }
+            
+            return $secret;
         }
         
         /***************\
@@ -146,21 +177,20 @@
         \*****************/
         
         /**
-         * Checks if the provided code is valid for the given account.
+         * Checks if the provided one-time password is valid or not.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param integer $code
+         * @param string $code
          *   Six-digit code that should be used for validation.
-         * @param object $entity
+         * @param mixed $entity
          *   Account or Secret that should be used for code validation.
          * @return bool
          *   Value <i>TRUE</i> if the provide code is valid, and vice versa.
          */
-        
-        public function isCodeValid($code, $entity)
+        public function isCodeValid(string $code, mixed $entity) : bool
         {
             // Logic
             
@@ -180,7 +210,7 @@
          * additional details.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param integer $offset
@@ -190,7 +220,6 @@
          * @return string
          *   Calculated time factor in a binary format.
          */
-        
         private function calculateTimeFactor($offset = 0, $timeStep = 30)
         {
             // Core Variables
@@ -213,7 +242,7 @@
          * additional details.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param integer $secret
@@ -223,7 +252,6 @@
          * @return string
          *   Calculated time-based password.
          */
-        
         public function calculateTimeBasedPassword($secret, $timeFactor)
         {
             // Logic
@@ -238,7 +266,7 @@
          * additional details.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param integer $timePassword
@@ -246,7 +274,6 @@
          * @return string
          *   Calculated 6-digit time code.
          */
-        
         public function calculateTimeCode($timePassword)
         {
             // Core Variables
@@ -280,7 +307,7 @@
          * Returns previous code generated for the account.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param string $secret
@@ -290,7 +317,6 @@
          * @return string
          *   Generated 6-digit code.
          */
-        
         private function generateCode($secret, $offset)
         {
             // Core Variables

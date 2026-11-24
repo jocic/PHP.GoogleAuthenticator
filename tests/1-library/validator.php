@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -41,10 +41,9 @@
      * the class <i>Validator</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2018 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    
     class TestValidator extends TestCase
     {
         /*********************\
@@ -55,12 +54,11 @@
          * Tests <i>getPreviousCode</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        
         public function testPreviousCode()
         {
             // Core Variables
@@ -78,12 +76,11 @@
          * Tests <i>getCurrentCode</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        
         public function testCurrentCode()
         {
             // Core Variables
@@ -101,12 +98,11 @@
          * Tests <i>getNextCode</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        
         public function testNextCode()
         {
             // Core Variables
@@ -128,12 +124,11 @@
          * Tests <i>isCodeValid</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        
         public function testIsCodeValidMethod()
         {
             // Core Variables
@@ -174,7 +169,7 @@
          * that the calculation is correct.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param string $secret
@@ -184,7 +179,6 @@
          * @return string
          *   Generated 6-digit code.
          */
-        
         private function generateCode($secret, $offset)
         {
             // Core Variables

@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -30,17 +30,18 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
-    use Jocic\GoogleAuthenticator\Secret as MfaSecret;
+    
+    use Jocic\GoogleAuthenticator\Secret;
     
     /**
      * <i>TestSecret</i> class is used for testing method implementation
      * of the class <i>Secret</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    class Secret extends TestCase
+    class TestSecret extends TestCase
     {
         /*********************\
         |* GET & SET METHODS *|
@@ -50,7 +51,7 @@
          * Tests <i>setValue</i> & <i>getValue</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
@@ -59,7 +60,7 @@
         {
             // Core Variables
             
-            $secret = new MfaSecret();
+            $secret = new Secret();
             
             // Other Variables
             
@@ -101,7 +102,7 @@
          * Tests secret validation.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
@@ -110,7 +111,7 @@
         {
             // Core Variables
             
-            $secret = new MfaSecret();
+            $secret = new Secret();
             
             // Other Variables
             
@@ -140,7 +141,7 @@
          * Tests <i>generate</i> method of the <i>Secret</i> class.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
@@ -149,7 +150,7 @@
         {
             // Core Variables
             
-            $secret = new MfaSecret();
+            $secret = new Secret();
             
             // Other Variables
             
@@ -159,7 +160,7 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(MfaSecret::M_BASE);
+                $value = $secret->generateValue(Secret::M_BASE);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }
@@ -168,7 +169,7 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(MfaSecret::M_NUMERICAL);
+                $value = $secret->generateValue(Secret::M_NUMERICAL);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }
@@ -177,7 +178,7 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(MfaSecret::M_BINARY);
+                $value = $secret->generateValue(Secret::M_BINARY);
                 
                 $this->assertSame(true, $secret->isSecretValid($value), $value);
             }

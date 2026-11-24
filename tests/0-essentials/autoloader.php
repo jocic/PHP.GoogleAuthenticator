@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -35,7 +35,7 @@
      * <i>TestAutoloader</i> class is used for testing project's autoloader.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
     class Autoloader extends TestCase
@@ -48,7 +48,7 @@
          * Tests the project's autoloading function.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
@@ -59,25 +59,17 @@
             
             $testValues = [
                 
-                "\Jocic\GoogleAuthenticator\Account"        => true,
-                "\Jocic\GoogleAuthenticator\Account"        => true,
-                "\Jocic\GoogleAuthenticator\AccountManager" => true,
-                "\Jocic\GoogleAuthenticator\AccountManager" => true,
-                "\Jocic\GoogleAuthenticator\Helper"         => true,
-                "\Jocic\GoogleAuthenticator\Helper"         => true,
-                "\Jocic\GoogleAuthenticator\Secret"         => true,
-                "\Jocic\GoogleAuthenticator\Secret"         => true,
-                "\Jocic\GoogleAuthenticator\Validator"      => true,
-                "\Jocic\GoogleAuthenticator\Validator"      => true,
+                "\Jocic\GoogleAuthenticator\Account"   => true,
+                "\Jocic\GoogleAuthenticator\Account"   => true,
+                "\Jocic\GoogleAuthenticator\Secret"    => true,
+                "\Jocic\GoogleAuthenticator\Secret"    => true,
                 
-                "\Jocic\GoogleAuthenticator\Account1"        => false,
-                "\Jocic\GoogleAuthenticator\Acc1ount"        => false,
-                "\Jocic\GoogleAuthenticator\Accountt"        => false,
-                "\Jocic\GoogleAuthenticator\Acc ount"        => false,
-                "\Jocic\GoogleAuthenticator\ Account"        => false,
-                "\Jocic\GoogleAuthenticator\AcOuNt"          => false,
-                "\Jocic\GoogleAuthenticator\Account Manager" => false,
-                "\Jocic\GoogleAuthenticator\Potato"          => false,
+                "\Jocic\GoogleAuthenticator\Account1" => false,
+                "\Jocic\GoogleAuthenticator\Acc1ount" => false,
+                "\Jocic\GoogleAuthenticator\Accountt" => false,
+                "\Jocic\GoogleAuthenticator\Acc ount" => false,
+                "\Jocic\GoogleAuthenticator\ Account" => false,
+                "\Jocic\GoogleAuthenticator\AcOuNt"   => false,
                 
             ];
             

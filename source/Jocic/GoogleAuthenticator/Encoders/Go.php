@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -29,156 +29,107 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator\Qr\Remote;
+    namespace Jocic\GoogleAuthenticator\Encoders;
     
-    use Jocic\GoogleAuthenticator\Qr\QrInterface;
-    use Jocic\GoogleAuthenticator\Qr\QrCore;
-    use Jocic\GoogleAuthenticator\Account;
-    use Jocic\GoogleAuthenticator\Helper;
+    use Jocic\GoogleAuthenticator\Encoder;
     
     /**
-     * <i>GoQr</i> class is used for generating QR codes using pubilcly
-     * available GoQr's API.
+     * <i>Go</i> class is used for generating QR codes using pubilcly
+     * available API from <i>GO QR</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2018 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    
-    class GoQr extends RemoteQrCore implements QrInterface,
-        RemoteQrInterface
+    class Go extends Encoder
     {
         /******************\
         |* CORE CONSTANTS *|
         \******************/
         
-        // CORE CONSTANTS GO HERE
+        const API_ENDPOINT = "http://api.qrserver.com/v1/create-qr-code";
         
         /******************\
         |* CORE VARIABLES *|
         \******************/
         
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        /**
-         * Constructor for the class <i>GoQr</i>. It's used for setting core
-         * class parameters upon object instantiation.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $qrCodeSize
-         *   Size of the QR codes that should be generated.
-         * @param string $storageDirectory
-         *   Storage directory that should be set.
-         * @return void
-         */
-        
-        public function __construct($qrCodeSize = null, $storageDirectory = null)
-        {
-            // Step 1 - Handle QR Code Size
-            
-            if ($qrCodeSize != null)
-            {
-                $this->setQrCodeSize($qrCodeSize);
-            }
-            
-            // Step 2 - Handle Storage Directory
-            
-            if ($storageDirectory != null)
-            {
-                $this->setStorageDirectory($storageDirectory);
-            }
-        }
+        // CORE VARIAVLES GO HERE
         
         /***************\
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Generally this method is used for getting the set API key of a remote
-         * QR code generator, but as GoQr's API doesn't require it, method
-         * will only throw an exception.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        
-        public function getApiKey()
-        {
-            // Logic
-            
-            throw new \Exception("API doesn't require a key.");
-        }
-        
-        /**
-         * Forms and returns an appropriate URL for that can be used for
-         * generating QR codes remotely by sending a GET request.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $account
-         *   Account that should be used for generating the QR code.
-         * @return string
-         *   Formed url that can be used for generating QR codes.
-         */
-        
-        public function getUrl($account)
-        {
-            // Core Variables
-            
-            $urlFormat = "https://api.qrserver.com/v1/create-qr-code/?" .
-                "size=%s&data=%s";
-            $codeSize  = $this->getQrCodeSize();
-            
-            // Logic
-            
-            return vsprintf($urlFormat, [
-                "code-size" => ($codeSize . "x" . $codeSize),
-                "request"   => $this->compileRequest($account)
-            ]);
-        }
+        // GET METHODS GO HERE
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        /**
-         * Generally this method is used for setting the API key of a remote
-         * QR code generator, but as GoQr's API doesn't require it, method
-         * will only throw an exception.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $apiKey
-         *   API key that should be used.
-         * @return void
-         */
-        
-        public function setApiKey($apiKey)
-        {
-            // Logic
-            
-            throw new \Exception("API doesn't require a key: $apiKey");
-        }
+        // SET METHODS GO HERE
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        // CORE METHODS GO HERE
+        public function process() : bool
+        {
+            // Core Variables
+            
+            $ecc_values    = [ "L", "M", "H" ];
+            $format_values = [ "png", "jpg", "gif" ];
+            
+            // Step 1 - Prepare Request
+            
+            $params = [
+                'size'   => $this->size . 'x' . $this->size,
+                'data'   => $this->data,
+                'ecc'    => $ecc_values[$this->ecc],
+                'format' => $format_values[$this->format]
+            ];
+            
+            $url = self::API_ENDPOINT . '?' .
+                http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+            
+            $ch = curl_init($url);
+            
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_CONNECTTIMEOUT => 5,
+                CURLOPT_TIMEOUT        => 10,
+                CURLOPT_HTTPHEADER     => [
+                    'Accept: text/html',
+                ],
+            ]);
+            
+            // Step 2 - Send Request
+            
+            $response = curl_exec($ch);
+            
+            if ($response === false)
+            {
+                $error = curl_error($ch);
+                
+                curl_close($ch);
+                
+                return false;
+            }
+            
+            // Step 3 - Handle Request
+            
+            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            
+            curl_close($ch);
+            
+            if ($status < 200 || $status >= 300)
+            {
+                return false;
+            }
+            
+            $this->encoding = $response;
+            
+            return true;
+        }
         
         /*****************\
         |* CHECK METHODS *|

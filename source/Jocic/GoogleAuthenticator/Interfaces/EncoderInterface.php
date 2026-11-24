@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -29,70 +29,41 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator\Qr\Remote;
+    namespace Jocic\GoogleAuthenticator\Interfaces;
     
     /**
-     * <i>RemoteQrInterface</i> is an interface used to enforce
-     * implementation of additional QR & QR-related methods
-     * used by remote QR generators.
+     * <i>EncoderInterface</i> is used to enforce implementation
+     * of core methods of the class <i>Encoder</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2018 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    
-    interface RemoteQrInterface
+    interface EncoderInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Returns set API key for the remote QR code generator.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         */
-        
-        public function getApiKey();
-        
-        /**
-         * Forms and returns an appropriate URL for that can be used
-         * for generating QR codes remotely by sending a GET request.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $account
-         *   Account that should be used for generating the URL.
-         */
-        
-        public function getUrl($account);
+        public function getSize() : int;
+        public function getErrorCorrection() : int;
+        public function getFormat() : int;
+        public function getData() : string|null;
+        public function getEncoding() : string|null;
+        public function getEmbeddable() : string|null;
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        public function setSize(int $size) : self;
+        public function setData(string $data) : self;
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        /**
-         * Sets API key for the remote QR code generator.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $apiKey
-         *   API key that should be used.
-         */
-        
-        public function setApiKey($apiKey);
+        public function process() : bool;
         
         /*****************\
         |* CHECK METHODS *|

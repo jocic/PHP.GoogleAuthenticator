@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -30,15 +30,16 @@
     \*******************************************************************/
     
     use PHPUnit\Framework\TestCase;
-    use Jocic\GoogleAuthenticator\Secret as MfaSecret;
-    use Jocic\GoogleAuthenticator\Account as MfaAccount;
+    
+    use Jocic\GoogleAuthenticator\Secret;
+    use Jocic\GoogleAuthenticator\Account;
     
     /**
-     * <i>TestAccount</i> class is used for testing method implementation of the
-     * class <i>Account</i>.
+     * <i>TestAccount</i> class is used for testing method implementation
+     * of the class <i>Account</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
     class TestAccount extends TestCase
@@ -48,55 +49,19 @@
         \*********************/
         
         /**
-         * Tests <i>setAccountId</i> & <i>getAccountId</i> methods.
+         * Tests <i>setService</i> & <i>getService</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        public function testAccountIdMethods() : void
+        public function testServiceMethods() : void
         {
             // Core Variables
             
-            $account = new MfaAccount();
-            
-            // Step 1 - Test Initial Setting
-            
-            $account->setAccountId(1337);
-            
-            $this->assertSame(1337, $account->getAccountId());
-            
-            // Step 2 - Test Repeated Setting
-            
-            try
-            {
-                $account->setAccountId(1337);
-                
-                $this->fail("Exception should've been thrown!");
-            }
-            catch (\Exception $e)
-            {
-                $this->assertEquals("ID was already assigned.",
-                    $e->getMessage());
-            }
-        }
-        
-        /**
-         * Tests <i>setServiceName</i> & <i>getServiceName</i> methods.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        public function testServiceNameMethods() : void
-        {
-            // Core Variables
-            
-            $account = new MfaAccount();
+            $account = new Account();
             
             // Other Variables
             
@@ -110,26 +75,26 @@
             
             foreach ($testValues as $testValue)
             {
-                $account->setServiceName($testValue);
+                $account->setService($testValue);
                 
-                $this->assertSame($testValue, $account->getServiceName());
+                $this->assertSame($testValue, $account->getService());
             }
         }
         
         /**
-         * Tests <i>setAccountName</i> & <i>getAccountName</i> methods.
+         * Tests <i>setName</i> & <i>getName</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        public function testAccountNameMethods() : void
+        public function testNameMethods() : void
         {
             // Core Variables
             
-            $account = new MfaAccount();
+            $account = new Account();
             
             // Other Variables
             
@@ -143,42 +108,42 @@
             
             foreach ($testValues as $testValue)
             {
-                $account->setAccountName($testValue);
+                $account->setName($testValue);
                 
-                $this->assertSame($testValue, $account->getAccountName());
+                $this->assertSame($testValue, $account->getName());
             }
         }
         
         /**
-         * Tests <i>setAccountSecret</i> & <i>getAccountSecret</i> methods.
+         * Tests <i>setSecret</i> & <i>getSecret</i> methods.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
          */
-        public function testAccountSecretMethods() : void
+        public function testSecretMethods() : void
         {
             // Core Variables
             
-            $account = new MfaAccount();
+            $account = new Account();
             
             // Other Variables
             
             $testSecrets = [
-                new MfaSecret(),
-                new MfaSecret(),
-                new MfaSecret()
+                new Secret(),
+                new Secret(),
+                new Secret()
             ];
             
             // Logic
             
             foreach ($testSecrets as $testSecret)
             {
-                $account->setAccountSecret($testSecret);
+                $account->setSecret($testSecret);
                 
-                $this->assertSame($testSecret, $account->getAccountSecret());
+                $this->assertSame($testSecret, $account->getSecret());
             }
         }
         
@@ -190,7 +155,7 @@
          * Tests constructor of the class.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return void
@@ -206,24 +171,31 @@
             $testValues = [
                 [ null,  null,  null ],
                 [ "",  "",  null ],
-                [ "A", "B", new MfaSecret() ]
+                [ "A", "B", "RMB4AMUMDHODBYNR" ]
             ];
             
             // Logic
             
             foreach ($testValues as $testValue)
             {
-                $account = new MfaAccount($testValue[0],
+                $account = new Account($testValue[0],
                     $testValue[1], $testValue[2]);
                 
                 $this->assertSame($testValue[0],
-                    $account->getServiceName(), "getServiceName");
+                    $account->getService(), "getService");
                 
                 $this->assertSame($testValue[1],
-                    $account->getAccountName(), "getAccountName");
+                    $account->getName(), "getName");
                 
-                $this->assertSame($testValue[2],
-                    $account->getAccountSecret(), "getAccountSecret");
+                if ($testValue[2] !== null)
+                {
+                    $this->assertSame($testValue[2],
+                        $account->getSecret()->getValue(), "getSecret");
+                }
+                else
+                {
+                    $this->assertSame($testValue[2], null, "getSecret");
+                }
             }
         }
     }

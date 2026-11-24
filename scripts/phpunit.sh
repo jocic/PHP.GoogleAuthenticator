@@ -2,7 +2,7 @@
 
 ###################################################################
 # Script Author: Djordje Jocic                                    #
-# Script Year: 2024                                               #
+# Script Year: 2026                                               #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -33,29 +33,24 @@
 # Core Variables #
 ##################
 
-source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
+source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)"
 
-#################
-# PHP Variables #
-#################
+phpunit_location="$source_dir/../dependencies/phpunit/phpunit/phpunit"
 
-php_command="$(command -v php)";
+###################
+# Probe Variables #
+###################
 
-#####################
-# PHPUnit Variables #
-#####################
-
-phpunit_location="./dependencies/phpunit/phpunit/phpunit";
+probe_php="$(which php 2>/dev/null)"
+probe_phpunit="$(ls "$phpunit_location" 2>/dev/null)"
 
 #########
 # Logic #
 #########
 
-cd "$source_dir/../";
-
-if [ -z "$php_command" ]; then
+if [ -z "$probe_php" ]; then
     echo "Error: You don't have PHP installed on your machine." && exit 1;
-elif [ ! -e "$phpunit_location" ]; then
+elif [ -z "$probe_phpunit" ]; then
     echo "Error: You don't have PHPUnit installed - check Composer's dependencies." && exit 1;
 fi
 

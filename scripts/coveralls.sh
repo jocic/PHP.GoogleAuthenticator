@@ -2,7 +2,7 @@
 
 ###################################################################
 # Script Author: Djordje Jocic                                    #
-# Script Year: 2024                                               #
+# Script Year: 2026                                               #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -33,30 +33,25 @@
 # Core Variables #
 ##################
 
-source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
+source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)"
 
-#################
-# PHP Variables #
-#################
+coveralls_location="$source_dir/../dependencies/bin/php-coveralls"
 
-php_command="$(command -v php)";
+###################
+# Probe Variables #
+###################
 
-#######################
-# Coveralls Variables #
-#######################
-
-coveralls_location="./dependencies/bin/php-coveralls";
+probe_php="$(which php 2>/dev/null)"
+probe_coveralls="$(ls "$coveralls_location" 2>/dev/null)"
 
 #########
 # Logic #
 #########
 
-cd "$source_dir/../";
-
-if [ -z "$php_command" ]; then
-    echo "Error: You don't have PHP installed on your machine." && exit 1;
-elif [ ! -e "$coveralls_location" ]; then
-    echo "Error: You don't have PHP Coveralls installed - check Composer's dependencies." && exit 1;
+if [ -z "$probe_php" ]; then
+    echo "Error: You don't have PHP installed on your machine." && exit 1
+elif [ -z "$probe_coveralls" ]; then
+    echo "Error: You don't have PHP Coveralls installed - check Composer's dependencies." && exit 1
 fi
 
-php "$coveralls_location" "$@" && exit $?;
+php "$coveralls_location" "$@" && exit $?

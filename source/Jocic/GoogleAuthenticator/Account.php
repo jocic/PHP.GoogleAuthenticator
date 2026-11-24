@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -36,7 +36,7 @@
      * information required for <i>2FA</i> implementation.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
     class Account implements Interfaces\AccountInterface
@@ -46,44 +46,32 @@
         \******************/
         
         /**
-         * Assigned account ID, ex. <i>1337</i>.
+         * Name of the 2FA service used by the account, ex. <i>Hosting ABC</i>.
          * 
-         * @var    integer|null
-         * @access private
-         */
-        private int|null $accountId = null;
-        
-        /**
-         * Reference of an account manager storing the account.
-         * 
-         * @var    object|null
-         * @access private
-         */
-        private AccountManager|null $accountManager = null;
-        
-        /**
-         * Name of the service used by an account, ex. <i>Hosting ABC</i>.
+         * <strong>Note:</strong> This line will be shown in the 2FA apps.
          * 
          * @var    string|null
          * @access private
          */
-        private string|null $serviceName = null;
+        private string|null $service = null;
         
         /**
-         * Name of an account, ex. <i>John Doe</i> or <i>john@doe.com</i>.
+         * Name of the account, ex. <i>John Doe</i> or <i>john@doe.com</i>.
+         * 
+         * <strong>Note:</strong> This line will be shown in the 2FA apps.
          * 
          * @var    string|null
          * @access private
          */
-        private string|null $accountName = null;
+        private string|null $name = null;
         
         /**
-         * Secret of an account.
+         * Secret of the account, ex. <i>RMB4AMUMDHODBYNR</i>.
          * 
          * @var    object|null
          * @access private
          */
-        private Secret|null $accountSecret = null;
+        private Secret|null $secret = null;
         
         /*******************\
         |* MAGIC FUNCTIONS *|
@@ -93,37 +81,37 @@
          * Generic PHP constructor for the class <i>Account</i>.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string|null $serviceName
+         * @param string|null $service
          *   Account's service name that should be set.
-         * @param string|null $accountName
+         * @param string|null $name
          *   Account's name that should be set.
          * @param object|null $secret
          *   Account's secret that should be set.
          * @return void
          */
         public function __construct(
-            string|null $serviceName = null,
-            string|null $accountName = null,
-            Secret|null $accountSecret = null)
+            string|null $service = null,
+            string|null $name = null,
+            string|null $secret = null)
         {
             // Logic
             
-            if ($serviceName !== NULL)
+            if ($service !== NULL)
             {
-                $this->setServiceName($serviceName);
+                $this->setService($service);
             }
             
-            if ($accountName !== NULL)
+            if ($name !== NULL)
             {
-                $this->setAccountName($accountName);
+                $this->setName($name);
             }
             
-            if ($accountSecret !== NULL)
+            if ($secret !== NULL)
             {
-                $this->setAccountSecret($accountSecret);
+                $this->setSecret($secret);
             }
         }
         
@@ -132,93 +120,57 @@
         \***************/
         
         /**
-         * Returns an account's ID.
+         * Returns the 2FA service name used by the account.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return integer|null
-         *   ID of an account ex. <i>123</i>, or value <i>NULL</i>
-         *   if the ID wasn't set for the account.
-         */
-        public function getAccountId() : int|null
-        {
-            // Logic
-            
-            return $this->accountId;
-        }
-        
-        /**
-         * Returns an account's manager.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return object|null
-         *   Reference to the account's manager, or value
-         *   <i>NULL</i> if the account's manager wasn't set.
-         */
-        public function getAccountManager() : AccountManager|null
-        {
-            // Logic
-            
-            return $this->accountManager;
-        }
-        
-        /**
-         * Returns an account's service name.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string|null
-         *   Name of an account's service, ex. <i>Hosting ABC</i>, or value
-         *   <i>NULL</i> if the account's service name wasn't set.
+         *   Name of the 2FA service, ex. <i>Hosting ABC</i>, or the value
+         *   <i>NULL</i> if the account's service name wasn't previously set.
          */
-        public function getServiceName() : string|null
+        public function getService() : string|null
         {
             // Logic
             
-            return $this->serviceName;
+            return $this->service;
         }
         
         /**
-         * Returns an account's name.
+         * Returns the account's name.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string|null
-         *   Name of an account, ex. <i>John Doe</i> or <i>john@doe.com</i>,
-         *   or value <i>NULL</i> if the account's name wasn't set.
+         *   Name of the account, ex. <i>john@doe.com</i>, or the value
+         *   <i>NULL</i> if the account's name wasn't previously set.
          */
-        public function getAccountName() : string|null
+        public function getName() : string|null
         {
             // Logic
             
-            return $this->accountName;
+            return $this->name;
         }
         
         /**
-         * Returns an account's secret.
+         * Returns the account's secret.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return object|null
-         *   Secret of an account, or value <i>NULL</i> if the account's
-         *   secret wasn't set.
+         *   Secret of the account, ex. <i>RMB4AMUMDHODBYNR</i>, or the value
+         *   <i>NULL</i> if the account's secret wasn't previously set.
          */
-        public function getAccountSecret() : Secret|null
+        public function getSecret() : Secret|null
         {
             // Logic
             
-            return $this->accountSecret;
+            return $this->secret;
         }
         
         /***************\
@@ -226,127 +178,71 @@
         \***************/
         
         /**
-         * Sets an account's ID.
+         * Sets the 2FA service name of the acocunt.
+         * 
+         * <strong>Note:</strong> Service name parameter is required.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $accountId
-         *   New account's ID.
-         * @return object
-         *   Reference to the object calling the method - current object.
-         */
-        public function setAccountId($accountId) : self
-        {
-            // Logic
-            
-            if ($this->accountId != null)
-            {
-                throw new \Exception("ID was already assigned.");
-            }
-            
-            $this->accountId = $accountId;
-            
-            return $this;
-        }
-        
-        /**
-         * Sets an account's manager.
-         * 
-         * <strong>Note:</strong> This method is called by the
-         * <i>AccountManager</i> object once the account is associated with
-         * it through one of the <i>set</i> or <i>add</i> methods.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $accountManager
-         *   New account's manager.
-         * @return object
-         *   Reference to the object calling the method - current object.
-         */
-        public function setAccountManager($accountManager) : self
-        {
-            // Logic
-            
-            if (!($accountManager instanceof AccountManager))
-            {
-                throw new \Exception("Invalid object used.");
-            }
-            
-            $this->accountManager = $accountManager;
-            
-            return $this;
-        }
-        
-        /**
-         * Sets an account's service name.
-         * 
-         * Note: Service name parameter is required, it must be set.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param string $serviceName
-         *   New account's service name.
+         *   New account's service name, ex. <i>Hosting ABC</i>.
          * @return object
          *   Reference to the object calling the method - current object.
          */
-        public function setServiceName($serviceName) : self
+        public function setService($service) : self
         {
             // Logic
             
-            $this->serviceName = $serviceName;
+            $this->service = $service;
             
             return $this;
         }
         
         /**
-         * Sets an account's name.
+         * Sets the account's name.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param string $accountName
-         *   New account's name.
+         *   New account's name, ex. <i>John Doe</i> or <i>john@doe.com</i>.
          * @return object
          *   Reference to the object calling the method - current object.
          */
-        public function setAccountName($accountName) : self
+        public function setName(string $name) : self
         {
             // Logic
             
-            $this->accountName = $accountName;
+            $this->name = $name;
             
             return $this;
         }
         
         /**
-         * Sets an account's secret.
+         * Sets the account's secret.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
+         * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @param mixed $accountSecret
-         *   New account's secret.
+         *   New account's secret, ex. <i>RMB4AMUMDHODBYNR</i>.
          * @return object
          *   Reference to the object calling the method - current object.
          */
-        public function setAccountSecret($accountSecret) : self
+        public function setSecret(Secret|string $secret) : self
         {
             // Logic
             
-            if (is_string($accountSecret))
+            if (is_string($secret))
             {
-                $accountSecret = new Secret($accountSecret);
+                $secret = new Secret($secret);
             }
             
-            $this->accountSecret = $accountSecret;
+            $this->secret = $secret;
             
             return $this;
         }

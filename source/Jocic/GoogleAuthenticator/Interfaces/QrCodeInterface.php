@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -31,50 +31,55 @@
     
     namespace Jocic\GoogleAuthenticator\Interfaces;
     
+    use Jocic\GoogleAuthenticator\Account;
+    use Jocic\GoogleAuthenticator\Encoder;
+    
     /**
-     * <i>FileSystemInterface</i> is an interface used to enforce
-     * implementation of core methods of the class <i>FileSystem</i>.
+     * <i>QrCodeInterface</i> is used to enforce implementation
+     * of core methods of the class <i>QrCode</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    interface FileSystemInterface
+    interface QrCodeInterface
     {
+        /***************\
+        |* GET METHODS *|
+        \***************/
+        
+        public function getSize() : int;
+        public function getDirectory() : string|null;
+        public function getFilename() : string|null;
+        public function getPath() : string|null;
+        public function getEncoder() : Encoder;
+        
+        /***************\
+        |* SET METHODS *|
+        \***************/
+        
+        public function setSize(int $size) : self;
+        public function setDirectory(string $directory) : self;
+        public function setFilename(string $filename) : self;
+        public function setEncoder(Encoder $encoder) : self;
+        
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        /**
-         * Loads contents from a desired file.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $fileLocation
-         *   File location that should be used for loading.
-         * @return string|null
-         *   Contents of a desired file, or value <i>NULL</i> if the
-         *   file couldn't be loaded.
-         */
-        public function load(string $fileLocation) : string|null;
+        public function generate(Account $account) : bool;
         
-        /**
-         * Saves contents to a desired file location.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $fileLocation
-         *   File location that should be used for saving.
-         * @param string $contents
-         *   Contents that should be saved to a desired file.
-         * @return bool
-         *   Value <i>TRUE</i> if data was saved, and vice versa.
-         */
-        public function save(string $fileLocation, string $contents) : bool;
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
+        
+        // CHECK METHODS GO HERE
+        
+        /*****************\
+        |* OTHER METHODS *|
+        \*****************/
+        
+        // OTHER METHODS GO HERE
     }
     
 ?>

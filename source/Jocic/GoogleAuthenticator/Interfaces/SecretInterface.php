@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2024                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -32,11 +32,11 @@
     namespace Jocic\GoogleAuthenticator\Interfaces;
     
     /**
-     * <i>SecretInterface</i> is an interface used to enforce implementation
+     * <i>SecretInterface</i> is used to enforce implementation
      * of core methods of the class <i>Secret</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2024 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
     interface SecretInterface
@@ -45,68 +45,24 @@
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Returns a value of the secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return string
-         *   Currently set value of the secret.
-         */
         public function getValue() : string;
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        /**
-         * Sets a value of the secret.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $secret
-         *   New value of the secret.
-         * @return object
-         *   Reference to the object calling the method - current object.
-         */
-        public function setValue(string $secret) : self;
+        public function setValue(string $value) : self;
         
         /****************\
         |* CORE METHODS *|
         \****************/
         
-        /**
-         * Generates a random secret that may be used for implementing MFA.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return string
-         *   Value of the secret - randomly-generated.
-         */
         public function generateValue() : string;
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        /**
-         * Checks if the provided secret is valid or not.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2024 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $secret
-         *   Secret that needs to be checked.
-         * @return bool
-         *   Value <i>TRUE</i> if secret is valid, and vice versa.
-         */
         public function isSecretValid(string $secret) : bool;
     }
     

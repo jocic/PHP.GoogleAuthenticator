@@ -2,7 +2,7 @@
     
     /*******************************************************************\
     |* Author: Djordje Jocic                                           *|
-    |* Year: 2018                                                      *|
+    |* Year: 2026                                                      *|
     |* License: MIT License (MIT)                                      *|
     |* =============================================================== *|
     |* Personal Website: http://www.djordjejocic.com/                  *|
@@ -29,61 +29,25 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator\Interfaces;
     
     /**
-     * <i>ValidatorInterface</i> class is an interface used to enforce
-     * implementation of core validator's methods.
+     * <i>ValidatorInterface</i> is used to enforce implementation
+     * of core methods of the class <i>Validator</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
-     * @copyright 2018 All Rights Reserved
+     * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    
     interface ValidatorInterface
     {
         /***************\
         |* GET METHODS *|
         \***************/
         
-        /**
-         * Returns previous code generated for the account.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $entity
-         *   Account or Secret that should be used for code generation.
-         */
-        
-        public function getPreviousCode($entity);
-        
-        /**
-         * Returns current code generated for the account.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $entity
-         *   Account or Secret that should be used for code generation.
-         */
-        
-        public function getCurrentCode($entity);
-        
-        /**
-         * Returns next code generated for the account.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param object $entity
-         *   Account or Secret that should be used for code generation.
-         */
-        
-        public function getNextCode($entity);
+        public function getPreviousCode(mixed $entity) : string;
+        public function getCurrentCode(mixed $entity) : string;
+        public function getNextCode(mixed $entity) : string;
         
         /***************\
         |* SET METHODS *|
@@ -101,20 +65,7 @@
         |* CHECK METHODS *|
         \*****************/
         
-        /**
-         * Checks if the provided code is valid for the given account.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2018 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param integer $code
-         *   Six-digit code that should be used for validation.
-         * @param object $entity
-         *   Account or Secret that should be used for code validation.
-         */
-        
-        public function isCodeValid($code, $entity);
+        public function isCodeValid(string $code, mixed $entity) : bool;
         
         /*****************\
         |* OTHER METHODS *|

@@ -2,7 +2,7 @@
 
 ###################################################################
 # Script Author: Djordje Jocic                                    #
-# Script Year: 2024                                               #
+# Script Year: 2026                                               #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -29,41 +29,18 @@
 # OTHER DEALINGS IN THE SOFTWARE.                                 #
 ###################################################################
 
-####################
-# System Variables #
-####################
+#########
+# Logic #
+#########
 
-kernel_name="$(uname -s)";
-kernel_version="$(uname -r)";
-architecture="$(uname -m)";
-hostname="$(uname -n)";
+printf "[+] System Details\n\n"
 
-#################
-# PHP Variables #
-#################
+uname -a
 
-php_command="$(command -v php)";
-php_version="$(php --version | sed -n 1p)";
+printf "\n[*] PHP Version\n\n"
 
-###########################
-# Step 1 - System Details #
-###########################
+php -v
 
-printf "[+] System Details\n\n";
+printf "\n[*] PHP Modules\n\n"
 
-printf "Kernel Name: %s\n" "$kernel_name";
-printf "Kernel Version: %s\n" "$kernel_version";
-printf "System Architecture: %s\n" "$architecture";
-printf "Hostname: %s\n" "$hostname";
-
-########################
-# Step 2 - PHP Details #
-########################
-
-printf "\n[+] PHP Details\n\n";
-
-printf "PHP Command: %s\n" "$php_command";
-
-if [ -n "$php_command" ]; then
-    printf "PHP Version: %s\n" "$php_version";
-fi
+php -m

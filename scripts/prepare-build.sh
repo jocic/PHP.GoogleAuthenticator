@@ -2,7 +2,7 @@
 
 ###################################################################
 # Script Author: Djordje Jocic                                    #
-# Script Year: 2024                                               #
+# Script Year: 2026                                               #
 # Script License: MIT License (MIT)                               #
 # =============================================================== #
 # Personal Website: http://www.djordjejocic.com/                  #
@@ -33,12 +33,12 @@
 # Core Variables #
 ##################
 
-source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)";
+source_dir="$(cd -- "$(dirname -- "$0")" && pwd -P)"
 
 #########
 # Logic #
 #########
 
-cd "$source_dir/../";
+cd "$source_dir/../"
 
-mkdir -p "./build/logs";
+mkdir -p "./build/logs"

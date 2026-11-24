@@ -14,8 +14,6 @@ Following specifications were referenced:
 *   [RFC 6238](other/specifications/rfc6238.txt) - TOTP: Time-Based One-Time Password Algorithm
 *   [RFC 6287](other/specifications/rfc6287.txt) - OCRA: OATH Challenge-Response Algorithm
 
-[![Buy Me Coffee](images/buy-me-coffee.png)](https://www.paypal.me/DjordjeJocic)
-
 ## Versioning Scheme
 
 I use a 3-digit [Semantic Versioning](https://semver.org/spec/v2.0.0.html) identifier, for example 1.0.2. These digits have the following meaning:
@@ -47,6 +45,10 @@ You only need to have PHP >=7.0 available on your system to use **Google Authent
 *   [Multibyte String](https://secure.php.net/manual/en/book.mbstring.php)
 *   [DOM](https://secure.php.net/manual/en/dom.setup.php)
 
+```bash
+apt-get install php-mbstring php-xml -y
+```
+
 ## Installation
 
 There's two ways you can add **Google Authenticator** library to your project:
@@ -55,7 +57,7 @@ There's two ways you can add **Google Authenticator** library to your project:
 *   Via Composer, by executing the command below
 
 ```bash
-composer require jocic/google-authenticator 1.0.0
+composer require jocic/google-authenticator 1.1.0
 ```
 
 ## Tests
@@ -82,6 +84,6 @@ bash ./scripts/composer.sh install
 
 ## Copyright & License
 
-Copyright (C) 2024 Đorđe Jocić
+Copyright (C) 2026 Đorđe Jocić
 
 Licensed under the MIT license.
