@@ -28,20 +28,20 @@ Complete documentation can be found by following the link above.
 
 Following examples should be more then enough to get you started. I tried my best to make them as simple as possible so that everyone, even junior developers, can successfully use them for implementing two-factor authentication.
 
+1.  [Installation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Installation)
 1.  [Creating a Secret](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-a-Secret)
-2.  [Secret Creation Methods](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Secret-Creation-Methods)
-3.  [Setting Existing Secrets](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Setting-Existing-Secrets)
-4.  [Creating an Account](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-an-Account)
-5.  [Account Management](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Account-Management)
-6.  [QR Codes](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/QR-Codes)
-7.  [Code Validation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Code-Validation)
+2.  [Creating an Account](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-an-Account)
+3.  [QR Codes](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/QR-Codes)
+4.  [Code Validation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Code-Validation)
+5.  [Tests](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Tests)
 
 For additional examples please review the official project's [wiki](https://github.com/jocic/PHP.GoogleAuthenticator/wiki).
 
 ## Requirements
 
-You only need to have PHP >=7.0 available on your system to use **Google Authenticator** in your application. However, for running unit tests, you need to have the following extensions installed:
+You need to have PHP >=8.2 available on your system to use **Google Authenticator** in your application.
 
+Additionally, you should have the following PHP extensions installed as well:
 *   [Multibyte String](https://secure.php.net/manual/en/book.mbstring.php)
 *   [DOM](https://secure.php.net/manual/en/dom.setup.php)
 
@@ -64,22 +64,24 @@ composer require jocic/google-authenticator 1.1.0
 
 Following unit tests are available:
 
-*   **Essentials** - Tests for library's essentials ex. Autoloader, Base 32 encoder, etc.
-*   **QR Generators** - Tests for available QR code generators in the library.
-*   **Elements** - Tests for library's core elements ex. Secret, Account, etc.
+*   Essentials
+*   Library
+*   Encoders
 
-You can execute them easily from the terminal like in the example below.
+Reference the examples below if you ever need to run them.
+
+### Installing Dependencies
+
+```bash
+bash ./scripts/composer.sh install
+```
+
+### Running Unit Tests
 
 ```bash
 bash ./scripts/phpunit.sh --testsuite essentials
 bash ./scripts/phpunit.sh --testsuite qr-generators
 bash ./scripts/phpunit.sh --testsuite elements
-```
-
-Please don’t forget to install necessary dependencies before attempting to do the God's work above. They may be important.
-
-```bash
-bash ./scripts/composer.sh install
 ```
 
 ## Copyright & License

@@ -55,7 +55,7 @@
          * @var    int
          * @access public
          */
-        const M_BASE = 0;
+        const METHOD_BASE = 0;
         
         /**
          * Method constant for generating secrets using the <i>numerical</i>
@@ -65,7 +65,7 @@
          * @var    int
          * @access public
          */
-        const M_NUMERICAL = 1;
+        const METHOD_NUMERICAL = 1;
         
         /**
          * Method constant for generating secrets using the <i>binary</i>
@@ -75,7 +75,7 @@
          * @var    int
          * @access public
          */
-        const M_BINARY = 2;
+        const METHOD_BINARY = 2;
         
         /******************\
         |* CORE VARIABLES *|
@@ -201,17 +201,17 @@
          * @return string
          *   Value of the secret - randomly-generated.
          */
-        public function generateValue(int $method = self::M_BASE) : string
+        public function generateValue(int $method = self::METHOD_BASE) : string
         {
             // Logic
             
             switch ($method)
             {
-                case self::M_BASE:
+                case self::METHOD_BASE:
                     return $this->__generateValue_BASE();
-                case self::M_NUMERICAL:
+                case self::METHOD_NUMERICAL:
                     return $this->__generateValue_NUMERICAL();
-                case self::M_BINARY:
+                case self::METHOD_BINARY:
                     return $this->__generateValue_BINARY();
                 default:
                     throw new \Exception("Invalid method selected.");

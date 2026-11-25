@@ -33,7 +33,7 @@
     
     use Jocic\GoogleAuthenticator\Secret;
     use Jocic\GoogleAuthenticator\Account;
-    use Jocic\GoogleAuthenticator\Encoderkjfdfdf;
+    use Jocic\GoogleAuthenticator\Encoder;
     use Jocic\GoogleAuthenticator\QrCode;
     
     use Jocic\GoogleAuthenticator\Encoders\Go;
@@ -74,7 +74,7 @@
             
             $encoder = new Go();
             
-            $encoder->setErrorCorrection(Go::ECC_LOW);
+            $encoder->setErrorCorrection(Encoder::ECC_LOW);
             
             /////////////////////////////
             
