@@ -4,7 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/jocic/google-authenticator/v/stable)](https://packagist.org/packages/jocic/google-authenticator)
 [![License](https://poser.pugx.org/jocic/google-authenticator/license)](https://packagist.org/packages/jocic/google-authenticator)
 
-Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App. It was written to simplify the usually complicated implementation process.
+Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App.
 
 ![Project Image](images/project-image-small.png)
 
@@ -26,7 +26,7 @@ Complete documentation can be found by following the link above.
 
 ## Examples
 
-Following examples should be more then enough to get you started. I tried my best to make them as simple as possible so that everyone, even junior developers, can successfully use them for implementing two-factor authentication.
+Following examples should be more then enough to get you started.
 
 1.  [Installation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Installation)
 1.  [Creating a Secret](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Creating-a-Secret)
@@ -35,7 +35,7 @@ Following examples should be more then enough to get you started. I tried my bes
 4.  [Code Validation](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Code-Validation)
 5.  [Tests](https://github.com/jocic/PHP.GoogleAuthenticator/wiki/Tests)
 
-For additional examples please review the official project's [wiki](https://github.com/jocic/PHP.GoogleAuthenticator/wiki).
+Additional examples can be found on the official project's [wiki](https://github.com/jocic/PHP.GoogleAuthenticator/wiki).
 
 ## Requirements
 
@@ -53,7 +53,7 @@ apt-get install php-mbstring php-xml -y
 
 There's two ways you can add **Google Authenticator** library to your project:
 
-*   Copying files from the "source" directory to your project and requiring the "Autoload.php" script (this includes doing the same for project's dependencies ex. Encoders)
+*   Copying files from the `source` directory to your project and requiring the `Autoload.php` script (this includes doing the same for project's dependencies ex. Encoders)
 *   Via Composer, by executing the command below
 
 ```bash
