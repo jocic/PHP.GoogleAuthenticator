@@ -57,7 +57,7 @@
         |* CORE METHODS *|
         \****************/
         
-        public function generateValue() : string;
+        public function reset(int $method) : self;
         
         /*****************\
         |* CHECK METHODS *|

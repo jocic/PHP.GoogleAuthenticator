@@ -186,6 +186,30 @@
         \****************/
         
         /**
+         * Resets the secret's value.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param integer $method
+         *   Method used for generating the secret. Default value
+         *   corresponds to the <i>M_BASE</i> constant.
+         * @return string
+         *   Value of the secret - randomly-generated.
+         */
+        public function reset(int $method = self::METHOD_BASE) : self
+        {
+            // Logic
+            
+            $value = $this->generateValue($method);
+            
+            $this->setValue($value);
+            
+            return $this;
+        }
+        
+        /**
          * Generates a random secret that may be used for implementing MFA.
          * 
          * <strong>Note:</string> Secrets are random 80-bit values
@@ -201,7 +225,7 @@
          * @return string
          *   Value of the secret - randomly-generated.
          */
-        public function generateValue(int $method = self::METHOD_BASE) : string
+        private function generateValue(int $method = self::METHOD_BASE) : string
         {
             // Logic
             
