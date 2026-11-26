@@ -48,17 +48,15 @@
         |* GET METHODS *|
         \***************/
         
-        public function getSize() : int;
         public function getDirectory() : string|null;
         public function getFilename() : string|null;
         public function getPath() : string|null;
-        public function getEncoder() : Encoder;
+        public function getEncoder() : Encoder|null;
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        public function setSize(int $size) : self;
         public function setDirectory(string $directory) : self;
         public function setFilename(string $filename) : self;
         public function setEncoder(Encoder $encoder) : self;
@@ -67,19 +65,13 @@
         |* CORE METHODS *|
         \****************/
         
-        public function generate(Account $account) : bool;
+        public function generate(Account $account, bool $force) : bool;
         
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
         // CHECK METHODS GO HERE
-        
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
-        
-        // OTHER METHODS GO HERE
     }
     
 ?>
