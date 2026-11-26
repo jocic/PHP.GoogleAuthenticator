@@ -171,9 +171,9 @@
         {
             // Logic
             
-            if (!$this->isSecretValid($value))
+            if (!$this->isValid($value))
             {
-                throw new \Exception("Invalid secret provided: \"$value\"");
+                throw new \Exception("Invalid secret provided: $value");
             }
             
             $this->value = $value;
@@ -260,7 +260,7 @@
          * @return bool
          *   Value <i>TRUE</i> if secret is valid, and vice versa.
          */
-        public function isSecretValid(string $secret) : bool
+        public function isValid(string $secret) : bool
         {
             // Core Variables
             
@@ -272,7 +272,7 @@
             
             // Step 1 - Check Length
             
-            if (count($characters) < 8)
+            if (count($characters) != 16)
             {
                 return false;
             }

@@ -4,7 +4,7 @@
 [![Latest Stable Version](https://poser.pugx.org/jocic/google-authenticator/v/stable)](https://packagist.org/packages/jocic/google-authenticator)
 [![License](https://poser.pugx.org/jocic/google-authenticator/license)](https://packagist.org/packages/jocic/google-authenticator)
 
-Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication by utilizing Google's Authenticator App.
+Google Authenticator is a mini PHP library for implementing Multi-Factor Authentication.
 
 ![Project Image](images/project-image-small.png)
 

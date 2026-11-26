@@ -62,17 +62,17 @@
             
             $secret = new Secret();
             
-            // Other Variables
-            
-            $testValues = [
-                "RMB4AMUMDHODBYNR",
-                "4JT4TVALIJOHCRZX",
-                "YPPMQXR6UGWBP3UI"
-            ];
-            
             // Step 1 - Test Valid Values
             
-            foreach ($testValues as $testValue)
+            $validValues = [
+                "RMB4AMUMDHODBYNR",
+                "4JT4TVALIJOHCRZX",
+                "YPPMQXR6UGWBP3UI",
+                "YHP4XAD5EVOK5VF3",
+                "VNZ6GL7HQA3XELVQ"
+            ];
+            
+            foreach ($validValues as $testValue)
             {
                 $secret->setValue($testValue);
                 
@@ -81,16 +81,27 @@
             
             // Step 2 - Test Invalid Value
             
-            try
+            $invalidValues = [
+                "RMB4AMUMDHODBNR",
+                "4JT4TVALIJOHCTRZX",
+                "YPPMQ#R6UGWBP3UI",
+                "YPPMQ#",
+                ""
+            ];
+            
+            foreach ($invalidValues as $testValue)
             {
-                $secret->setValue("#");
-                
-                $this->fail("Exception should've been thrown!");
-            }
-            catch (\Exception $e)
-            {
-                $this->assertEquals("Invalid secret provided: \"#\"",
-                    $e->getMessage());
+                try
+                {
+                    $secret->setValue($testValue);
+                    
+                    $this->fail("Exception should've been thrown!");
+                }
+                catch (\Exception $e)
+                {
+                    $this->assertEquals("Invalid secret provided: $testValue",
+                        $e->getMessage());
+                }
             }
         }
         
@@ -113,7 +124,7 @@
             
             $secret = new Secret();
             
-            // Other Variables
+            // Logic
             
             $testValues = [
                 "RMB4AMUMDHODBYNR" => true,
@@ -124,12 +135,10 @@
                 "YPPMQXR6UmWBP3UI" => false,
             ];
             
-            // Step 1 - Test Valid Values
-            
             foreach ($testValues as $testValue => $testResult)
             {
                 $this->assertSame($testResult,
-                    $secret->isSecretValid($testValue), $testValue);
+                    $secret->isValid($testValue), $testValue);
             }
         }
         
@@ -138,7 +147,7 @@
         \*******************/
         
         /**
-         * Tests <i>generate</i> method of the <i>Secret</i> class.
+         * Tests <i>reset</i> method of the <i>Secret</i> class.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
@@ -146,7 +155,7 @@
          * 
          * @return void
          */
-        public function testGenerateMethod() : void
+        public function testReset() : void
         {
             // Core Variables
             
@@ -154,40 +163,53 @@
             
             // Other Variables
             
-            $value = null;
+            $prev_value = null;
+            $curr_value = null;
             
             // Step 1 - Base Method
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(Secret::METHOD_BASE);
+                $prev_value = $secret->getValue();
                 
-                $this->assertSame(true, $secret->isSecretValid($value), $value);
+                $secret->reset(Secret::METHOD_BASE);
+                
+                $curr_value = $secret->getValue();
+                
+                $this->assertNotSame($prev_value, $curr_value);
             }
             
             // Step 2 - Numerical Method
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(Secret::METHOD_NUMERICAL);
+                $prev_value = $secret->getValue();
                 
-                $this->assertSame(true, $secret->isSecretValid($value), $value);
+                $secret->reset(Secret::METHOD_NUMERICAL);
+                
+                $curr_value = $secret->getValue();
+                
+                $this->assertNotSame($prev_value, $curr_value);
             }
             
             // Step 3 - Binary Method
             
             for ($i = 0; $i < 10; $i ++)
             {
-                $value = $secret->generateValue(Secret::METHOD_BINARY);
+                $prev_value = $secret->getValue();
                 
-                $this->assertSame(true, $secret->isSecretValid($value), $value);
+                $secret->reset(Secret::METHOD_BINARY);
+                
+                $curr_value = $secret->getValue();
+                
+                $this->assertNotSame($prev_value, $curr_value);
             }
             
             // Step 4 - Invalid Method
             
             try
             {
-                $secret->generateValue(1337);
+                $secret->reset(1337);
                 
                 $this->fail("Exception should've been thrown!");
             }
