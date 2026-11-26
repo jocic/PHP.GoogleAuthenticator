@@ -66,12 +66,6 @@
         \****************/
         
         public function generate(Account $account, bool $force) : bool;
-        
-        /*****************\
-        |* CHECK METHODS *|
-        \*****************/
-        
-        // CHECK METHODS GO HERE
     }
     
 ?>

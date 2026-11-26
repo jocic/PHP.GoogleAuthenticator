@@ -41,37 +41,11 @@
      */
     interface ValidatorInterface
     {
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        public function getPreviousCode(mixed $entity) : string;
-        public function getCurrentCode(mixed $entity) : string;
-        public function getNextCode(mixed $entity) : string;
-        
-        /***************\
-        |* SET METHODS *|
-        \***************/
-        
-        // SET METHODS GO HERE
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
-        
-        // CORE METHODS GO HERE
-        
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
-        public function isCodeValid(string $code, mixed $entity) : bool;
-        
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
-        
-        // OTHER METHODS GO HERE
+        public function isValid(string $code, mixed $entity) : bool;
     }
     
 ?>

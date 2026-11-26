@@ -63,7 +63,7 @@
         |* CHECK METHODS *|
         \*****************/
         
-        public function isSecretValid(string $secret) : bool;
+        public function isValid(string $secret) : bool;
     }
     
 ?>
