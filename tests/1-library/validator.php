@@ -46,82 +46,12 @@
      */
     class TestValidator extends TestCase
     {
-        /*********************\
-        |* GET & SET METHODS *|
-        \*********************/
-        
-        /**
-         * Tests <i>getPreviousCode</i> method.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        public function testPreviousCode()
-        {
-            // Core Variables
-            
-            $validator = new Validator();
-            $account   = new Account("A", "B", "RMB4AMUMDHODBYNR");
-            
-            // Logic
-            
-            $this->assertSame($this->generateCode("RMB4AMUMDHODBYNR", -1),
-                $validator->getPreviousCode($account));
-        }
-        
-        /**
-         * Tests <i>getCurrentCode</i> method.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        public function testCurrentCode()
-        {
-            // Core Variables
-            
-            $validator = new Validator();
-            $account   = new Account("A", "B", "RMB4AMUMDHODBYNR");
-            
-            // Logic
-            
-            $this->assertSame($this->generateCode("RMB4AMUMDHODBYNR", 0),
-                $validator->getCurrentCode($account));
-        }
-        
-        /**
-         * Tests <i>getNextCode</i> method.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @return void
-         */
-        public function testNextCode()
-        {
-            // Core Variables
-            
-            $validator = new Validator();
-            $account   = new Account("A", "B", "RMB4AMUMDHODBYNR");
-            
-            // Logic
-            
-            $this->assertSame($this->generateCode("RMB4AMUMDHODBYNR", 1),
-                $validator->getNextCode($account));
-        }
-        
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
         /**
-         * Tests <i>isCodeValid</i> method.
+         * Tests <i>isValid</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
@@ -129,7 +59,7 @@
          * 
          * @return void
          */
-        public function testIsCodeValidMethod()
+        public function testValidation()
         {
             // Core Variables
             
@@ -142,31 +72,37 @@
             
             // Logic
             
-            $this->assertTrue($validator->isCodeValid($currentCode, $account));
+            $testCodes = [
+                $this->generateCode("RMB4AMUMDHODBYNR", -5) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR", -4) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR", -3) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR", -2) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR", -1) => true,
+                $this->generateCode("RMB4AMUMDHODBYNR",  0) => true,
+                $this->generateCode("RMB4AMUMDHODBYNR",  1) => true,
+                $this->generateCode("RMB4AMUMDHODBYNR",  2) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR",  3) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR",  4) => false,
+                $this->generateCode("RMB4AMUMDHODBYNR",  5) => false
+            ];
+            
+            foreach ($testCodes as $testCode => $testResult)
+            {
+                $this->assertEquals($testResult,
+                    $validator->isValid($testCode, $account));
+            }
         }
-        
-        /*******************\
-        |* PRIMARY METHODS *|
-        \*******************/
-        
-        // PRIMARY METHODS GO HERE
-        
-        /*********************\
-        |* SECONDARY METHODS *|
-        \*********************/
-        
-        // SECONDARY METHODS GO HERE
         
         /*****************\
         |* OTHER METHODS *|
         \*****************/
         
         /**
-         * Returns previous code generated for the provided encoded secret.
+         * Returns a valid code for the selected time period.
          * 
-         * Note: This method was created by referencing existing implementation,
-         * <i>PHPGangsta/GoogleAuthenticator</i> to be exact, and it is assumed
-         * that the calculation is correct.
+         * <strong>Note:</strong> This method was created by referencing the
+         * <i>PHPGangsta/GoogleAuthenticator</i> implementation, and it is
+         * assumed that the calculation is correct.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved

@@ -47,6 +47,40 @@
         \***************/
         
         /**
+         * Helper method that extracts the secret from the provided object.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param mixed $entity
+         *   Account or Secret that should be used for code generation.
+         * @return string
+         *   Value of the secret.
+         */
+        public static function getSecret(mixed $entity) : string
+        {
+            // Logic
+            
+            $secret = "";
+            
+            if ($entity instanceof Account)
+            {
+                $secret = $entity->getSecret()->getValue();
+            }
+            else if ($entity instanceof Secret)
+            {
+                $secret = $entity->getValue();
+            }
+            else if (is_string($entity))
+            {
+                $secret = $entity;
+            }
+            
+            return $secret;
+        }
+        
+        /**
          * Returns the OTP URI derived from the account-related details.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>

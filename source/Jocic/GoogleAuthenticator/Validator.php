@@ -31,6 +31,7 @@
     
     namespace Jocic\GoogleAuthenticator;
     
+    use Jocic\GoogleAuthenticator\Util;
     use Jocic\Encoders\Base\Base32;
     
     /**
@@ -43,141 +44,16 @@
      */
     class Validator implements Interfaces\ValidatorInterface
     {
-        /******************\
-        |* CORE CONSTANTS *|
-        \******************/
-        
-        // CORE CONSTANTS GO HERE
-        
-        /******************\
-        |* CORE VARIABLES *|
-        \******************/
-        
-        // CORE VARIABLES GO HERE
-        
-        /*******************\
-        |* MAGIC FUNCTIONS *|
-        \*******************/
-        
-        // MAGIC FUNCTIONS GO HERE
-        
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        /**
-         * Returns the OTP valid in the previous cycle.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param mixed $entity
-         *   Value that should be used for code generation.
-         * @return string
-         *   6-digit code that was valid in the previous cycle.
-         */
-        public function getPreviousCode(mixed $entity) : string
-        {
-            // Logic
-            
-            $secret = $this->getSecret($entity);
-            
-            return $this->generateCode($secret, -1);
-        }
-        
-        /**
-         * Returns the OTP valid in the current cycle.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param mixed $entity
-         *   Account or Secret that should be used for code generation.
-         * @return string
-         *   6-digit code that is valid in the current cycle.
-         */
-        public function getCurrentCode(mixed $entity) : string
-        {
-            // Logic
-            
-            $secret = $this->getSecret($entity);
-            
-            return $this->generateCode($secret, 0);
-        }
-        
-        /**
-         * Returns the OTP valid in the next cycle.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param mixed $entity
-         *   Account or Secret that should be used for code generation.
-         * @return string
-         *   6-digit code that is going to be valid in the next cycle.
-         */
-        public function getNextCode(mixed $entity) : string
-        {
-            // Logic
-            
-            $secret = $this->getSecret($entity);
-            
-            return $this->generateCode($secret, 1);
-        }
-        
-        /**
-         * Helper method that extracts the secret from the provided object.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param mixed $entity
-         *   Account or Secret that should be used for code generation.
-         * @return string
-         *   Value of the secret.
-         */
-        private function getSecret(mixed $entity) : string {
-            
-            $secret = "";
-            
-            if ($entity instanceof Account)
-            {
-                $secret = $entity->getSecret()->getValue();
-            }
-            else if ($entity instanceof Secret)
-            {
-                $secret = $entity->getValue();
-            }
-            else if (is_string($entity))
-            {
-                $secret = $entity;
-            }
-            
-            return $secret;
-        }
-        
-        /***************\
-        |* SET METHODS *|
-        \***************/
-        
-        // SET METHODS GO HERE
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
-        
-        // CORE METHODS GO HERE
-        
         /*****************\
         |* CHECK METHODS *|
         \*****************/
         
         /**
          * Checks if the provided one-time password is valid or not.
+         * 
+         * Valid one-time-passwords are generated for the previous, current,
+         * and the following time cycles, then compared to the provided one. If
+         * there is a match then the code is considered to be valid.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
@@ -190,13 +66,19 @@
          * @return bool
          *   Value <i>TRUE</i> if the provide code is valid, and vice versa.
          */
-        public function isCodeValid(string $code, mixed $entity) : bool
+        public function isValid(string $code, mixed $entity) : bool
         {
             // Logic
             
-            return (   $this->getPreviousCode($entity) == $code
-                    || $this->getCurrentCode($entity) == $code
-                    || $this->getNextCode($entity) == $code);
+            $secret = Util::getSecret($entity);
+            
+            $code_tp = $this->generateCode($secret, -1);
+            $code_tc = $this->generateCode($secret,  0);
+            $code_tn = $this->generateCode($secret,  1);
+            
+            return (   $code_tp == $code
+                    || $code_tc == $code
+                    || $code_tn == $code);
         }
         
         /*****************\
@@ -252,7 +134,7 @@
          * @return string
          *   Calculated time-based password.
          */
-        public function calculateTimeBasedPassword($secret, $timeFactor)
+        private function calculateTimeBasedPassword($secret, $timeFactor)
         {
             // Logic
             
@@ -274,7 +156,7 @@
          * @return string
          *   Calculated 6-digit time code.
          */
-        public function calculateTimeCode($timePassword)
+        private function calculateTimeCode($timePassword)
         {
             // Core Variables
             

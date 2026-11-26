@@ -110,7 +110,7 @@
         \*****************/
         
         /**
-         * Tests secret validation.
+         * Tests <i>isValid</i> method.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
