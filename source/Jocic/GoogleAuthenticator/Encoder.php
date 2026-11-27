@@ -117,6 +117,14 @@
          */
         const FORMAT_SVG = 3;
         
+        /**
+         * Constant used for denoting encoder's file format - EPS.
+         * 
+         * @var    int
+         * @access public
+         */
+        const FORMAT_EPS = 4;
+        
         /******************\
         |* CORE VARIABLES *|
         \******************/
@@ -298,7 +306,7 @@
         {
             // Logic
             
-            if ($size <= 0)
+            if ($size < 10 || $size > 1000)
             {
                 throw new \Exception("Invalid size provided.");
             }

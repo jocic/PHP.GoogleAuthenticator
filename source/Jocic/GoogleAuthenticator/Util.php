@@ -148,6 +148,27 @@
             return "";
         }
         
+        /*****************\
+        |* CHECK METHODS *|
+        \*****************/
+        
+        /**
+         * Checks if the hexadecimal representation of an RGB color is valid.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $color
+         *   Hexadecimal color, e.g. <i>#FFFF00</i>.
+         * @return bool
+         *   Value <i>TRUE</i> if the color is valid, and vice versa.
+         */
+        public static function isColorValid(string $color) : bool
+        {
+            return preg_match("/^#[0-9a-fA-F]{6}$/", trim($color));
+        }
+        
         /****************\
         |* CORE METHODS *|
         \****************/

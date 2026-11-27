@@ -250,16 +250,19 @@
             
             $encoder = new Go();
             
-            $encoder->setSize(60);
+            $encoder->setSize(200);
+            $encoder->setMargin(5);
+            $encoder->setBackgroundColor("#ffffff");
+            $encoder->setForegroundColor("#000000");
             $encoder->setErrorCorrection(Encoder::ECC_LOW);
-            $encoder->setFormat(Encoder::FORMAT_JPG);
+            $encoder->setFormat(Encoder::FORMAT_PNG);
             
             /////////////////////////////
             
             $qrCode = new QrCode();
             
             $qrCode->setDirectory($temp_dir);
-            $qrCode->setFilename("test.jpg");
+            $qrCode->setFilename("test.png");
             $qrCode->setEncoder($encoder);
             
             /////////////////////////////

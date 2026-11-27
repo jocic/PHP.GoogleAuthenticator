@@ -32,6 +32,8 @@
     namespace Jocic\GoogleAuthenticator\Encoders;
     
     use Jocic\GoogleAuthenticator\Encoder;
+    use Jocic\GoogleAuthenticator\Http;
+    use Jocic\GoogleAuthenticator\Util;
     
     /**
      * <i>Go</i> class is used for generating QR codes using pubilcly
@@ -53,19 +55,124 @@
         |* CORE VARIABLES *|
         \******************/
         
-        // CORE VARIAVLES GO HERE
+        private string $ecc_alt = 'L';
+        
+        private string $format_alt = 'png';
+        
+        private int $margin = 10;
+        
+        private string $bg_color = "255-255-255";
+        
+        private string $fg_color = "0-0-0";
+        
+        public function __construct()
+        {
+            $this->setErrorCorrection($this->ecc);
+            $this->setFormat($this->format);
+        }
         
         /***************\
         |* GET METHODS *|
         \***************/
         
-        // GET METHODS GO HERE
+        public function getMargin() : int
+        {
+            return $this->margin;
+        }
+        
+        public function getBackgroundColor() : string
+        {
+            return $this->bg_color;
+        }
+        
+        public function getForegroundColor() : string
+        {
+            return $this->fg_color;
+        }
         
         /***************\
         |* SET METHODS *|
         \***************/
         
-        // SET METHODS GO HERE
+        public function setErrorCorrection(int $ecc) : self
+        {
+            switch ($ecc)
+            {
+                case Go::ECC_LOW:
+                    $this->ecc_alt = "L";
+                    break;
+                case Go::ECC_MEDIUM:
+                    $this->ecc_alt = "M";
+                    break;
+                case Go::ECC_HIGH:
+                    $this->ecc_alt = "H";
+                    break;
+                default:
+                    throw new \Exception("Unsupported ECC.");
+            }
+            
+            return parent::setErrorCorrection($ecc);
+        }
+        
+        public function setFormat(int $format) : self
+        {
+            switch ($format)
+            {
+                case Go::FORMAT_PNG:
+                    $this->format_alt = "png";
+                    break;
+                case Go::FORMAT_JPG:
+                    $this->format_alt = "jpg";
+                    break;
+                case Go::FORMAT_GIF:
+                    $this->format_alt = "gif";
+                    break;
+                case Go::FORMAT_SVG:
+                    $this->format_alt = "svg";
+                case Go::FORMAT_EPS:
+                    $this->format_alt = "eps";
+                    break;
+                default:
+                    throw new \Exception("Unsupported format.");
+            }
+            
+            return parent::setFormat($format);
+        }
+        
+        public function setMargin(int $margin) : self
+        {
+            $this->margin = $margin;
+            
+            return $this;
+        }
+        
+        public function setBackgroundColor(string $color) : self
+        {
+            if (!Util::isColorValid($color))
+            {
+                throw new \Exception("Invalid color provided.");
+            }
+            
+            $this->bg_color = hexdec($color[1] . $color[2]) . "-" .
+                hexdec($color[3] . $color[4]) . "-" .
+                hexdec($color[5] . $color[6]);
+            
+            return $this;
+        }
+        
+        public function setForegroundColor(string $color) : self
+        {
+            if (!Util::isColorValid($color))
+            {
+                throw new \Exception("Invalid color provided.");
+            }
+            
+            $this->fg_color = hexdec($color[1] . $color[2]) . "-" .
+                hexdec($color[3] . $color[4]) . "-" .
+                hexdec($color[5] . $color[6]);
+            
+            return $this;
+        }
         
         /****************\
         |* CORE METHODS *|
@@ -73,55 +180,23 @@
         
         public function process() : bool
         {
-            // Core Variables
-            
-            $ecc_values    = [ "L", "M", "H" ];
-            $format_values = [ "png", "jpg", "gif" ];
-            
-            // Step 1 - Prepare Request
+            // Step 1 - Prepare Parameters
             
             $params = [
-                'size'   => $this->size . 'x' . $this->size,
-                'data'   => $this->data,
-                'ecc'    => $ecc_values[$this->ecc],
-                'format' => $format_values[$this->format]
+                'size'    => $this->size . 'x' . $this->size,
+                'data'    => $this->data,
+                'margin'  => $this->margin,
+                'color'   => $this->fg_color,
+                'bgcolor' => $this->bg_color,
+                'ecc'     => $this->ecc_alt,
+                'format'  => $this->format_alt
             ];
-            
-            $url = self::API_ENDPOINT . '?' .
-                http_build_query($params, '', '&', PHP_QUERY_RFC3986);
-            
-            $ch = curl_init($url);
-            
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_CONNECTTIMEOUT => 5,
-                CURLOPT_TIMEOUT        => 10,
-                CURLOPT_HTTPHEADER     => [
-                    'Accept: text/html',
-                ],
-            ]);
             
             // Step 2 - Send Request
             
-            $response = curl_exec($ch);
+            $response = Http::get(self::API_ENDPOINT, $params);
             
-            if ($response === false)
-            {
-                $error = curl_error($ch);
-                
-                curl_close($ch);
-                
-                return false;
-            }
-            
-            // Step 3 - Handle Request
-            
-            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            
-            curl_close($ch);
-            
-            if ($status < 200 || $status >= 300)
+            if ($response == null)
             {
                 return false;
             }
@@ -130,18 +205,6 @@
             
             return true;
         }
-        
-        /*****************\
-        |* CHECK METHODS *|
-        \*****************/
-        
-        // CHECK METHODS GO HERE
-        
-        /*****************\
-        |* OTHER METHODS *|
-        \*****************/
-        
-        // OTHER METHODS GO HERE
     }
     
 ?>
