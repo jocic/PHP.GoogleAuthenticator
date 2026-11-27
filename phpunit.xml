@@ -8,6 +8,7 @@
             <file>tests/1-library/secret.php</file>
             <file>tests/1-library/account.php</file>
             <file>tests/1-library/validator.php</file>
+            <file>tests/1-library/qr.php</file>
         </testsuite>
         <testsuite name="encoders">
             

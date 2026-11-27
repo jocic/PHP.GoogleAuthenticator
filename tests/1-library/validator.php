@@ -125,7 +125,8 @@
             // Primary Algorithm Variables
             
             $timeSlice  = floor(time() / 30) + $offset;
-            $timePacked = (chr(0) . chr(0) . chr(0) . chr(0) . pack("N*", $timeSlice));
+            $timePacked = (chr(0) . chr(0) . chr(0) .
+                chr(0) . pack("N*", $timeSlice));
             $timeHmac   = hash_hmac("sha1", $timePacked, $binarySecret, true);
             
             // Secondary Algorithm Variables
