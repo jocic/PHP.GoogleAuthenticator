@@ -102,6 +102,7 @@
          */
         public static function load(string $path) : string|bool
         {
+            $contents  = false;
             $bytesRead = 0;
             
             try

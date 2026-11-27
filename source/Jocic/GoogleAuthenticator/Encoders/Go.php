@@ -49,32 +49,88 @@
         |* CORE CONSTANTS *|
         \******************/
         
-        const API_ENDPOINT = "http://api.qrserver.com/v1/create-qr-code";
+        /**
+         * API endpoint used for generating QR Codes.
+         * 
+         * @var    int
+         * @access public
+         */
+        const API_ENDPOINT = "https://api.qrserver.com/v1/create-qr-code";
         
         /******************\
         |* CORE VARIABLES *|
         \******************/
         
+        /**
+         * Translated and API-compliant <i>ECC</i> value.
+         * 
+         * @var    string
+         * @access protected
+         */
         private string $_ecc = 'L';
         
+        /**
+         * Translated and API-compliant <i>Format</i> value.
+         * 
+         * @var    string
+         * @access protected
+         */
         private string $_format = 'png';
         
+        /**
+         * Translated and API-compliant <i>Background Color</i> value.
+         * 
+         * @var    string
+         * @access protected
+         */
         private string $_bgColor = "255-255-255";
         
+        /**
+         * Translated and API-compliant <i>Foreground Color</i> value.
+         * 
+         * @var    string
+         * @access protected
+         */
         private string $_fgColor = "0-0-0";
         
+        /**
+         * Generic PHP constructor for the class <i>Go</i>.
+         * 
+         * It automatically translates any presets into their
+         * API-compliant alternatives.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return void
+         */
         public function __construct()
         {
             $this->setErrorCorrection($this->ecc);
             $this->setFormat($this->format);
             $this->setBackgroundColor($this->bgColor);
-            $this->setBackgroundColor($this->fgColor);
+            $this->setForegroundColor($this->fgColor);
         }
         
         /***************\
         |* SET METHODS *|
         \***************/
         
+        /**
+         * Sets the Error-Correction Code applied during the encoding.
+         * 
+         * <strong>Note:</strong> Overriden function.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param int $ecc
+         *   Error-Correction Code that should be applied during the encoding.
+         * @return object
+         *   Reference to the object calling the method - current object.
+         */
         public function setErrorCorrection(int $ecc) : self
         {
             switch ($ecc)
@@ -95,6 +151,20 @@
             return parent::setErrorCorrection($ecc);
         }
         
+        /**
+         * Sets the file format in which the QR Code should be generated.
+         * 
+         * <strong>Note:</strong> Overriden function.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param int $format
+         *   File format in which the QR Code should be generated.
+         * @return object
+         *   Reference to the object calling the method - current object.
+         */
         public function setFormat(int $format) : self
         {
             switch ($format)
@@ -121,6 +191,20 @@
             return parent::setFormat($format);
         }
         
+        /**
+         * Sets the background color of the generated QR Code.
+         * 
+         * <strong>Note:</strong> Overriden function.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $color
+         *   Background color of the generated QR Code.
+         * @return object
+         *   Reference to the object calling the method - current object.
+         */
         public function setBackgroundColor(string $color) : self
         {
             if (!Util::isColorValid($color))
@@ -135,6 +219,20 @@
             return parent::setBackgroundColor($color);
         }
         
+        /**
+         * Sets the foreground color of the generated QR Code.
+         * 
+         * <strong>Note:</strong> Overriden function.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $color
+         *   Background color of the generated QR Code.
+         * @return object
+         *   Reference to the object calling the method - current object.
+         */
         public function setForegroundColor(string $color) : self
         {
             if (!Util::isColorValid($color))
@@ -153,18 +251,31 @@
         |* CORE METHODS *|
         \****************/
         
+        /**
+         * Encodes specified data within a QR Code using the publicly
+         * available <i>GO QR</i> API.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $data
+         *   Data that should be encoded within the generated QR Code.
+         * @return bool
+         *   Value <i>TRUE</i> if QR Code was generated, and vice versa.
+         */
         public function process() : bool
         {
             // Step 1 - Prepare Parameters
             
             $params = [
-                'size'    => $this->size . 'x' . $this->size,
-                'data'    => $this->data,
-                'margin'  => $this->margin,
-                'color'   => $this->_fgColor,
-                'bgcolor' => $this->_bgColor,
-                'ecc'     => $this->_ecc,
-                'format'  => $this->_format
+                "size"    => $this->size . "x" . $this->size,
+                "data"    => $this->data,
+                "margin"  => $this->margin,
+                "color"   => $this->_fgColor,
+                "bgcolor" => $this->_bgColor,
+                "ecc"     => $this->_ecc,
+                "format"  => $this->_format
             ];
             
             // Step 2 - Send Request

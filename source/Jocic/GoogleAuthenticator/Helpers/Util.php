@@ -76,6 +76,10 @@
             {
                 $secret = $entity;
             }
+            else
+            {
+                throw new \Exception("Secret couldn't be extracted.");
+            }
             
             return $secret;
         }
@@ -98,12 +102,12 @@
             $name    = $account->getName();
             $secret  = $account->getSecret()->getValue();
             
-            if (strlen($service) == 0)
+            if (empty($service))
             {
                 $service = "Default Service";
             }
             
-            if (strlen($name) == 0)
+            if (empty($name))
             {
                 $name = "N/A";
             }

@@ -427,15 +427,17 @@
         }
         
         /**
-         * Returns the margin between the edges of the image and the
+         * Sets the margin between the edges of the image and the
          * QR Code itself. This value represents the margin in pixel.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @return int
+         * @param int $margin
          *   Margin between the edges of the image and the QR Code itself.
+         * @return object
+         *   Reference to the object calling the method - current object.
          */
         public function setMargin(int $margin) : self
         {
@@ -450,14 +452,16 @@
         }
         
         /**
-         * Returns the background color of the generated QR Code.
+         * Sets the background color of the generated QR Code.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @return string
+         * @param string $color
          *   Background color of the generated QR Code.
+         * @return object
+         *   Reference to the object calling the method - current object.
          */
         public function setBackgroundColor(string $color) : self
         {
@@ -472,14 +476,16 @@
         }
         
         /**
-         * Returns the foreground color of the generated QR Code.
+         * Sets the foreground color of the generated QR Code.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @return string
-         *   Foreground color of the generated QR Code.
+         * @param string $color
+         *   Background color of the generated QR Code.
+         * @return object
+         *   Reference to the object calling the method - current object.
          */
         public function setForegroundColor(string $color) : self
         {
