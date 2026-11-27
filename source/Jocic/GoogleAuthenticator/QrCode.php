@@ -197,6 +197,8 @@
         {
             // Logic
             
+            $directory = realpath(trim($directory));
+            
             if (!is_dir($directory))
             {
                 throw new \Exception("Invalid directory provided.");
@@ -226,6 +228,8 @@
         public function setFilename(string $filename) : self
         {
             // Logic
+            
+            $filename = basename(trim($filename));
             
             if (strlen($filename) == 0)
             {
@@ -310,7 +314,8 @@
             
             // Step 2 - Generate QR Code
             
-            if (file_exists($this->path) && !$force) {
+            if (file_exists($this->path) && !$force)
+            {
                 return true;
             }
             
@@ -332,8 +337,8 @@
         \*****************/
         
         /**
-         * Helper method that resolves a potentially relative directory path
-         * of the QR Code that should be generated.
+         * Helper method that resolves a full path for the QR Code
+         * that should be generated.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
@@ -346,8 +351,17 @@
         {
             // Logic
             
-            $this->path = realpath($this->directory) . DIRECTORY_SEPARATOR .
-                $this->filename;
+            $separator = DIRECTORY_SEPARATOR;
+            
+            if ($this->directory == DIRECTORY_SEPARATOR)
+            {
+                $separator = "";
+            }
+            
+            $this->path = join($separator, [
+                $this->directory,
+                $this->filename
+            ]);
             
             return $this;
         }

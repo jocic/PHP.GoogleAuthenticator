@@ -57,6 +57,8 @@
         \***************/
         
         public function setSize(int $size) : self;
+        public function setErrorCorrection(int $ecc) : self;
+        public function setFormat(int $format) : self;
         public function setData(string $data) : self;
         
         /****************\

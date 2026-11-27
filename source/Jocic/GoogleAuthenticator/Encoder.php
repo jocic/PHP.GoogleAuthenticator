@@ -324,7 +324,9 @@
         {
             // Logic
             
-            if (!in_array($ecc, [ self::ECC_LOW, self::ECC_MEDIUM, self::ECC_HIGH ])) {
+            if (!in_array($ecc, [ self::ECC_LOW,
+                self::ECC_MEDIUM, self::ECC_HIGH ]))
+            {
                 throw new \Exception("invalid ECC value provided.");
             }
             
@@ -349,14 +351,15 @@
         {
             // Logic
             
-            if (!in_array($format, [ FORMAT_PNG, FORMAT_JPG, FORMAT_GIF ]))
+            if (!in_array($format, [ self::FORMAT_PNG, self::FORMAT_JPG,
+                self::FORMAT_GIF, self::FORMAT_SVG ]))
             {
                 throw new \Exception("invalid format value provided.");
             }
             
             $this->format = $format;
             
-            return $self;
+            return $this;
         }
         
         /**
