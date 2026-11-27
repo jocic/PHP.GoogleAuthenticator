@@ -32,8 +32,8 @@
     namespace Jocic\GoogleAuthenticator\Encoders;
     
     use Jocic\GoogleAuthenticator\Encoder;
-    use Jocic\GoogleAuthenticator\Http;
-    use Jocic\GoogleAuthenticator\Util;
+    use Jocic\GoogleAuthenticator\Helpers\Http;
+    use Jocic\GoogleAuthenticator\Helpers\Util;
     
     /**
      * <i>Go</i> class is used for generating QR codes using pubilcly
@@ -55,39 +55,20 @@
         |* CORE VARIABLES *|
         \******************/
         
-        private string $ecc_alt = 'L';
+        private string $_ecc = 'L';
         
-        private string $format_alt = 'png';
+        private string $_format = 'png';
         
-        private int $margin = 10;
+        private string $_bgColor = "255-255-255";
         
-        private string $bg_color = "255-255-255";
-        
-        private string $fg_color = "0-0-0";
+        private string $_fgColor = "0-0-0";
         
         public function __construct()
         {
             $this->setErrorCorrection($this->ecc);
             $this->setFormat($this->format);
-        }
-        
-        /***************\
-        |* GET METHODS *|
-        \***************/
-        
-        public function getMargin() : int
-        {
-            return $this->margin;
-        }
-        
-        public function getBackgroundColor() : string
-        {
-            return $this->bg_color;
-        }
-        
-        public function getForegroundColor() : string
-        {
-            return $this->fg_color;
+            $this->setBackgroundColor($this->bgColor);
+            $this->setBackgroundColor($this->fgColor);
         }
         
         /***************\
@@ -99,13 +80,13 @@
             switch ($ecc)
             {
                 case Go::ECC_LOW:
-                    $this->ecc_alt = "L";
+                    $this->_ecc = "L";
                     break;
                 case Go::ECC_MEDIUM:
-                    $this->ecc_alt = "M";
+                    $this->_ecc = "M";
                     break;
                 case Go::ECC_HIGH:
-                    $this->ecc_alt = "H";
+                    $this->_ecc = "H";
                     break;
                 default:
                     throw new \Exception("Unsupported ECC.");
@@ -119,31 +100,25 @@
             switch ($format)
             {
                 case Go::FORMAT_PNG:
-                    $this->format_alt = "png";
+                    $this->_format = "png";
                     break;
                 case Go::FORMAT_JPG:
-                    $this->format_alt = "jpg";
+                    $this->_format = "jpg";
                     break;
                 case Go::FORMAT_GIF:
-                    $this->format_alt = "gif";
+                    $this->_format = "gif";
                     break;
                 case Go::FORMAT_SVG:
-                    $this->format_alt = "svg";
+                    $this->_format = "svg";
+                    break;
                 case Go::FORMAT_EPS:
-                    $this->format_alt = "eps";
+                    $this->_format = "eps";
                     break;
                 default:
                     throw new \Exception("Unsupported format.");
             }
             
             return parent::setFormat($format);
-        }
-        
-        public function setMargin(int $margin) : self
-        {
-            $this->margin = $margin;
-            
-            return $this;
         }
         
         public function setBackgroundColor(string $color) : self
@@ -153,11 +128,11 @@
                 throw new \Exception("Invalid color provided.");
             }
             
-            $this->bg_color = hexdec($color[1] . $color[2]) . "-" .
+            $this->_bgColor = hexdec($color[1] . $color[2]) . "-" .
                 hexdec($color[3] . $color[4]) . "-" .
                 hexdec($color[5] . $color[6]);
             
-            return $this;
+            return parent::setBackgroundColor($color);
         }
         
         public function setForegroundColor(string $color) : self
@@ -167,11 +142,11 @@
                 throw new \Exception("Invalid color provided.");
             }
             
-            $this->fg_color = hexdec($color[1] . $color[2]) . "-" .
+            $this->_fgColor = hexdec($color[1] . $color[2]) . "-" .
                 hexdec($color[3] . $color[4]) . "-" .
                 hexdec($color[5] . $color[6]);
             
-            return $this;
+            return parent::setForegroundColor($color);
         }
         
         /****************\
@@ -186,10 +161,10 @@
                 'size'    => $this->size . 'x' . $this->size,
                 'data'    => $this->data,
                 'margin'  => $this->margin,
-                'color'   => $this->fg_color,
-                'bgcolor' => $this->bg_color,
-                'ecc'     => $this->ecc_alt,
-                'format'  => $this->format_alt
+                'color'   => $this->_fgColor,
+                'bgcolor' => $this->_bgColor,
+                'ecc'     => $this->_ecc,
+                'format'  => $this->_format
             ];
             
             // Step 2 - Send Request

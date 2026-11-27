@@ -118,8 +118,6 @@
          */
         public function __construct(string|null $value = null)
         {
-            // Logic
-            
             $this->encoder = new Base32();
             
             if ($value == null)
@@ -146,8 +144,6 @@
          */
         public function getValue() : string
         {
-            // Logic
-            
             return $this->value;
         }
         
@@ -169,8 +165,6 @@
          */
         public function setValue(string $value) : self
         {
-            // Logic
-            
             if (!$this->isValid($value))
             {
                 throw new \Exception("Invalid secret provided: $value");
@@ -200,8 +194,6 @@
          */
         public function reset(int $method = self::METHOD_BASE) : self
         {
-            // Logic
-            
             $value = $this->generateValue($method);
             
             $this->setValue($value);
@@ -227,8 +219,6 @@
          */
         private function generateValue(int $method = self::METHOD_BASE) : string
         {
-            // Logic
-            
             switch ($method)
             {
                 case self::METHOD_BASE:
@@ -262,15 +252,9 @@
          */
         public function isValid(string $secret) : bool
         {
-            // Core Variables
-            
-            $baseTable = $this->encoder->getBaseTable();
-            
-            // Other Variables
+            // Step 1 - Check Length
             
             $characters = str_split($secret);
-            
-            // Step 1 - Check Length
             
             if (count($characters) != 16)
             {
@@ -278,6 +262,8 @@
             }
             
             // Step 2 - Check Characters
+            
+            $baseTable = $this->encoder->getBaseTable();
             
             foreach ($characters as $character)
             {
@@ -306,17 +292,10 @@
          */
         private function __generateValue_BASE() : string
         {
-            // Core Variables
-            
             $baseTable = $this->encoder->getBaseTable();
-            
-            // Other Variables
             
             $value    = "";
             $maxIndex = count($baseTable) - 1;
-            $index    = 0;
-            
-            // Logic
             
             for ($i = 0; $i < 16; $i ++)
             {
@@ -339,12 +318,7 @@
          */
         private function __generateValue_NUMERICAL() : string
         {
-            // Core Variables
-            
-            $value  = "";
-            $number = 0;
-            
-            // Logic
+            $value = "";
             
             for ($i = 0; $i < 10; $i ++)
             {
@@ -367,12 +341,7 @@
          */
         private function __generateValue_BINARY() : string
         {
-            // Core Variables
-            
             $value = "";
-            $byte  = 0;
-            
-            // Logic
             
             for ($i = 0; $i < 10; $i ++)
             {

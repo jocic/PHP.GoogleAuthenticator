@@ -48,6 +48,9 @@
         public function getSize() : int;
         public function getErrorCorrection() : int;
         public function getFormat() : int;
+        public function getMargin() : int;
+        public function getBackgroundColor() : string;
+        public function getForegroundColor() : string;
         public function getData() : string|null;
         public function getEncoding() : string|null;
         public function getEmbeddable() : string|null;
@@ -59,6 +62,9 @@
         public function setSize(int $size) : self;
         public function setErrorCorrection(int $ecc) : self;
         public function setFormat(int $format) : self;
+        public function setMargin(int $margin) : self;
+        public function setBackgroundColor(string $color) : self;
+        public function setForegroundColor(string $color) : self;
         public function setData(string $data) : self;
         
         /****************\

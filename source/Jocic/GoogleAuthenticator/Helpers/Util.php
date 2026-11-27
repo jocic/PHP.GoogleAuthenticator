@@ -29,8 +29,10 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator\Helpers;
     
+    use Jocic\GoogleAuthenticator\Account;
+    use Jocic\GoogleAuthenticator\Secret;
     use Jocic\GoogleAuthenticator\Encoder;
     
     /**
@@ -60,8 +62,6 @@
          */
         public static function getSecret(mixed $entity) : string
         {
-            // Logic
-            
             $secret = "";
             
             if ($entity instanceof Account)
@@ -94,13 +94,9 @@
          */
         public static function getOtpUri(Account $account) : string
         {
-            // Core Variables
-            
             $service = $account->getService();
             $name    = $account->getName();
             $secret  = $account->getSecret()->getValue();
-            
-            // Logic
             
             if (strlen($service) == 0)
             {
@@ -131,8 +127,6 @@
          */
         public static function getFormatExtension(int $code) : string
         {
-            // Logic
-            
             switch ($code)
             {
                 case Encoder::FORMAT_PNG:
@@ -143,6 +137,8 @@
                     return "gif";
                 case Encoder::FORMAT_SVG:
                     return "svg";
+                case Encoder::FORMAT_EPS:
+                    return "eps";
             }
             
             return "";
@@ -167,57 +163,6 @@
         public static function isColorValid(string $color) : bool
         {
             return preg_match("/^#[0-9a-fA-F]{6}$/", trim($color));
-        }
-        
-        /****************\
-        |* CORE METHODS *|
-        \****************/
-        
-        /**
-         * Saves the provided contents to a file.
-         * 
-         * @author    Djordje Jocic <office@djordjejocic.com>
-         * @copyright 2026 All Rights Reserved
-         * @version   1.0.0
-         * 
-         * @param string $path
-         *   Path of the file that should be saved.
-         * @param string $contents
-         *   Contents of the file that should be saved.
-         * @return bool
-         *   Value <i>TRUE</i> if the file was saved, and vice versa.
-         */
-        public static function saveFile(string $path, string $contents) : bool
-        {
-            // Core Variables
-            
-            $fileHandler  = null;
-            $bytesWritten = 0;
-            
-            // Logic
-            
-            try
-            {
-                $fileHandler = fopen($path, "w");
-                
-                if ($fileHandler !== false)
-                {
-                    $bytesWritten = fwrite($fileHandler, $contents);
-                }
-            }
-            catch (\Exception $e)
-            {
-                throw new \Exception("An unkown IO error occured.");
-            }
-            finally
-            {
-                if ($fileHandler != null)
-                {
-                    fclose($fileHandler);
-                }
-            }
-            
-            return $bytesWritten > 0;
         }
     }
     

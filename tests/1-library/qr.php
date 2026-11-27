@@ -37,6 +37,7 @@
     use Jocic\GoogleAuthenticator\QrCode;
     
     use Jocic\GoogleAuthenticator\Encoders\Go;
+    use Jocic\GoogleAuthenticator\Encoders\Endroid;
     
     /**
      * <i>TestQr</i> class is used for testing method implementation

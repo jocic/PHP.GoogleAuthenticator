@@ -29,75 +29,103 @@
     |* OTHER DEALINGS IN THE SOFTWARE.                                 *|
     \*******************************************************************/
     
-    namespace Jocic\GoogleAuthenticator;
+    namespace Jocic\GoogleAuthenticator\Helpers;
+    
+    use Jocic\GoogleAuthenticator\Encoder;
     
     /**
-     * <i>Http</i> class is a helper class for making HTTP requests.
+     * <i>File</i> class is a helper class used for file I/O.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2026 All Rights Reserved
      * @version   1.0.0
      */
-    class Http
+    class File
     {
         /****************\
         |* CORE METHODS *|
         \****************/
         
         /**
-         * Makes a HTTP GET request.
+         * Saves the provided contents to a file.
          * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $url
-         *   URL of the request.
-         * @param array $params
-         *   Array of request parameters in key to value form.
-         * @return string|null
-         *   Value <i>NULL</i> if the request failed, or response.
+         * @param string $path
+         *   Path of the file that should be saved.
+         * @param string $contents
+         *   Contents of the file that should be saved.
+         * @return bool
+         *   Value <i>TRUE</i> if the file was saved, and vice versa.
          */
-        public static function get(string $url, array $params = []) : string|null
+        public static function save(string $path, string $contents) : bool
         {
-            // Step 1 - Prepare Request
+            $bytesWritten = 0;
             
-            $url = $url . "?" . http_build_query(
-                $params, "", "&", PHP_QUERY_RFC3986);
-            
-            $ch = curl_init($url);
-            
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_CONNECTTIMEOUT => 5,
-                CURLOPT_TIMEOUT        => 10,
-                CURLOPT_HTTPHEADER     => [
-                    'Accept: text/html',
-                ],
-            ]);
-            
-            // Step 2 - Send Request
-            
-            $response = curl_exec($ch);
-            
-            if ($response === false)
+            try
             {
-                $error = curl_error($ch);
+                $fileHandler = fopen($path, "w");
                 
-                return null;
+                if ($fileHandler !== false)
+                {
+                    $bytesWritten = fwrite($fileHandler, $contents);
+                }
             }
-            
-            // Step 3 - Handle Request
-            
-            $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            
-            if ($status < 200 || $status >= 300)
+            catch (\Exception $e)
             {
-                return null;
+                throw new \Exception("An unkown IO error occured.");
+            }
+            finally
+            {
+                if ($fileHandler != null)
+                {
+                    fclose($fileHandler);
+                }
             }
             
-            return $response;
+            return $bytesWritten > 0;
+        }
+        
+        /**
+         * Loads contents from the provided file.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @param string $path
+         *   Path of the file that should be saved.
+         * @return string|false
+         *   Contents of the file or <i>FALSE</i> on failure.
+         */
+        public static function load(string $path) : string|bool
+        {
+            $bytesRead = 0;
+            
+            try
+            {
+                $fileHandler = fopen($path, "r");
+                
+                if ($fileHandler !== false)
+                {
+                    $contents = fread($fileHandler, filesize($path));
+                }
+            }
+            catch (\Exception $e)
+            {
+                throw new \Exception("An unkown IO error occured.");
+            }
+            finally
+            {
+                if ($fileHandler != null)
+                {
+                    fclose($fileHandler);
+                }
+            }
+            
+            return $contents;
         }
     }
     

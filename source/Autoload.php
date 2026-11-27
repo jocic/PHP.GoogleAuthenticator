@@ -45,19 +45,19 @@
      */
     function load_google_authenticator_class($class_name)
     {
-        // Core Variables
-        
-        $class_location = join(DIRECTORY_SEPARATOR, [
-            __DIR__,
-            str_replace("\\", DIRECTORY_SEPARATOR, $class_name)
-        ]) . ".php";
-        
-        // Logic
+        // Step 1 - Check If Class Was Defined
         
         if (class_exists($class_name))
         {
             return true;
         }
+        
+        // Step 2 - Include Class If It Exists
+        
+        $class_location = join(DIRECTORY_SEPARATOR, [
+            __DIR__,
+            str_replace("\\", DIRECTORY_SEPARATOR, $class_name)
+        ]) . ".php";
         
         if (is_file($class_location))
         {

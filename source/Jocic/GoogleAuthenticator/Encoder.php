@@ -31,7 +31,7 @@
     
     namespace Jocic\GoogleAuthenticator;
     
-    use Jocic\GoogleAuthenticator\Util;
+    use Jocic\GoogleAuthenticator\Helpers\Util;
     use Jocic\Encoders\Base\Base64;
     
     /**
@@ -138,22 +138,6 @@
         protected int $size = 320;
         
         /**
-         * Data that should be encoded within the generated QR Code.
-         * 
-         * @var    int
-         * @access protected
-         */
-        protected string|null $data = null;
-        
-        /**
-         * QR Code with the encoded data in the specified image format.
-         * 
-         * @var    string
-         * @access protected
-         */
-        protected string|null $encoding = null;
-        
-        /**
          * Error-Correction Code applied during the encoding.
          * 
          * @var    int
@@ -168,6 +152,46 @@
          * @access protected
          */
         protected int $format = self::FORMAT_PNG;
+        
+        /**
+         * Margin between the edges of the image and the QR Code itself.
+         * 
+         * @var    int
+         * @access protected
+         */
+        protected int $margin = 5;
+        
+        /**
+         * Background color of the generated QR Code.
+         * 
+         * @var    string
+         * @access protected
+         */
+        protected string $bgColor = "#ffffff";
+        
+        /**
+         * Foreground color of the generated QR Code - color of the code.
+         * 
+         * @var    string
+         * @access protected
+         */
+        protected string $fgColor = "#000000";
+        
+        /**
+         * Data that should be encoded within the generated QR Code.
+         * 
+         * @var    int
+         * @access protected
+         */
+        protected string|null $data = null;
+        
+        /**
+         * QR Code with the encoded data in the specified image format.
+         * 
+         * @var    string
+         * @access protected
+         */
+        protected string|null $encoding = null;
         
         /***************\
         |* GET METHODS *|
@@ -185,8 +209,6 @@
          */
         public function getSize() : int
         {
-            // Logic
-            
             return $this->size;
         }
         
@@ -202,8 +224,6 @@
          */
         public function getErrorCorrection() : int
         {
-            // Logic
-            
             return $this->ecc;
         }
         
@@ -219,9 +239,53 @@
          */
         public function getFormat() : int
         {
-            // Logic
-            
             return $this->format;
+        }
+        
+        /**
+         * Returns the margin between the edges of the image and the
+         * QR Code itself. This value represents the margin in pixel.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return int
+         *   Margin between the edges of the image and the QR Code itself.
+         */
+        public function getMargin() : int
+        {
+            return $this->margin;
+        }
+        
+        /**
+         * Returns the background color of the generated QR Code.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Background color of the generated QR Code.
+         */
+        public function getBackgroundColor() : string
+        {
+            return $this->bgColor;
+        }
+        
+        /**
+         * Returns the foreground color of the generated QR Code.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Foreground color of the generated QR Code.
+         */
+        public function getForegroundColor() : string
+        {
+            return $this->fgColor;
         }
         
         /**
@@ -236,8 +300,6 @@
          */
         public function getData() : string|null
         {
-            // Logic
-            
             return $this->data;
         }
         
@@ -254,31 +316,29 @@
          */
         public function getEncoding() : string|null
         {
-            // Logic
-            
             return $this->encoding;
         }
         
         /**
          * Returns the previously-generated <i>BASE64</i> encoded QR Code.
          * 
+         * This is particularly useful if you only need to temporarily
+         * embedd a QR code on a page as an inline image.
+         * 
          * @author    Djordje Jocic <office@djordjejocic.com>
          * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
          * @return string|null
-         *   Previously-generated <i>BASE64</i> encoded QR Code.
+         *   Previously-generated <i>BASE64</i> encoded QR Code, or
+         *   value <i>NULL</i> if the QR Code generation failed.
          */
         public function getEmbeddable() : string|null
         {
-            // Step 1 - Check Encoding
-            
             if ($this->encoding === null)
             {
                 return null;
             }
-            
-            // Step 2 - Generate Inline Image Data
             
             $ext = Util::getFormatExtension($this->format);
             
@@ -304,8 +364,6 @@
          */
         public function setSize(int $size) : self
         {
-            // Logic
-            
             if ($size < 10 || $size > 1000)
             {
                 throw new \Exception("Invalid size provided.");
@@ -330,8 +388,6 @@
          */
         public function setErrorCorrection(int $ecc) : self
         {
-            // Logic
-            
             if (!in_array($ecc, [ self::ECC_LOW,
                 self::ECC_MEDIUM, self::ECC_HIGH ]))
             {
@@ -360,12 +416,79 @@
             // Logic
             
             if (!in_array($format, [ self::FORMAT_PNG, self::FORMAT_JPG,
-                self::FORMAT_GIF, self::FORMAT_SVG ]))
+                self::FORMAT_GIF, self::FORMAT_SVG, self::FORMAT_EPS ]))
             {
                 throw new \Exception("invalid format value provided.");
             }
             
             $this->format = $format;
+            
+            return $this;
+        }
+        
+        /**
+         * Returns the margin between the edges of the image and the
+         * QR Code itself. This value represents the margin in pixel.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return int
+         *   Margin between the edges of the image and the QR Code itself.
+         */
+        public function setMargin(int $margin) : self
+        {
+            if ($margin < 0 || $margin > 50)
+            {
+                throw new \Exception("Invalid margin provided.");
+            }
+            
+            $this->margin = $margin;
+            
+            return $this;
+        }
+        
+        /**
+         * Returns the background color of the generated QR Code.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Background color of the generated QR Code.
+         */
+        public function setBackgroundColor(string $color) : self
+        {
+            if (!Util::isColorValid($color))
+            {
+                throw new \Exception("Invalid color provided.");
+            }
+            
+            $this->bgColor = $color;
+            
+            return $this;
+        }
+        
+        /**
+         * Returns the foreground color of the generated QR Code.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return string
+         *   Foreground color of the generated QR Code.
+         */
+        public function setForegroundColor(string $color) : self
+        {
+            if (!Util::isColorValid($color))
+            {
+                throw new \Exception("Invalid color provided.");
+            }
+            
+            $this->fgColor = $color;
             
             return $this;
         }
@@ -384,8 +507,6 @@
          */
         public function setData(string $data) : self
         {
-            // Logic
-            
             if (strlen($data) == 0)
             {
                 throw new \Exception("Invalid data provided.");
@@ -415,8 +536,6 @@
          */
         public function process() : bool
         {
-            // Logic
-            
             return false;
         }
     }

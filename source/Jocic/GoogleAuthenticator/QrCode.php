@@ -31,7 +31,8 @@
     
     namespace Jocic\GoogleAuthenticator;
     
-    use Jocic\GoogleAuthenticator\Util;
+    use Jocic\GoogleAuthenticator\Helpers\Util;
+    use Jocic\GoogleAuthenticator\Helpers\File;
     
     /**
      * <i>QrCode</i> class is a wrapper that manages various available
@@ -109,8 +110,6 @@
          */
         public function getDirectory() : string|null
         {
-            // Logic
-            
             return $this->directory;
         }
         
@@ -129,8 +128,6 @@
          */
         public function getFilename() : string|null
         {
-            // Logic
-            
             return $this->filename;
         }
         
@@ -152,8 +149,6 @@
          */
         public function getPath() : string|null
         {
-            // Logic
-            
             return $this->path;
         }
         
@@ -170,8 +165,6 @@
          */
         public function getEncoder() : Encoder|null
         {
-            // Logic
-            
             return $this->encoder;
         }
         
@@ -195,8 +188,6 @@
          */
         public function setDirectory(string $directory) : self
         {
-            // Logic
-            
             $directory = realpath(trim($directory));
             
             if (!is_dir($directory))
@@ -227,8 +218,6 @@
          */
         public function setFilename(string $filename) : self
         {
-            // Logic
-            
             $filename = basename(trim($filename));
             
             if (strlen($filename) == 0)
@@ -257,8 +246,6 @@
          */
         public function setEncoder(Encoder $encoder) : self
         {
-            // Logic
-            
             $this->encoder = $encoder;
             
             return $this;
@@ -325,7 +312,7 @@
             
             if ($this->encoder->process())
             {
-                return Util::saveFile($this->path,
+                return File::save($this->path,
                     $this->encoder->getEncoding());
             }
             
@@ -349,8 +336,6 @@
          */
         private function resolvePath() : self
         {
-            // Logic
-            
             $separator = DIRECTORY_SEPARATOR;
             
             if ($this->directory == DIRECTORY_SEPARATOR)
