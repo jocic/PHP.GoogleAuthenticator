@@ -74,9 +74,9 @@
             $code_tc = $this->generateCode($secret,  0);
             $code_tn = $this->generateCode($secret,  1);
             
-            return (   $code_tp == $code
-                    || $code_tc == $code
-                    || $code_tn == $code);
+            return (   hash_equals($code_tp, $code)
+                    || hash_equals($code_tc, $code)
+                    || hash_equals($code_tn, $code));
         }
         
         /*****************\
