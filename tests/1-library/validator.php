@@ -37,8 +37,8 @@
     use Jocic\GoogleAuthenticator\Secret;
     
     /**
-     * <i>TestValidator</i> class is used for testing method implementation of
-     * the class <i>Validator</i>.
+     * <i>TestValidator</i> class is used for testing method implementation
+     * of the class <i>Validator</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2026 All Rights Reserved

@@ -58,10 +58,6 @@
          */
         public function testValueMethods() : void
         {
-            // Core Variables
-            
-            $secret = new Secret();
-            
             // Step 1 - Test Valid Values
             
             $validValues = [
@@ -74,6 +70,8 @@
             
             foreach ($validValues as $testValue)
             {
+                $secret = new Secret();
+                
                 $secret->setValue($testValue);
                 
                 $this->assertSame($testValue, $secret->getValue());
@@ -93,6 +91,8 @@
             {
                 try
                 {
+                    $secret = new Secret();
+                    
                     $secret->setValue($testValue);
                     
                     $this->fail("Exception should've been thrown!");
@@ -120,11 +120,7 @@
          */
         public function testValidation() : void
         {
-            // Core Variables
-            
             $secret = new Secret();
-            
-            // Logic
             
             $testValues = [
                 "RMB4AMUMDHODBYNR" => true,
@@ -157,19 +153,12 @@
          */
         public function testReset() : void
         {
-            // Core Variables
-            
-            $secret = new Secret();
-            
-            // Other Variables
-            
-            $prev_value = null;
-            $curr_value = null;
-            
             // Step 1 - Base Method
             
             for ($i = 0; $i < 10; $i ++)
             {
+                $secret = new Secret();
+                
                 $prev_value = $secret->getValue();
                 
                 $secret->reset(Secret::METHOD_BASE);
@@ -183,6 +172,8 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
+                $secret = new Secret();
+                
                 $prev_value = $secret->getValue();
                 
                 $secret->reset(Secret::METHOD_NUMERICAL);
@@ -196,6 +187,8 @@
             
             for ($i = 0; $i < 10; $i ++)
             {
+                $secret = new Secret();
+                
                 $prev_value = $secret->getValue();
                 
                 $secret->reset(Secret::METHOD_BINARY);
@@ -209,6 +202,8 @@
             
             try
             {
+                $secret = new Secret();
+                
                 $secret->reset(1337);
                 
                 $this->fail("Exception should've been thrown!");

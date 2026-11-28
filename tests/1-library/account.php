@@ -59,19 +59,13 @@
          */
         public function testServiceMethods() : void
         {
-            // Core Variables
-            
             $account = new Account();
-            
-            // Other Variables
             
             $testValues = [
                 "Hosting ABC",
                 "FastFood Joint",
                 "That Shop"
             ];
-            
-            // Logic
             
             foreach ($testValues as $testValue)
             {
@@ -92,19 +86,13 @@
          */
         public function testNameMethods() : void
         {
-            // Core Variables
-            
             $account = new Account();
-            
-            // Other Variables
             
             $testValues = [
                 "John Doe",
                 "john@doe.com",
                 "Buyer McBuyerson"
             ];
-            
-            // Logic
             
             foreach ($testValues as $testValue)
             {
@@ -125,25 +113,28 @@
          */
         public function testSecretMethods() : void
         {
-            // Core Variables
-            
             $account = new Account();
-            
-            // Other Variables
             
             $testSecrets = [
                 new Secret(),
-                new Secret(),
-                new Secret()
+                "YPPMQXR6UGWBP3UI",
+                new Secret("RMB4AMUMDHODBYNR")
             ];
-            
-            // Logic
             
             foreach ($testSecrets as $testSecret)
             {
                 $account->setSecret($testSecret);
                 
-                $this->assertSame($testSecret, $account->getSecret());
+                if ($testSecret instanceof Secret)
+                {
+                    $this->assertSame($testSecret->getValue(),
+                        $account->getSecret()->getValue());
+                }
+                else
+                {
+                    $this->assertSame($testSecret,
+                        $account->getSecret()->getValue());
+                }
             }
         }
         
@@ -162,24 +153,19 @@
          */
         public function testConstructor() : void
         {
-            // Core Variables
-            
-            $account = null;
-            
-            // Other Variables
-            
             $testValues = [
                 [ null,  null,  null ],
                 [ "",  "",  null ],
                 [ "A", "B", "RMB4AMUMDHODBYNR" ]
             ];
             
-            // Logic
-            
             foreach ($testValues as $testValue)
             {
-                $account = new Account($testValue[0],
-                    $testValue[1], $testValue[2]);
+                $account = new Account(
+                    $testValue[0],
+                    $testValue[1],
+                    $testValue[2]
+                );
                 
                 $this->assertSame($testValue[0],
                     $account->getService(), "getService");

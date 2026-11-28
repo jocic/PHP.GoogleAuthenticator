@@ -35,8 +35,6 @@
     use Jocic\GoogleAuthenticator\Account;
     use Jocic\GoogleAuthenticator\Encoder;
     use Jocic\GoogleAuthenticator\QrCode;
-    
-    use Jocic\GoogleAuthenticator\Encoders\Go;
     use Jocic\GoogleAuthenticator\Encoders\Endroid;
     
     /**
@@ -260,7 +258,7 @@
             
             /////////////////////////////
             
-            $qrCode = new QrCode();
+            $qrCode = new QrCode(); 
             
             $qrCode->setDirectory($temp_dir);
             $qrCode->setFilename("test.png");
@@ -268,8 +266,14 @@
             
             /////////////////////////////
             
-            $this->assertSame(true, $qrCode->generate($account));
-            $this->assertSame(true, file_exists($qrCode->getPath()));
+            $this->assertSame(true, $qrCode->generate($account),
+                "QR Code - Procedure");
+            
+            $this->assertSame(true, file_exists($qrCode->getPath()),
+                "QR Code - Existence");
+            
+            $this->assertSame(503, filesize($qrCode->getPath()),
+                "QR Code - File Size");
         }
     }
     
