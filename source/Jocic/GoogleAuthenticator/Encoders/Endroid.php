@@ -47,8 +47,8 @@
     use Endroid\QrCode\Writer\ValidationException;
     
     /**
-     * <i>Go</i> class is used for generating QR codes using pubilcly
-     * available API from <i>GO QR</i>.
+     * <i>Endroid</i> class is used for generating QR codes using the
+     * local and open-source PHP library <i>endroid/qr-code</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2026 All Rights Reserved
@@ -226,7 +226,7 @@
             
             $this->_fgColor = new Color($red, $green, $blue);
             
-            return parent::setBackgroundColor($color);
+            return parent::setForegroundColor($color);
         }
         
         /****************\
@@ -250,14 +250,14 @@
                 
                 roundBlockSizeMode: RoundBlockSizeMode::Margin,
                 
-                errorCorrectionLevel: ErrorCorrectionLevel::Low
+                errorCorrectionLevel: $this->_ecc
             );
             
             // Step 2 - Generate QR Code
             
             switch ($this->format) {
                 case Encoder::FORMAT_PNG:
-                    $writer = new PngWritier();
+                    $writer = new PngWriter();
                     break;
                 case Encoder::FORMAT_GIF:
                     $writer = new GifWriter();

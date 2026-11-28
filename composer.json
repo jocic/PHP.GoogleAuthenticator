@@ -15,12 +15,19 @@
         "security"
     ],
     "config" : {
-        "vendor-dir" : "./dependencies"
+        "vendor-dir" : "./dependencies",
+        "allow-plugins": {
+            "endroid/installer": false
+        }
     },
     "require" : {
         "php" : ">=8.2",
+        "ext-mbstring" : "*",
+        "ext-xml" : "*",
+        "ext-curl" : "*",
+        "ext-gd" : "*",
         "jocic/encoders" : "1.0.0",
-        "endroid/qr-code-bundle": "^7.1"
+        "endroid/qr-code-bundle": "^6.1.0"
     },
     "require-dev" : {
         "php" : ">=8.2",
