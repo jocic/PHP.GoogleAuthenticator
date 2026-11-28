@@ -42,11 +42,13 @@ Additional examples can be found on the official project's [wiki](https://github
 You need to have PHP >=8.5 available on your system to use **Google Authenticator** in your application.
 
 Additionally, you should have the following PHP extensions installed as well:
-*   [Multibyte String](https://secure.php.net/manual/en/book.mbstring.php)
-*   [DOM](https://secure.php.net/manual/en/dom.setup.php)
+*   [CURL](https://www.php.net/manual/en/book.curl.php)
+*   [GD](https://www.php.net/manual/en/book.image.php)
+*   [Multibyte String](https://www.php.net/manual/en/book.mbstring.php)
+*   [DOM](https://www.php.net/manual/en/dom.setup.php)
 
 ```bash
-apt-get install php-mbstring php-xml php-gd -y
+apt-get install php-curl php-gd php-mbstring php-xml -y
 ```
 
 ## Installation
