@@ -210,14 +210,14 @@
         {
             // Core Variables
             
-            $qr = new QrCode();
-            $go = new Go();
+            $qr  = new QrCode();
+            $enc = new Endroid();
             
             $this->assertSame(null, $qr->getEncoder());
             
-            $qr->setEncoder($go);
+            $qr->setEncoder($enc);
             
-            $this->assertSame($go, $qr->getEncoder());
+            $this->assertSame($enc, $qr->getEncoder());
         }
         
         /*******************\

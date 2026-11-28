@@ -59,7 +59,7 @@
         
         /**
          * Method constant for generating secrets using the <i>numerical</i>
-         * creation method - picking random numbers between 0 and 256 until an
+         * creation method - picking random numbers between 0 and 255 until an
          * 80-bit long secret is generated.
          * 
          * @var    int

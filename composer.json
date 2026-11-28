@@ -15,10 +15,7 @@
         "security"
     ],
     "config" : {
-        "vendor-dir" : "./dependencies",
-        "allow-plugins": {
-            "endroid/installer": false
-        }
+        "vendor-dir" : "./dependencies"
     },
     "require" : {
         "php" : ">=8.5",

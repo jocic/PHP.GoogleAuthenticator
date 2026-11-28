@@ -475,6 +475,8 @@
          */
         public function setBackgroundColor(string $color) : self
         {
+            $color = trim($color);
+            
             if (!Util::isColorValid($color))
             {
                 throw new \Exception("Invalid color provided.");
@@ -493,12 +495,14 @@
          * @version   1.0.0
          * 
          * @param string $color
-         *   Background color of the generated QR Code.
+         *   Foreground color of the generated QR Code.
          * @return object
          *   Reference to the object calling the method - current object.
          */
         public function setForegroundColor(string $color) : self
         {
+            $color = trim($color);
+            
             if (!Util::isColorValid($color))
             {
                 throw new \Exception("Invalid color provided.");
@@ -523,6 +527,8 @@
          */
         public function setData(string $data) : self
         {
+            $data = trim($data);
+            
             if (strlen($data) == 0)
             {
                 throw new \Exception("Invalid data provided.");

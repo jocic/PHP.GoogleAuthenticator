@@ -180,12 +180,12 @@
          * 
          * @param string $secret
          *   Secret that should be used for code generation.
-         * @param string $offset
+         * @param int $offset
          *   Offset of the time slice.
          * @return string
          *   Generated 6-digit code.
          */
-        private function generateCode(string $secret, string $offset) : string
+        private function generateCode(string $secret, int $offset) : string
         {
             $encoder = new Base32();
             

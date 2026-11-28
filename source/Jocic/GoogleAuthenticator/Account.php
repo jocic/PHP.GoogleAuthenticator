@@ -185,7 +185,7 @@
          * @return object
          *   Reference to the object calling the method - current object.
          */
-        public function setService($service) : self
+        public function setService(string $service) : self
         {
             $this->service = $service;
             

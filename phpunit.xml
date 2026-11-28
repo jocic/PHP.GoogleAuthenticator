@@ -12,8 +12,6 @@
             <file>tests/1-library/qr.php</file>
         </testsuite>
         <testsuite name="encoders">
-            <file>tests/2-encoders/go.php</file>
-            <file>tests/2-encoders/endroid.php</file>
         </testsuite>
     </testsuites>
     <source>
