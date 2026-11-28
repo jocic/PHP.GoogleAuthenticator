@@ -259,8 +259,6 @@
          * @copyright 2026 All Rights Reserved
          * @version   1.0.0
          * 
-         * @param string $data
-         *   Data that should be encoded within the generated QR Code.
          * @return bool
          *   Value <i>TRUE</i> if QR Code was generated, and vice versa.
          */

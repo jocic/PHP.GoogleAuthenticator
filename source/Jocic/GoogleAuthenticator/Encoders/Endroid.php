@@ -48,7 +48,7 @@
     
     /**
      * <i>Endroid</i> class is used for generating QR codes using the
-     * local and open-source PHP library <i>endroid/qr-code</i>.
+     * local PHP library <i>endroid/qr-code</i>.
      * 
      * @author    Djordje Jocic <office@djordjejocic.com>
      * @copyright 2026 All Rights Reserved
@@ -233,6 +233,17 @@
         |* CORE METHODS *|
         \****************/
         
+        /**
+         * Encodes specified data within a QR Code using the
+         * local PHP library <i>endroid/qr-code</i>.
+         * 
+         * @author    Djordje Jocic <office@djordjejocic.com>
+         * @copyright 2026 All Rights Reserved
+         * @version   1.0.0
+         * 
+         * @return bool
+         *   Value <i>TRUE</i> if QR Code was generated, and vice versa.
+         */
         public function process() : bool
         {
             // Step 1 - Prepare QR Code Data

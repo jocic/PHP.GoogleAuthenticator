@@ -39,7 +39,7 @@ Additional examples can be found on the official project's [wiki](https://github
 
 ## Requirements
 
-You need to have PHP >=8.2 available on your system to use **Google Authenticator** in your application.
+You need to have PHP >=8.5 available on your system to use **Google Authenticator** in your application.
 
 Additionally, you should have the following PHP extensions installed as well:
 *   [Multibyte String](https://secure.php.net/manual/en/book.mbstring.php)
@@ -80,8 +80,8 @@ bash ./scripts/composer.sh install
 
 ```bash
 bash ./scripts/phpunit.sh --testsuite essentials
-bash ./scripts/phpunit.sh --testsuite qr-generators
-bash ./scripts/phpunit.sh --testsuite elements
+bash ./scripts/phpunit.sh --testsuite library
+bash ./scripts/phpunit.sh --testsuite encoders
 ```
 
 ## Copyright & License
