@@ -46,7 +46,7 @@ Additionally, you should have the following PHP extensions installed as well:
 *   [DOM](https://secure.php.net/manual/en/dom.setup.php)
 
 ```bash
-apt-get install php-mbstring php-xml -y
+apt-get install php-mbstring php-xml php-gd -y
 ```
 
 ## Installation

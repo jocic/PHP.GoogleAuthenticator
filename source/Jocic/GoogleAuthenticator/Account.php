@@ -97,8 +97,6 @@
             string|null $name = null,
             string|null $secret = null)
         {
-            // Logic
-            
             if ($service !== NULL)
             {
                 $this->setService($service);
@@ -132,8 +130,6 @@
          */
         public function getService() : string|null
         {
-            // Logic
-            
             return $this->service;
         }
         
@@ -168,8 +164,6 @@
          */
         public function getSecret() : Secret|null
         {
-            // Logic
-            
             return $this->secret;
         }
         
@@ -193,8 +187,6 @@
          */
         public function setService($service) : self
         {
-            // Logic
-            
             $this->service = $service;
             
             return $this;
@@ -214,8 +206,6 @@
          */
         public function setName(string $name) : self
         {
-            // Logic
-            
             $this->name = $name;
             
             return $this;
@@ -235,8 +225,6 @@
          */
         public function setSecret(Secret|string $secret) : self
         {
-            // Logic
-            
             if (is_string($secret))
             {
                 $secret = new Secret($secret);

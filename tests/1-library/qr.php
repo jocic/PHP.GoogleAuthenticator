@@ -249,7 +249,7 @@
             
             /////////////////////////////
             
-            $encoder = new Go();
+            $encoder = new Endroid();
             
             $encoder->setSize(200);
             $encoder->setMargin(5);

@@ -125,6 +125,14 @@
          */
         const FORMAT_EPS = 4;
         
+        /**
+         * Constant used for denoting encoder's file format - WEBP.
+         * 
+         * @var    int
+         * @access public
+         */
+        const FORMAT_WEBP = 5;
+        
         /******************\
         |* CORE VARIABLES *|
         \******************/
@@ -415,8 +423,10 @@
         {
             // Logic
             
-            if (!in_array($format, [ self::FORMAT_PNG, self::FORMAT_JPG,
-                self::FORMAT_GIF, self::FORMAT_SVG, self::FORMAT_EPS ]))
+            if (!in_array($format, [
+                self::FORMAT_PNG, self::FORMAT_JPG,
+                self::FORMAT_GIF, self::FORMAT_SVG,
+                self::FORMAT_EPS, self::FORMAT_WEBP ]))
             {
                 throw new \Exception("invalid format value provided.");
             }

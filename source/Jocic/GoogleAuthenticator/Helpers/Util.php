@@ -143,6 +143,8 @@
                     return "svg";
                 case Encoder::FORMAT_EPS:
                     return "eps";
+                case Encoder::FORMAT_WEBP:
+                    return "webp";
             }
             
             return "";

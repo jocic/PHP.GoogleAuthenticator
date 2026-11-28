@@ -19,7 +19,8 @@
     },
     "require" : {
         "php" : ">=8.2",
-        "jocic/encoders" : "1.0.0"
+        "jocic/encoders" : "1.0.0",
+        "endroid/qr-code-bundle": "^7.1"
     },
     "require-dev" : {
         "php" : ">=8.2",

@@ -67,7 +67,7 @@
          * @var    string
          * @access protected
          */
-        private string $_ecc = 'L';
+        private string $_ecc;
         
         /**
          * Translated and API-compliant <i>Format</i> value.
@@ -75,7 +75,7 @@
          * @var    string
          * @access protected
          */
-        private string $_format = 'png';
+        private string $_format;
         
         /**
          * Translated and API-compliant <i>Background Color</i> value.
@@ -83,7 +83,7 @@
          * @var    string
          * @access protected
          */
-        private string $_bgColor = "255-255-255";
+        private string $_bgColor;
         
         /**
          * Translated and API-compliant <i>Foreground Color</i> value.
@@ -91,7 +91,7 @@
          * @var    string
          * @access protected
          */
-        private string $_fgColor = "0-0-0";
+        private string $_fgColor;
         
         /**
          * Generic PHP constructor for the class <i>Go</i>.
@@ -169,19 +169,19 @@
         {
             switch ($format)
             {
-                case Go::FORMAT_PNG:
+                case Encoder::FORMAT_PNG:
                     $this->_format = "png";
                     break;
-                case Go::FORMAT_JPG:
+                case Encoder::FORMAT_JPG:
                     $this->_format = "jpg";
                     break;
-                case Go::FORMAT_GIF:
+                case Encoder::FORMAT_GIF:
                     $this->_format = "gif";
                     break;
-                case Go::FORMAT_SVG:
+                case Encoder::FORMAT_SVG:
                     $this->_format = "svg";
                     break;
-                case Go::FORMAT_EPS:
+                case Encoder::FORMAT_EPS:
                     $this->_format = "eps";
                     break;
                 default:
